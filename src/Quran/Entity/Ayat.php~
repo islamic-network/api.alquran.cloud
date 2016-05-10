@@ -1,0 +1,45 @@
+<?php
+// entity/Ayat.php
+
+namespace Quran\Entity;
+
+
+/**
+ * @Entity @Table(name="ayat")
+ **/
+class Ayat
+{
+    /**
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue 
+     **/
+    protected $id;
+    
+    /**
+     * @Column(type="integer", length=4, nullable=false)
+     **/
+    protected $number;
+    
+    /**
+     * @Column(type="string", length=64000, nullable=false)
+     **/
+    protected $text;
+    
+    /**
+     * @ManyToOne(targetEntity="Surat", inversedBy="ayats")
+     **/
+    protected $surat;
+    
+    /**
+     * @ManyToOne(targetEntity="Edition", inversedBy="ayats")
+     **/
+    protected $edition;
+    
+    /**
+     * @ManyToOne(targetEntity="Juz", inversedBy="ayats")
+     **/
+    protected $juz;
+
+
+}
