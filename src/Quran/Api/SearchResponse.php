@@ -16,42 +16,51 @@ class SearchResponse extends QuranResponse
      * @var
      */
     private $response;
-    
-    private $keyword;
-    
-    private $surat = null;
-    
-    private $lang;
-    
 
     /**
-     * @param null $number
-     * @param bool|false $ayats
+     * @var string
+     */
+    private $keyword;
+
+    /**
+     * @var null|string
+     */
+    private $surat = null;
+
+    /**
+     * @var string
+     */
+    private $lang;
+
+
+    /**
+     * @param $keyword
+     * @param string $surat
+     * @param string $lang
      */
     public function __construct($keyword, $surat = 'all', $lang = 'en')
     {
         parent::__construct();
-        
+
         $this->keyword = (string) strtolower($keyword);
-        
-        $this->surat = (int) $surat;
-        
+
+        $this->surat = $surat;
+
         $this->lang = (string) $lang;
-        
+
         $this->load();
 
     }
 
-    
 
     /**
-     * @param $number
+     * 
      */
     public function load()
     {
         $result = false;
-        if ($this->surat > 0 && $this->surat < 115) {
-            $result = $this->entityManager->getRepository("\Quran\Entity\Ayat")->createQueryBuilder('a')   
+        if ((int) $this->surat > 0 && (int) $this->surat < 115) {
+            $result = $this->entityManager->getRepository("\Quran\Entity\Ayat")->createQueryBuilder('a')
                 ->leftJoin('a.edition', 'e')
                 ->where('LOWER(a.text) LIKE :keyword')
                 ->andWhere('a.surat = :surat')
@@ -73,13 +82,13 @@ class SearchResponse extends QuranResponse
                 ->getQuery()
                 ->getResult();
         }
-        
+
         if (!$result || $result === null) {
             $this->response = 'Nothing matching your search was found..';
             $this->setCode(400);
             $this->setStatus('Bad Request');
         } else {
-            
+
             $this->response = $this->prepare($result);
             $this->setCode(200);
             $this->setStatus('OK');
@@ -88,23 +97,38 @@ class SearchResponse extends QuranResponse
     }
 
     /**
-     * @param $ayats
-     * @return array
-
+     * @param $ayat
+     * @return mixed
      */
     private function prepare($ayat)
     {
         $a['count'] = count($ayat);
+        $surahs = [];
+        $editions = [];
         foreach($ayat as $ayah) {
+            $surahs[] = $ayah->getSurat();
             $ax['number'] = $ayah->getNumber();
             $ax['text'] = $ayah->getText();
-            $ax['edition'] = $ayatEdtion = (new EditionResponse($ayah->getEdition()->getIdentifier()))->getResponse();
-            $ax['surah'] = (new SuratResponse($ayah->getSurat()->getId()))->getResponse();;
+            $ax['edition'] = [
+                'identifier' => $ayah->getEdition()->getIdentifier(),
+                'language' => $ayah->getEdition()->getLanguage(),
+                'name' => $ayah->getEdition()->getName(),
+                'englishName' => $ayah->getEdition()->getEnglishName(),
+                //'format' => $ayah->getEdition()->getFormat(),
+                'type' => $ayah->getEdition()->getType()
+            ];
+            $ax['surah'] = [
+                'number' => $ayah->getSurat()->getId(),
+                'name' => $ayah->getSurat()->getName(),
+                'englishName' => $ayah->getSurat()->getEnglishName(),
+                'englishNameTranslation' => $ayah->getSurat()->getEnglishTranslation(),
+                'revelationType' => $ayah->getSurat()->getRevelationCity()
+            ];
             $ax['numberInSurah'] = $ayah->getNumberInSurat();
 
             $a['matches'][] = $ax;
         }
-        
+
         return $a;
     }
 
@@ -117,7 +141,10 @@ class SearchResponse extends QuranResponse
 
         return $this;
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function getResponse()
     {
         return $this->response;

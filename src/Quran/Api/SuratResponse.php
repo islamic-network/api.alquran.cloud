@@ -26,23 +26,31 @@ class SuratResponse extends QuranResponse
      * @var bool
      */
     private $ayats = false;
-    
+
+    /**
+     * @var
+     */
     private $edition;
-    
+
+    /**
+     * @var bool
+     */
     private $loadEdition;
 
     /**
      * @param null $number
      * @param bool|false $ayats
+     * @param string $edition
+     * @param bool|false $loadEdition
      */
     public function __construct($number = null, $ayats = false, $edition = 'quran-simple', $loadEdition = false)
     {
         parent::__construct();
 
         $this->ayats = $ayats;
-        
+
         $this->edition = (new EditionResponse())->getEditionByIdentifier($edition);
-        
+
         $this->loadEdition = $loadEdition;
 
         $this->load(self::sanitizeNumber($number));
@@ -146,7 +154,10 @@ class SuratResponse extends QuranResponse
 
         return $this;
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function getResponse()
     {
         return $this->response;

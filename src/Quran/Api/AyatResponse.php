@@ -18,30 +18,40 @@ class AyatResponse extends QuranResponse
     private $response;
 
     /**
+     * @var
+     */
+    private $edition;
+
+    /**
      * @var bool
      */
-    private $ayats = false;
-    
-    private $edition;
-    
     private $includeEdition;
-    
+
+    /**
+     * @var bool
+     */
     private $includeSurat;
-    
+
+    /**
+     * @var bool
+     */
     private $all;
 
     /**
      * @param null $number
-     * @param bool|false $ayats
+     * @param string $edition
+     * @param bool|false $all
+     * @param bool|true $includeEdition
+     * @param bool|true $includeSurat
      */
     public function __construct($number = null, $edition = 'quran-simple', $all = false, $includeEdition = true, $includeSurat = true)
     {
         parent::__construct();
 
         $this->edition = (new EditionResponse())->getEditionByIdentifier($edition);
-        
+
         $this->all = $all;
-        
+
         $this->includeEdition = $includeEdition;
         $this->includeSurat = $includeSurat;
 
@@ -50,46 +60,49 @@ class AyatResponse extends QuranResponse
 
     }
 
-    
+
     /**
      * @param $number
-     * @return int
+     * @return array|int
      */
     public static function sanitizeNumber($number)
     {
         if ($number === null) {
-            
+
             return $number;
         }
-        
+
         if (is_numeric($number)) {
-            
-            return (int) $number;  
+
+            return (int) $number;
         }
-        
+
         $parts = explode(':', $number);
         if (count($parts) === 2) {
-            
+
             return [$parts[0], $parts[1]];
         }
     }
 
+    /**
+     * @param $number
+     */
     public function load($number)
     {
         if ($this->all) {
             // Load everything
             $this->loadAll();
-            
+
             return $number;
         }
         if ($number === null) {
             $this->setCode(400);
             $this->setStatus('Bad Request');
             $this->response = 'Please specify an Ayah number (1 to 6326) or a reference in the format Surah:Ayat (2:255).';
-            
+
             return $number;
         }
-        
+
         if (is_array($number)) {
             return $this->loadByReference($number[0], $number[1]);
         } else {
@@ -102,7 +115,10 @@ class AyatResponse extends QuranResponse
             }
         }
     }
-  
+
+    /**
+     * Loads All Ayahs
+     */
     public function loadAll()
     {
         $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['edition' => $this->edition]);
@@ -110,7 +126,7 @@ class AyatResponse extends QuranResponse
         $this->setCode(200);
         $this->setStatus('OK');
     }
-    
+
     /**
      * @param $number
      */
@@ -127,7 +143,11 @@ class AyatResponse extends QuranResponse
             $this->response = 'Please specify an Ayah number (1 to 6326)';
         }
     }
-    
+
+    /**
+     * @param $surat
+     * @param $ayat
+     */
     public function loadByReference($surat, $ayat)
     {
         $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findOneBy(['surat' => $surat, 'numberInSurat' => $ayat, 'edition' => $this->edition]);
@@ -141,7 +161,10 @@ class AyatResponse extends QuranResponse
             $this->response = 'Please specify a valid surah reference in the format Surah:Ayat (2:255).';
         }
     }
-    
+
+    /**
+     * @param $surat
+     */
     public function loadBySurat($surat)
     {
         $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['surat' => $surat, 'edition' => $this->edition]);
@@ -155,7 +178,10 @@ class AyatResponse extends QuranResponse
             $this->response = 'Please specify a valid surah (1 to 114).';
         }
     }
-    
+
+    /**
+     * @param $juz
+     */
     public function loadByJuz($juz)
     {
         $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['juz' => $juz, 'edition' => $this->edition]);
@@ -172,28 +198,33 @@ class AyatResponse extends QuranResponse
     private function prepare($ayat)
     {
         if (is_array($ayat)) {
-            $ayatEdtion = (new EditionResponse($ayat[0]->getEdition()->getIdentifier()))->getResponse();
-            $ayahSuratId = 0;
             foreach($ayat as $ayah) {
-                if ($this->includeSurat) {
-                    if ($ayahSuratId !== $ayah->getSurat()->getId()) {
-                        $ayahSuratId = $ayah->getSurat()->getId();
-                        $ayahSurat = (new SuratResponse($ayah->getSurat()->getId()))->getResponse();
-                    }
-                }
                 $ax['number'] = $ayah->getNumber();
                 $ax['text'] = $ayah->getText();
                 if ($this->includeEdition) {
-                    $ax['edition'] = $ayatEdtion;
+                    $ax['edition'] = [
+                        'identifier' => $ayah->getEdition()->getIdentifier(),
+                        'language' => $ayah->getEdition()->getLanguage(),
+                        'name' => $ayah->getEdition()->getName(),
+                        'englishName' => $ayah->getEdition()->getEnglishName(),
+                        //'format' => $ayah->getEdition()->getFormat(),
+                        'type' => $ayah->getEdition()->getType()
+                    ];
                 }
                 if ($this->includeSurat) {
-                    $ax['surah'] = $ayahSurat;
+                    $ax['surah'] = [
+                        'number' => $ayah->getSurat()->getId(),
+                        'name' => $ayah->getSurat()->getName(),
+                        'englishName' => $ayah->getSurat()->getEnglishName(),
+                        'englishNameTranslation' => $ayah->getSurat()->getEnglishTranslation(),
+                        'revelationType' => $ayah->getSurat()->getRevelationCity()
+                    ];
                 }
                 $ax['numberInSurah'] = $ayah->getNumberInSurat();
-                
+
                 $a[] = $ax;
             }
-            
+
         } else {
             $a = [
                 'number' => $ayat->getNumber(),
@@ -216,7 +247,10 @@ class AyatResponse extends QuranResponse
 
         return $this;
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function getResponse() {
 
         return $this->response;

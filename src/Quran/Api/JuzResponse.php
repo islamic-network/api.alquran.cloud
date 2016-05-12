@@ -21,18 +21,21 @@ class JuzResponse extends QuranResponse
      * @var
      */
     private $response;
-    
+
+    /**
+     * @var
+     */
     private $edition;
-    
+
 
     /**
      * @param null $number
-     * @param bool|false $ayats
+     * @param string $edition
      */
     public function __construct($number = null, $edition = 'quran-simple')
     {
         parent::__construct();
-        
+
         $this->edition = (new EditionResponse())->getEditionByIdentifier($edition);
 
         $this->load(self::sanitizeNumber($number));
@@ -69,12 +72,12 @@ class JuzResponse extends QuranResponse
             $this->response = $this->prepare($juz);
             $this->setCode(200);
             $this->setStatus('OK');
-            
+
         }
     }
 
     /**
-     * @param $surat
+     * @param $juz
      * @return array
      */
     private function prepare($juz)
@@ -85,7 +88,7 @@ class JuzResponse extends QuranResponse
             'number' => $juz->getId(),
             'ayahs' => $ayats->getResponse()
         ];
-        
+
         $j['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
 
 
@@ -101,7 +104,10 @@ class JuzResponse extends QuranResponse
 
         return $this;
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function getResponse()
     {
         return $this->response;

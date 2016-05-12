@@ -21,26 +21,31 @@ class EditionResponse extends QuranResponse
     private $response;
 
     /**
-     * @param null $number
-     * @param bool|false $surats
+     * @param null $identifier
+     * @param null $type
+     * @param null $language
+     * @param null $format
      */
-    public function __construct($identifier = null, $type = null, $language = null)
+    public function __construct($identifier = null, $type = null, $language = null, $format = null)
     {
         parent::__construct();
 
-        $this->load($identifier, $type, $language);
+        $this->load($identifier, $type, $language, $format);
 
 
     }
 
     /**
-     * @param $number
+     * @param $identifier
+     * @param $type
+     * @param $language
+     * @param $format
      */
-    public function load($identifier, $type, $language)
+    public function load($identifier, $type, $language, $format)
     {
 
         if ($identifier === null) {
-            $filter['format'] = 'text';
+            $filter = [];
             if ($type !== null) {
                 $filter['type'] = $type;
                 $filtertype = 'type';
@@ -48,7 +53,12 @@ class EditionResponse extends QuranResponse
             if ($language !== null) {
                 $filter['language'] = $language;
                 $filtertype = 'language';
-                
+
+            }
+            if ($format !== null) {
+                $filter['format'] = $format;
+                $filtertype = 'format';
+
             }
 
             $this->editionEM = $this->entityManager->getRepository('\Quran\Entity\Edition')->findBy($filter);
@@ -89,19 +99,19 @@ class EditionResponse extends QuranResponse
     }
 
     /**
-     * @param $surat
+     * @param $edition
      * @return array
      */
     private function prepare($edition)
     {
-            $e = [
-                'identifier' => $edition->getIdentifier(),
-                'language' => $edition->getLanguage(),
-                'name' => $edition->getName(),
-                'englishName' => $edition->getEnglishName(),
-                //'format' => $edition->getFormat(),
-                'type' => $edition->getType()
-            ];
+        $e = [
+            'identifier' => $edition->getIdentifier(),
+            'language' => $edition->getLanguage(),
+            'name' => $edition->getName(),
+            'englishName' => $edition->getEnglishName(),
+            'format' => $edition->getFormat(),
+            'type' => $edition->getType()
+        ];
 
         return $e;
     }
@@ -115,11 +125,12 @@ class EditionResponse extends QuranResponse
 
         return $this;
     }
-    
+
     /**
      * Defaults to quran-simple
-     **/
-    
+     * @param $identifier
+     * @return mixed
+     */
     public function getEditionByIdentifier($identifier)
     {
         $edition = $this->entityManager->getRepository('\Quran\Entity\Edition')->findOneBy(['identifier' => $identifier]);
@@ -128,9 +139,12 @@ class EditionResponse extends QuranResponse
         } else {
             return $edition;
         }
-                                                                                            
+
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function getResponse()
     {
         return $this->response;

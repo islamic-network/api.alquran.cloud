@@ -21,27 +21,28 @@ class CompleteResponse extends QuranResponse
      * @var
      */
     private $response;
-    
-    private $edition;
-    
 
     /**
-     * @param null $number
-     * @param bool|false $ayats
+     * @var
+     */
+    private $edition;
+
+
+    /**
+     * @param string $edition
      */
     public function __construct($edition = 'quran-simple')
     {
         parent::__construct();
-        
+
         $this->edition = (new EditionResponse())->getEditionByIdentifier($edition);
-        
+
         $this->load();
 
     }
 
-
     /**
-     * @param $number
+     *
      */
     public function load()
     {
@@ -52,19 +53,34 @@ class CompleteResponse extends QuranResponse
     }
 
     /**
-     * @param $surat
      * @return array
      */
     private function prepare()
     {
         foreach ($this->entityManager->getRepository('\Quran\Entity\Surat')->findAll() as $surat) {
-            $s[] = (new SuratResponse($surat->getId(), true, $this->edition->getIdentifier(), false))->getResponse();
+            $ayats = new AyatResponse(null, $this->edition->getIdentifier(), false, false, false);
+            $ayats->loadBySurat($surat->getId());
+            $s[] = [
+                'number' => $surat->getId(),
+                'name' => $surat->getName(),
+                'englishName' => $surat->getEnglishName(),
+                'englishNameTranslation' => $surat->getEnglishTranslation(),
+                'revelationType' => $surat->getRevelationCity(),
+                'ayahs' => $ayats->getResponse()
+            ];
         }
         $j = [
             'surahs' => $s
         ];
-        
-        $j['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
+
+        $j['edition'] = [
+            'identifier' => $this->edition->getIdentifier(),
+            'language' => $this->edition->getLanguage(),
+            'name' => $this->edition->getName(),
+            'englishName' => $this->edition->getEnglishName(),
+            //'format' => $edition->getFormat(),
+            'type' => $this->edition->getType()
+        ];
 
 
         return $j;
@@ -79,7 +95,10 @@ class CompleteResponse extends QuranResponse
 
         return $this;
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function getResponse()
     {
         return $this->response;

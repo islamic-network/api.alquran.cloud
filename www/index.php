@@ -160,8 +160,7 @@ $app->get('/edition', function (Request $request, Response $response) {
 // Edition Types
 $app->get('/edition/type', function (Request $request, Response $response) {
     $this->alquranAutoLoader;
-    $type = $request->getAttribute('type');
-    $json = $response->withJson(['status' => 'OK', 'code' => 200, 'data' => ['tafsir', 'translation', 'quran', 'transliteration']], 200);
+    $json = $response->withJson(['status' => 'OK', 'code' => 200, 'data' => ['tafsir', 'translation', 'quran', 'transliteration', 'versebyverse']], 200);
     $this->logger->addInfo('edition ::: ' . time(), ['server' => $_SERVER, 'request' => $_REQUEST, 'response' => $json]);
     
     return $json;
@@ -171,6 +170,24 @@ $app->get('/edition/type/{type}', function (Request $request, Response $response
     $this->alquranAutoLoader;
     $type = $request->getAttribute('type');
     $edition = new Quran\Api\EditionResponse(null, $type);
+    $json = $response->withJson($edition->get(), $edition->getCode());
+    $this->logger->addInfo('edition ::: ' . time(), ['server' => $_SERVER, 'request' => $_REQUEST, 'response' => $json]);
+    
+    return $json;
+});
+
+$app->get('/edition/format', function (Request $request, Response $response) {
+    $this->alquranAutoLoader;
+    $json = $response->withJson(['status' => 'OK', 'code' => 200, 'data' => ['text', 'audio']], 200);
+    $this->logger->addInfo('edition ::: ' . time(), ['server' => $_SERVER, 'request' => $_REQUEST, 'response' => $json]);
+    
+    return $json;
+});
+
+$app->get('/edition/format/{format}', function (Request $request, Response $response) {
+    $this->alquranAutoLoader;
+    $format = $request->getAttribute('format');
+    $edition = new Quran\Api\EditionResponse(null, null, null, $format);
     $json = $response->withJson($edition->get(), $edition->getCode());
     $this->logger->addInfo('edition ::: ' . time(), ['server' => $_SERVER, 'request' => $_REQUEST, 'response' => $json]);
     
