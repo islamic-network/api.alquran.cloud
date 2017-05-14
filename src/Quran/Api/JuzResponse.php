@@ -5,6 +5,7 @@ namespace Quran\Api;
 use Quran\Entity\Juz;
 use Quran\Entity\Edition;
 use Quran\Entity\Ayat;
+use Quran\Entity\Surat;
 
 /**
  * Class JuzResponse
@@ -26,17 +27,31 @@ class JuzResponse extends QuranResponse
      * @var
      */
     private $edition;
+    
+    /**
+     * @var int
+     */
+    private $offset;
+    
+    /**
+     * @var int
+     */
+    private $limit;
 
 
     /**
      * @param null $number
      * @param string $edition
      */
-    public function __construct($number = null, $edition = 'quran-simple')
+    public function __construct($number = null, $edition = 'quran-simple',  $offset = null, $limit = null)
     {
         parent::__construct();
 
-        $this->edition = (new EditionResponse())->getEditionByIdentifier($edition);
+        $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
+        
+        $this->offset = $offset;
+        
+        $this->limit = $limit;
 
         $this->load(self::sanitizeNumber($number));
 
@@ -83,11 +98,20 @@ class JuzResponse extends QuranResponse
     private function prepare($juz)
     {
         $ayats = new AyatResponse(null, $this->edition->getIdentifier(), false, false, true);
-        $ayats->loadByJuz($juz->getId());
+        if ($this->limit == null) {
+            $this->limit = 1000; // No juz has this many ayahs, so this limit is high enough.
+        }
+        
+        // Load juz ayahs first.
+        $ayats->loadByJuz($juz->getId(), $this->offset, $this->limit);
         $j = [
             'number' => $juz->getId(),
             'ayahs' => $ayats->getResponse()
         ];
+        
+        // Now load juz surahs and add to the response.
+        $ayats->loadAyahSurahsByJuz($juz->getId(), $this->offset, $this->limit);
+        $j['surahs'] = $ayats->getResponse();
 
         $j['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
 

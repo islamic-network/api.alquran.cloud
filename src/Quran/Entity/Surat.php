@@ -37,6 +37,11 @@ class Surat
     protected $revelationCity;
     
     /**
+     * @Column(type="integer", length=3, unique=false, nullable=true)
+     **/
+    protected $numberOfAyats;
+    
+    /**
      * @OneToMany(targetEntity="Ayat", mappedBy="surat")
      **/
     protected $ayats;
@@ -188,5 +193,15 @@ class Surat
     public function getAyats()
     {
         return $this->ayats;
+    }
+    
+    public function setNumberOfAyats($number)
+    {
+        $this->numberOfAyats = $number;
+    }
+    
+    public function getNumberOfAyats()
+    {
+        return $this->numberOfAyats;
     }
 }

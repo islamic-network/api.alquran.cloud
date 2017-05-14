@@ -85,7 +85,7 @@ class SearchResponse extends QuranResponse
 
         if (!$result || $result === null) {
             $this->response = 'Nothing matching your search was found..';
-            $this->setCode(400);
+            $this->setCode(204);
             $this->setStatus('Bad Request');
         } else {
 

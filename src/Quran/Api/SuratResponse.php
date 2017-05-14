@@ -36,6 +36,16 @@ class SuratResponse extends QuranResponse
      * @var bool
      */
     private $loadEdition;
+    
+    /**
+     * @var int
+     */
+    private $offset;
+    
+    /**
+     * @var int
+     */
+    private $limit;
 
     /**
      * @param null $number
@@ -43,15 +53,19 @@ class SuratResponse extends QuranResponse
      * @param string $edition
      * @param bool|false $loadEdition
      */
-    public function __construct($number = null, $ayats = false, $edition = 'quran-simple', $loadEdition = false)
+    public function __construct($number = null, $ayats = false, $edition = 'quran-simple', $loadEdition = false, $offset = null, $limit = null)
     {
         parent::__construct();
 
         $this->ayats = $ayats;
 
-        $this->edition = (new EditionResponse())->getEditionByIdentifier($edition);
+        $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
 
         $this->loadEdition = $loadEdition;
+        
+        $this->offset = $offset;
+        
+        $this->limit = $limit;
 
         $this->load(self::sanitizeNumber($number));
 
@@ -120,13 +134,17 @@ class SuratResponse extends QuranResponse
     {
         if ($this->ayats) {
             $ayats = new AyatResponse(null, $this->edition->getIdentifier(), false, false, false);
-            $ayats->loadBySurat($surat->getId());
+            if ($this->limit == null) {
+                $this->limit = $surat->getNumberOfAyats();
+            }
+            $ayats->loadBySurat($surat->getId(), $this->offset, $this->limit);
             $s = [
                 'number' => $surat->getId(),
                 'name' => $surat->getName(),
                 'englishName' => $surat->getEnglishName(),
                 'englishNameTranslation' => $surat->getEnglishTranslation(),
                 'revelationType' => $surat->getRevelationCity(),
+                'numberOfAyahs' => $surat->getNumberOfAyats(),
                 'ayahs' => $ayats->getResponse()
             ];
         } else {
@@ -135,6 +153,7 @@ class SuratResponse extends QuranResponse
                 'name' => $surat->getName(),
                 'englishName' => $surat->getEnglishName(),
                 'englishNameTranslation' => $surat->getEnglishTranslation(),
+                'numberOfAyahs' => $surat->getNumberOfAyats(),
                 'revelationType' => $surat->getRevelationCity()
             ];
         }

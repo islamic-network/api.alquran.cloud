@@ -26,11 +26,13 @@ class EditionResponse extends QuranResponse
      * @param null $language
      * @param null $format
      */
-    public function __construct($identifier = null, $type = null, $language = null, $format = null)
+    public function __construct($identifier = null, $type = null, $language = null, $format = null, $load = true)
     {
         parent::__construct();
 
-        $this->load($identifier, $type, $language, $format);
+        if ($load) {
+            $this->load($identifier, $type, $language, $format);
+        }
 
 
     }
@@ -95,6 +97,7 @@ class EditionResponse extends QuranResponse
             $response[] = $this->prepare($edition);
         }
 
+        
         return $response;
     }
 

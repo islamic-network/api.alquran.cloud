@@ -35,7 +35,7 @@ class CompleteResponse extends QuranResponse
     {
         parent::__construct();
 
-        $this->edition = (new EditionResponse())->getEditionByIdentifier($edition);
+        $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
 
         $this->load();
 
@@ -78,7 +78,7 @@ class CompleteResponse extends QuranResponse
             'language' => $this->edition->getLanguage(),
             'name' => $this->edition->getName(),
             'englishName' => $this->edition->getEnglishName(),
-            //'format' => $edition->getFormat(),
+            'format' => $this->edition->getFormat(),
             'type' => $this->edition->getType()
         ];
 

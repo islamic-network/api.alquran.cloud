@@ -238,9 +238,9 @@ class Edition
      *
      * @return Edition
      */
-    public function setAudio($audio)
+    public function setAudio($media)
     {
-        $this->audio = $audio;
+        $this->media = $media;
 
         return $this;
     }
@@ -250,9 +250,9 @@ class Edition
      *
      * @return string
      */
-    public function getAudio()
+    public function getMedia()
     {
-        return $this->audio;
+        return $this->media;
     }
 
     /**
