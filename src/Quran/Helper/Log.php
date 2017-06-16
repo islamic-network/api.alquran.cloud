@@ -15,7 +15,7 @@ class Log
         $l['request'] = $request;
         $l['server'] = [
             'ip' => $server['REMOTE_ADDR'],
-            'url' => $server['SCRIPT_URL'],
+            'url' => isset($server['SCRIPT_URL']) ? $server['SCRIPT_URL'] : $server['REDIRECT_URL'],
             'method' => $server['REQUEST_METHOD']
         ];
         if (isset($server['HTTP_USER_AGENT'])) {
