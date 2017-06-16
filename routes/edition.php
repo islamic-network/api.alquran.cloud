@@ -1,4 +1,9 @@
 <?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use Quran\Helper\Log;
+use Quran\Helper\Request as ApiRequest;
+
 // Without Edition Number or Type
 $app->get('/edition', function (Request $request, Response $response) {
     $this->alquranAutoLoader;

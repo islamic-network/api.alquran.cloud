@@ -1,4 +1,8 @@
 <?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use Quran\Helper\Log;
+use Quran\Helper\Request as ApiRequest;
 
 // Without edition
 $app->get('/quran', function (Request $request, Response $response) {
