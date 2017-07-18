@@ -11,11 +11,11 @@ use Monolog\Handler\StreamHandler;
 use Quran\Helper\Log;
 use Quran\Helper\Request as ApiRequest;
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 /** App settings **/
-$config['displayErrorDetails'] = true;
+$config['displayErrorDetails'] = false;
 
 $app = new \Slim\App(["settings" => $config]);
 
