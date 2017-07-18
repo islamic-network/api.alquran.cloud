@@ -36,7 +36,7 @@ class AyatResponse extends QuranResponse
      * @var bool
      */
     private $all;
-    
+
     private $cache = [];
 
     /**
@@ -51,7 +51,7 @@ class AyatResponse extends QuranResponse
         parent::__construct();
 
         $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
-        
+
         if ($this->edition->getFormat() == 'audio') {
             $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier('quran-simple');
             $this->audioEdition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
@@ -62,7 +62,7 @@ class AyatResponse extends QuranResponse
         $this->includeEdition = $includeEdition;
         $this->includeSurat = $includeSurat;
 
-        
+
         if ($number !== null) {
             $this->load(self::sanitizeNumber($number));
         }
@@ -179,7 +179,7 @@ class AyatResponse extends QuranResponse
     {
         $limit = (int) $limit;
         $offset = (int) $offset;
-        
+
         if ($offset == 0 && $limit > 0) {
             $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['surat' => $surat, 'edition' => $this->edition], ['numberInSurat' => 'ASC'], $limit);
         } elseif ($offset ==0 && $limit == 0)  {
@@ -205,7 +205,7 @@ class AyatResponse extends QuranResponse
     {
         $limit = (int) $limit;
         $offset = (int) $offset;
-        
+
         if ($offset == 0) {
             $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['juz' => $juz, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
         } else {
@@ -217,7 +217,92 @@ class AyatResponse extends QuranResponse
         $this->setStatus('OK');
     }
 
-    
+    /**
+     * @param $manzil
+     */
+    public function loadByManzil($manzil, $offset = null, $limit = null)
+    {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        if ($offset == 0) {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['manzil' => $manzil, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
+        } else {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['manzil' => $manzil, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
+        }
+        //$ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['juz' => $juz, 'edition' => $this->edition]);
+        $this->response = $this->prepare($ayat);
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+    /**
+     * @param $page
+     */
+    public function loadByPage($page, $offset = null, $limit = null)
+    {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        if ($offset == 0) {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['page' => $page, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
+        } else {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['page' => $page, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
+        }
+        //$ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['juz' => $juz, 'edition' => $this->edition]);
+        $this->response = $this->prepare($ayat);
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+    /**
+     * @param $ruku
+     */
+    public function loadByRuku($ruku, $offset = null, $limit = null)
+    {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        if ($offset == 0) {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['ruku' => $ruku, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
+        } else {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['ruku' => $ruku, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
+        }
+        //$ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['juz' => $juz, 'edition' => $this->edition]);
+        $this->response = $this->prepare($ayat);
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+    public function loadBySajda()
+    {
+        $q = $this->entityManager->createQuery("SELECT a FROM \Quran\Entity\Ayat a WHERE a.sajda IS NOT NULL AND a.edition = {$this->edition->getId()}");
+        $ayat = $q->getResult();
+        $this->response = $this->prepare($ayat);
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+    /**
+     * @param $hizbQuarter
+     */
+    public function loadByHizbQuarter($hizbQuarter, $offset = null, $limit = null)
+    {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        if ($offset == 0) {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['hizbQuarter' => $hizbQuarter, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
+        } else {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['hizbQuarter' => $hizbQuarter, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
+        }
+        //$ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['juz' => $juz, 'edition' => $this->edition]);
+        $this->response = $this->prepare($ayat);
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+
     /**
      * @param $juz
      */
@@ -225,17 +310,109 @@ class AyatResponse extends QuranResponse
     {
         $limit = (int) $limit;
         $offset = (int) $offset;
-        
+
         if ($offset == 0) {
             $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['juz' => $juz, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
         } else {
             $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['juz' => $juz, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
         }
-        
+
         foreach($ayat as $ayah) {
             $this->cacheSurah($ayah);
         }
-        
+
+        $this->response = $this->cache['surah'];
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+    /**
+     * @param $manzil
+     */
+    public function loadAyahSurahsByManzil($manzil, $offset = null, $limit = null)
+    {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        if ($offset == 0) {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['manzil' => $manzil, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
+        } else {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['manzil' => $manzil, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
+        }
+
+        foreach($ayat as $ayah) {
+            $this->cacheSurah($ayah);
+        }
+
+        $this->response = $this->cache['surah'];
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+    /**
+     * @param $page
+     */
+    public function loadAyahSurahsByPage($page, $offset = null, $limit = null)
+    {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        if ($offset == 0) {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['page' => $page, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
+        } else {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['page' => $page, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
+        }
+
+        foreach($ayat as $ayah) {
+            $this->cacheSurah($ayah);
+        }
+
+        $this->response = $this->cache['surah'];
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+    /**
+     * @param $ruku
+     */
+    public function loadAyahSurahsByRuku($ruku, $offset = null, $limit = null)
+    {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        if ($offset == 0) {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['ruku' => $ruku, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
+        } else {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['ruku' => $ruku, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
+        }
+
+        foreach($ayat as $ayah) {
+            $this->cacheSurah($ayah);
+        }
+
+        $this->response = $this->cache['surah'];
+        $this->setCode(200);
+        $this->setStatus('OK');
+    }
+
+    /**
+     * @param $hizbQuarter
+     */
+    public function loadAyahSurahsByHizbQuarter($hizbQuarter, $offset = null, $limit = null)
+    {
+        $limit = (int) $limit;
+        $offset = (int) $offset;
+
+        if ($offset == 0) {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['hizbQuarter' => $hizbQuarter, 'edition' => $this->edition], ['number' => 'ASC'], $limit);
+        } else {
+            $ayat = $this->entityManager->getRepository('\Quran\Entity\Ayat')->findBy(['hizbQuarter' => $hizbQuarter, 'edition' => $this->edition], ['number' => 'ASC'], $limit, $offset);
+        }
+
+        foreach($ayat as $ayah) {
+            $this->cacheSurah($ayah);
+        }
+
         $this->response = $this->cache['surah'];
         $this->setCode(200);
         $this->setStatus('OK');
@@ -268,6 +445,20 @@ class AyatResponse extends QuranResponse
                 }
                 $ax['numberInSurah'] = $ayah->getNumberInSurat();
                 $ax['juz'] = $ayah->getJuz()->getId();
+                $ax['manzil'] = $ayah->getManzil()->getId();
+                $ax['page'] = $ayah->getPage()->getId();
+                $ax['ruku'] = $ayah->getRuku()->getId();
+                $ax['hizbQuarter'] = $ayah->getHizbQuarter()->getId();
+                $sajda = $ayah->getSajda();
+                if ($sajda !== null) {
+                    $ax['sajda'] = [
+                        'id' => $sajda->getId(),
+                        'recommended' => $sajda->getRecommended(),
+                        'obligatory' => $sajda->getObligatory(),
+                    ];
+                } else {
+                    $ax['sajda'] = false;
+                }
 
                 $a[] = $ax;
             }
@@ -282,12 +473,26 @@ class AyatResponse extends QuranResponse
                 $a['surah'] = (new SuratResponse($ayat->getSurat()->getId()))->getResponse();
                 $a['numberInSurah'] = $ayat->getNumberInSurat();
                 $a['juz'] = $ayat->getJuz()->getId();
+                $a['manzil'] = $ayat->getManzil()->getId();
+                $a['page'] = $ayat->getPage()->getId();
+                $a['ruku'] = $ayat->getRuku()->getId();
+                $a['hizbQuarter'] = $ayat->getHizbQuarter()->getId();
+                $sajda = $ayat->getSajda();
+                if ($sajda !== null) {
+                    $a['sajda'] = [
+                        'id' => $sajda->getId(),
+                        'recommended' => $sajda->getRecommended(),
+                        'obligatory' => $sajda->getObligatory(),
+                    ];
+                } else {
+                    $a['sajda'] = false;
+                }
         }
 
         unset($this->audioEdition);
         return $a;
     }
-    
+
     /**
      * @param $ayah
      */
@@ -303,7 +508,7 @@ class AyatResponse extends QuranResponse
                     ];
         }
     }
-    
+
     /**
      * @param $ayah
      */

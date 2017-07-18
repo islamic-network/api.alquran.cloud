@@ -12,41 +12,64 @@ class Ayat
     /**
      * @Id
      * @Column(type="integer")
-     * @GeneratedValue 
+     * @GeneratedValue
      **/
     protected $id;
-    
+
     /**
      * @Column(type="integer", length=4, nullable=false)
      **/
     protected $number;
-    
+
     /**
      * @Column(type="integer", name="numberinsurat", length=4, nullable=false)
      **/
     protected $numberInSurat;
-    
+
     /**
      * @Column(type="string", length=64000, nullable=false)
      **/
     protected $text;
-    
+
     /**
      * @ManyToOne(targetEntity="Surat", inversedBy="ayats")
      **/
     protected $surat;
-    
+
     /**
      * @ManyToOne(targetEntity="Edition", inversedBy="ayats")
      **/
     protected $edition;
-    
+
     /**
      * @ManyToOne(targetEntity="Juz", inversedBy="ayats")
      **/
     protected $juz;
 
+    /**
+     * @ManyToOne(targetEntity="Manzil", inversedBy="ayats")
+     **/
+    protected $manzil;
 
+    /**
+     * @ManyToOne(targetEntity="Page", inversedBy="ayats")
+     **/
+    protected $page;
+
+    /**
+     * @ManyToOne(targetEntity="HizbQuarter", inversedBy="ayats")
+     **/
+    protected $hizbQuarter;
+
+    /**
+     * @ManyToOne(targetEntity="Ruku", inversedBy="ayats")
+     **/
+    protected $ruku;
+
+    /**
+     * @ManyToOne(targetEntity="Sajda", inversedBy="ayats")
+     **/
+    protected $sajda;
 
     /**
      * Get id
@@ -71,7 +94,7 @@ class Ayat
 
         return $this;
     }
-    
+
     /**
      * Get number
      *
@@ -91,7 +114,7 @@ class Ayat
     {
         return $this->numberInSurat;
     }
-    
+
     /**
      * Set number in Surat
      *
@@ -106,7 +129,7 @@ class Ayat
         return $this;
     }
 
-    
+
 
     /**
      * Set text
@@ -203,4 +226,125 @@ class Ayat
     {
         return $this->juz;
     }
+
+    /**
+     * Set manzil
+     *
+     * @param \Quran\Entity\Manzil $manzil
+     *
+     * @return Ayat
+     */
+    public function setManzil(\Quran\Entity\Manzil $manzil = null)
+    {
+        $this->manzil = $manzil;
+
+        return $this;
+    }
+
+    /**
+     * Get manzil
+     *
+     * @return \Quran\Entity\Manzil
+     */
+    public function getManzil()
+    {
+        return $this->manzil;
+    }
+
+    /**
+     * Set page
+     *
+     * @param \Quran\Entity\Page $page
+     *
+     * @return Ayat
+     */
+    public function setPage(\Quran\Entity\Page $page = null)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get page
+     *
+     * @return \Quran\Entity\Page
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * Set ruku
+     *
+     * @param \Quran\Entity\Ruku $ruku
+     *
+     * @return Ayat
+     */
+    public function setRuku(\Quran\Entity\Ruku $ruku = null)
+    {
+        $this->ruku = $ruku;
+
+        return $this;
+    }
+
+    /**
+     * Get ruku
+     *
+     * @return \Quran\Entity\Ruku
+     */
+    public function getRuku()
+    {
+        return $this->ruku;
+    }
+
+    /**
+     * Set hizbQuarter
+     *
+     * @param \Quran\Entity\HizbQuarter $hizbQuarter
+     *
+     * @return Ayat
+     */
+    public function setHizbQuarter(\Quran\Entity\HizbQuarter $hizbQuarter = null)
+    {
+        $this->hizbQuarter = $hizbQuarter;
+
+        return $this;
+    }
+
+    /**
+     * Get hizbQuarter
+     *
+     * @return \Quran\Entity\HizbQuarter
+     */
+    public function getHizbQuarter()
+    {
+        return $this->hizbQuarter;
+    }
+
+    /**
+     * Set sajda
+     *
+     * @param \Quran\Entity\Sajda $sajda
+     *
+     * @return Ayat
+     */
+    public function setSajda(\Quran\Entity\Sajda $sajda = null)
+    {
+        $this->sajda = $sajda;
+
+        return $this;
+    }
+
+    /**
+     * Get sajda
+     *
+     * @return \Quran\Entity\Sajda
+     */
+    public function getSajda()
+    {
+        return $this->sajda;
+    }
+
 }

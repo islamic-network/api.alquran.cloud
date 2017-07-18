@@ -27,7 +27,7 @@ class Log
         if (isset($server['HTTP_REFERER'])) {
             $l['server']['referer'] = $server['HTTP_REFERER'];
         }
-        
+
         return $l;
     }
 }

@@ -6,30 +6,30 @@ use Quran\Helper\Request as ApiRequest;
 
 // Without Surat Number
 $app->get('/surah', function (Request $request, Response $response) {
-    $this->alquranAutoLoader;
+
     $number = $request->getAttribute('number');
     $edition = 'quran-simple';
     $surat = new Quran\Api\SuratResponse();
     $this->logger->addInfo('surah ::: ' . time() . ' :: ', Log::format($_SERVER, $_REQUEST));
-    
+
     return $response->withJson($surat->get(), $surat->getCode());
 });
 
 // With Surat Number
 $app->get('/surah/{number}', function (Request $request, Response $response) {
-    $this->alquranAutoLoader;
+
     $number = $request->getAttribute('number');
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
     $edition = 'quran-simple';
     $surat = new Quran\Api\SuratResponse($number, true, $edition, true, $offset, $limit);
     $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-    
+
     return $response->withJson($surat->get(), $surat->getCode());
 });
 
 $app->get('/surah/{number}/editions', function (Request $request, Response $response) {
-    $this->alquranAutoLoader;
+
     $number = $request->getAttribute('number');
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
@@ -50,19 +50,19 @@ $app->get('/surah/{number}/editions', function (Request $request, Response $resp
 
 // With Surat Number and edition
 $app->get('/surah/{number}/{edition}', function (Request $request, Response $response) {
-    $this->alquranAutoLoader;
+
     $number = $request->getAttribute('number');
     $edition = $request->getAttribute('edition');
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
     $surat = new Quran\Api\SuratResponse($number, true, $edition, true, $offset, $limit);
     $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-    
+
     return $response->withJson($surat->get(), $surat->getCode());
 });
 
 $app->get('/surah/{number}/editions/{editions}', function (Request $request, Response $response) {
-    $this->alquranAutoLoader;
+
     $number = $request->getAttribute('number');
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
@@ -80,4 +80,3 @@ $app->get('/surah/{number}/editions/{editions}', function (Request $request, Res
 
     return $response->withJson($r, $surat->getCode());
 });
-

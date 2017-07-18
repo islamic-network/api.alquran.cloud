@@ -5,7 +5,7 @@ use Quran\Helper\Log;
 use Quran\Helper\Request as ApiRequest;
 
 $app->get('/juz/{number}', function (Request $request, Response $response) {
-    $this->alquranAutoLoader;
+
     $number = $request->getAttribute('number');
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
@@ -17,7 +17,7 @@ $app->get('/juz/{number}', function (Request $request, Response $response) {
 });
 
 $app->get('/juz/{number}/{edition}', function (Request $request, Response $response) {
-    $this->alquranAutoLoader;
+
     $number = $request->getAttribute('number');
     $edition = $request->getAttribute('edition');
     $offset = $request->getQueryParam('offset');

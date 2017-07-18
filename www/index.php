@@ -30,9 +30,6 @@ $container['logger'] = function($c) {
     $logger->pushHandler(new StreamHandler(__DIR__.'/../logs/' . $logFile . '.log', Logger::INFO));
     return $logger;
 };
-$container['alquranAutoLoader'] = function($c) {
-    require realpath(__DIR__) . '/../config/doctrineBootstrap.php';
-};
 
 $container['notFoundHandler'] = function ($c) {
     return function ($request, $response) use ($c) {
@@ -49,6 +46,23 @@ $container['notFoundHandler'] = function ($c) {
     };
 };
 
+$container['errorHandler'] = function ($c) {
+    return function ($request, $response) use ($c) {
+        $r = [
+        'code' => 500,
+        'status' => 'Internal Server Error',
+        'data' => 'Something went wrong when the server tried to process this request. Sorry!'
+        ];
+
+        $resp = json_encode($r);
+
+        return $c['response']
+            ->withStatus(500)
+            ->withHeader('Content-Type', 'application/json')
+            ->write($resp);
+    };
+};
+
 /** App Settings End **/
 
 /** Endpoint Definition ***/
@@ -56,8 +70,14 @@ $container['notFoundHandler'] = function ($c) {
 require realpath(__DIR__) . '/../routes/surah.php';
 require realpath(__DIR__) . '/../routes/ayah.php';
 require realpath(__DIR__) . '/../routes/juz.php';
+require realpath(__DIR__) . '/../routes/manzil.php';
+require realpath(__DIR__) . '/../routes/page.php';
+require realpath(__DIR__) . '/../routes/ruku.php';
+require realpath(__DIR__) . '/../routes/sajda.php';
+require realpath(__DIR__) . '/../routes/hizbQuarter.php';
 require realpath(__DIR__) . '/../routes/edition.php';
 require realpath(__DIR__) . '/../routes/quran.php';
 require realpath(__DIR__) . '/../routes/search.php';
+require realpath(__DIR__) . '/../routes/other.php';
 
 $app->run();
