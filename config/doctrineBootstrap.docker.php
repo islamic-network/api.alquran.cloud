@@ -6,7 +6,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 $paths = array(realpath(__DIR__) . '/../src');
-$isDevMode = false;
+$isDevMode = true;
 
 // the connection configuration
 
