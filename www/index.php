@@ -79,5 +79,17 @@ require realpath(__DIR__) . '/../routes/edition.php';
 require realpath(__DIR__) . '/../routes/quran.php';
 require realpath(__DIR__) . '/../routes/search.php';
 require realpath(__DIR__) . '/../routes/other.php';
+require realpath(__DIR__) . '/../routes/v1/surah.php';
+require realpath(__DIR__) . '/../routes/v1/ayah.php';
+require realpath(__DIR__) . '/../routes/v1/juz.php';
+require realpath(__DIR__) . '/../routes/v1/manzil.php';
+require realpath(__DIR__) . '/../routes/v1/page.php';
+require realpath(__DIR__) . '/../routes/v1/ruku.php';
+require realpath(__DIR__) . '/../routes/v1/sajda.php';
+require realpath(__DIR__) . '/../routes/v1/hizbQuarter.php';
+require realpath(__DIR__) . '/../routes/v1/edition.php';
+require realpath(__DIR__) . '/../routes/v1/quran.php';
+require realpath(__DIR__) . '/../routes/v1/search.php';
+require realpath(__DIR__) . '/../routes/v1/other.php';
 
 $app->run();
