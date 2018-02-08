@@ -67,18 +67,18 @@ $container['errorHandler'] = function ($c) {
 
 /** Endpoint Definition ***/
 
-require realpath(__DIR__) . '/../routes/surah.php';
-require realpath(__DIR__) . '/../routes/ayah.php';
-require realpath(__DIR__) . '/../routes/juz.php';
-require realpath(__DIR__) . '/../routes/manzil.php';
-require realpath(__DIR__) . '/../routes/page.php';
-require realpath(__DIR__) . '/../routes/ruku.php';
-require realpath(__DIR__) . '/../routes/sajda.php';
-require realpath(__DIR__) . '/../routes/hizbQuarter.php';
-require realpath(__DIR__) . '/../routes/edition.php';
-require realpath(__DIR__) . '/../routes/quran.php';
-require realpath(__DIR__) . '/../routes/search.php';
-require realpath(__DIR__) . '/../routes/other.php';
+require realpath(__DIR__) . '/../archive/routes/surah.php';
+require realpath(__DIR__) . '/../archive/routes/ayah.php';
+require realpath(__DIR__) . '/../archive/routes/juz.php';
+require realpath(__DIR__) . '/../archive/routes/manzil.php';
+require realpath(__DIR__) . '/../archive/routes/page.php';
+require realpath(__DIR__) . '/../archive/routes/ruku.php';
+require realpath(__DIR__) . '/../archive/routes/sajda.php';
+require realpath(__DIR__) . '/../archive/routes/hizbQuarter.php';
+require realpath(__DIR__) . '/../archive/routes/edition.php';
+require realpath(__DIR__) . '/../archive/routes/quran.php';
+require realpath(__DIR__) . '/../archive/routes/search.php';
+require realpath(__DIR__) . '/../archive/routes/other.php';
 require realpath(__DIR__) . '/../routes/v1/surah.php';
 require realpath(__DIR__) . '/../routes/v1/ayah.php';
 require realpath(__DIR__) . '/../routes/v1/juz.php';
