@@ -5,7 +5,7 @@ use Quran\Helper\Log;
 use Quran\Helper\Request as ApiRequest;
 
 $app->group('/v1', function() {
-    $app->get('/meta', function (Request $request, Response $response) {
+    $this->get('/meta', function (Request $request, Response $response) {
         $this->logger->addInfo('meta ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         $meta = new Quran\Api\MetaResponse();

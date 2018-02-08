@@ -6,7 +6,7 @@ use Quran\Helper\Request as ApiRequest;
 
 $app->group('/v1', function() {
     // With Ayat Number or All
-    $app->get('/ayah/random', function (Request $request, Response $response) {
+    $this->get('/ayah/random', function (Request $request, Response $response) {
 
         $number = rand(1, 6326);
         $edition = 'quran-simple';
@@ -21,7 +21,7 @@ $app->group('/v1', function() {
     });
 
     // With Ayat Number AND editions
-    $app->get('/ayah/random/editions', function (Request $request, Response $response) {
+    $this->get('/ayah/random/editions', function (Request $request, Response $response) {
 
         $number = rand(1, 6326);
         $editions = ['quran-simple'];
@@ -40,7 +40,7 @@ $app->group('/v1', function() {
     });
 
     // With Ayat Number or All AND edition
-    $app->get('/ayah/random/{edition}', function (Request $request, Response $response) {
+    $this->get('/ayah/random/{edition}', function (Request $request, Response $response) {
 
         $number = rand(1, 6326);
         $edition = $request->getAttribute('edition');
@@ -56,7 +56,7 @@ $app->group('/v1', function() {
 
 
     // With Ayat Number AND editions
-    $app->get('/ayah/random/editions/{editions}', function (Request $request, Response $response) {
+    $this->get('/ayah/random/editions/{editions}', function (Request $request, Response $response) {
 
         $number = rand(1, 6326);
         $editions = ApiRequest::editions($request->getAttribute('editions'));
@@ -75,7 +75,7 @@ $app->group('/v1', function() {
     });
 
     // With Ayat Number or All
-    $app->get('/ayah/{number}', function (Request $request, Response $response) {
+    $this->get('/ayah/{number}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $edition = 'quran-simple';
@@ -90,7 +90,7 @@ $app->group('/v1', function() {
     });
 
     // With Ayat Number AND editions
-    $app->get('/ayah/{number}/editions', function (Request $request, Response $response) {
+    $this->get('/ayah/{number}/editions', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $editions = ['quran-simple'];
@@ -109,7 +109,7 @@ $app->group('/v1', function() {
     });
 
     // With Ayat Number or All AND edition
-    $app->get('/ayah/{number}/{edition}', function (Request $request, Response $response) {
+    $this->get('/ayah/{number}/{edition}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $edition = $request->getAttribute('edition');
@@ -125,7 +125,7 @@ $app->group('/v1', function() {
 
 
     // With Ayat Number AND editions
-    $app->get('/ayah/{number}/editions/{editions}', function (Request $request, Response $response) {
+    $this->get('/ayah/{number}/editions/{editions}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $editions = ApiRequest::editions($request->getAttribute('editions'));

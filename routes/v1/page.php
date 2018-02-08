@@ -5,7 +5,7 @@ use Quran\Helper\Log;
 use Quran\Helper\Request as ApiRequest;
 
 $app->group('/v1', function() {
-    $app->get('/page/{number}', function (Request $request, Response $response) {
+    $this->get('/page/{number}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $offset = $request->getQueryParam('offset');
@@ -17,7 +17,7 @@ $app->group('/v1', function() {
         return $response->withJson($page->get(), $page->getCode());
     });
 
-    $app->get('/page/{number}/{edition}', function (Request $request, Response $response) {
+    $this->get('/page/{number}/{edition}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $edition = $request->getAttribute('edition');

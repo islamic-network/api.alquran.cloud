@@ -6,7 +6,7 @@ use Quran\Helper\Request as ApiRequest;
 
 $app->group('/v1', function() {
     // Without Surat Number
-    $app->get('/surah', function (Request $request, Response $response) {
+    $this->get('/surah', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $edition = 'quran-simple';
@@ -17,7 +17,7 @@ $app->group('/v1', function() {
     });
 
     // With Surat Number
-    $app->get('/surah/{number}', function (Request $request, Response $response) {
+    $this->get('/surah/{number}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $offset = $request->getQueryParam('offset');
@@ -29,7 +29,7 @@ $app->group('/v1', function() {
         return $response->withJson($surat->get(), $surat->getCode());
     });
 
-    $app->get('/surah/{number}/editions', function (Request $request, Response $response) {
+    $this->get('/surah/{number}/editions', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $offset = $request->getQueryParam('offset');
@@ -50,7 +50,7 @@ $app->group('/v1', function() {
     });
 
     // With Surat Number and edition
-    $app->get('/surah/{number}/{edition}', function (Request $request, Response $response) {
+    $this->get('/surah/{number}/{edition}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $edition = $request->getAttribute('edition');
@@ -62,7 +62,7 @@ $app->group('/v1', function() {
         return $response->withJson($surat->get(), $surat->getCode());
     });
 
-    $app->get('/surah/{number}/editions/{editions}', function (Request $request, Response $response) {
+    $this->get('/surah/{number}/editions/{editions}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $offset = $request->getQueryParam('offset');

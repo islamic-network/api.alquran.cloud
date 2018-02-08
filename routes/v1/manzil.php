@@ -5,7 +5,7 @@ use Quran\Helper\Log;
 use Quran\Helper\Request as ApiRequest;
 
 $app->group('/v1', function() {
-    $app->get('/manzil/{number}', function (Request $request, Response $response) {
+    $this->get('/manzil/{number}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $offset = $request->getQueryParam('offset');
@@ -17,7 +17,7 @@ $app->group('/v1', function() {
         return $response->withJson($manzil->get(), $manzil->getCode());
     });
 
-    $app->get('/manzil/{number}/{edition}', function (Request $request, Response $response) {
+    $this->get('/manzil/{number}/{edition}', function (Request $request, Response $response) {
 
         $number = $request->getAttribute('number');
         $edition = $request->getAttribute('edition');

@@ -5,7 +5,7 @@ use Quran\Helper\Log;
 use Quran\Helper\Request as ApiRequest;
 
 $app->group('/v1', function() {
-    $app->get('/search/{word}', function (Request $request, Response $response) {
+    $this->get('/search/{word}', function (Request $request, Response $response) {
 
         $word = $request->getAttribute('word');
         $search = new Quran\Api\SearchResponse($word);
@@ -14,7 +14,7 @@ $app->group('/v1', function() {
         return $response->withJson($search->get(), $search->getCode());
     });
 
-    $app->get('/search/{word}/{surah}', function (Request $request, Response $response) {
+    $this->get('/search/{word}/{surah}', function (Request $request, Response $response) {
 
         $word = $request->getAttribute('word');
         $surat = $request->getAttribute('surah');
@@ -24,7 +24,7 @@ $app->group('/v1', function() {
         return $response->withJson($search->get(), $search->getCode());
     });
 
-    $app->get('/search/{word}/{surah}/{language}', function (Request $request, Response $response) {
+    $this->get('/search/{word}/{surah}/{language}', function (Request $request, Response $response) {
 
         $word = $request->getAttribute('word');
         $surat = $request->getAttribute('surah');

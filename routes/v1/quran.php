@@ -6,7 +6,7 @@ use Quran\Helper\Request as ApiRequest;
 
 $app->group('/v1', function() {
     // Without edition
-    $app->get('/quran', function (Request $request, Response $response) {
+    $this->get('/quran', function (Request $request, Response $response) {
 
         $edition = 'quran-simple';
         $quran = new Quran\Api\CompleteResponse($edition);
@@ -16,7 +16,7 @@ $app->group('/v1', function() {
     });
 
     // With edition
-    $app->get('/quran/{edition}', function (Request $request, Response $response) {
+    $this->get('/quran/{edition}', function (Request $request, Response $response) {
 
         $edition = $request->getAttribute('edition');
         $quran = new Quran\Api\CompleteResponse($edition);
