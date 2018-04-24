@@ -28,7 +28,7 @@ class Request
     public static function isHttps()
     {
         if ( isset($_SERVER) ) {
-            if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) {
+            if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
                 return true;
             }
             if ( isset($_SERVER['HTTPS']) ) {
