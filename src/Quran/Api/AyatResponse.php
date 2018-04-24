@@ -4,7 +4,7 @@ namespace Quran\Api;
 
 use Quran\Entity\Ayat;
 use Quran\Entity\Edition;
-use Quran\Helper\Request RequestHelper;
+use Quran\Helper\Request as RequestHelper;
 
 /**
  * Class AyatResponse
@@ -56,7 +56,7 @@ class AyatResponse extends QuranResponse
     {
         parent::__construct();
 
-        if (RequestHelper::isHttps() {
+        if (RequestHelper::isHttps()) {
             $this->protocol = 'https';
         }
 
