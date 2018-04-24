@@ -4,6 +4,7 @@ namespace Quran\Api;
 
 use Quran\Entity\Ayat;
 use Quran\Entity\Edition;
+use Quran\Helper\Request RequestHelper;
 
 /**
  * Class AyatResponse
@@ -37,6 +38,11 @@ class AyatResponse extends QuranResponse
      */
     private $all;
 
+    /**
+     * @var bool
+     */
+    private $protocol = 'http';
+
     private $cache = [];
 
     /**
@@ -49,6 +55,10 @@ class AyatResponse extends QuranResponse
     public function __construct($number = null, $edition = 'quran-simple', $all = false, $includeEdition = true, $includeSurat = true)
     {
         parent::__construct();
+
+        if (RequestHelper::isHttps() {
+            $this->protocol = 'https';
+        }
 
         $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
 
@@ -432,7 +442,7 @@ class AyatResponse extends QuranResponse
             foreach($ayat as $ayah) {
                 $ax['number'] = $ayah->getNumber();
                 if (isset($this->audioEdition)) {
-                    $ax['audio'] = 'http://islamcdn.com/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
+                    $ax['audio'] = $this->protocol . '://islamcdn.com/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
                 }
                 $ax['text'] = $ayah->getText();
                 if ($this->includeEdition) {
@@ -466,7 +476,7 @@ class AyatResponse extends QuranResponse
         } else {
                 $a['number'] = $ayat->getNumber();
                 if (isset($this->audioEdition)) {
-                    $a['audio'] = 'http://islamcdn.com/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
+                    $a['audio'] = $this->protocol . '://islamcdn.com/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
                 }
                 $a['text'] = $ayat->getText();
                 $a['edition'] = (new EditionResponse($ayat->getEdition()->getIdentifier()))->getResponse();
