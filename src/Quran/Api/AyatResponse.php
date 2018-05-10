@@ -442,7 +442,7 @@ class AyatResponse extends QuranResponse
             foreach($ayat as $ayah) {
                 $ax['number'] = $ayah->getNumber();
                 if (isset($this->audioEdition)) {
-                    $ax['audio'] = $this->protocol . '://islamcdn.com/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
+                    $ax['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
                 }
                 $ax['text'] = $ayah->getText();
                 if ($this->includeEdition) {
@@ -476,7 +476,7 @@ class AyatResponse extends QuranResponse
         } else {
                 $a['number'] = $ayat->getNumber();
                 if (isset($this->audioEdition)) {
-                    $a['audio'] = $this->protocol . '://islamcdn.com/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
+                    $a['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
                 }
                 $a['text'] = $ayat->getText();
                 $a['edition'] = (new EditionResponse($ayat->getEdition()->getIdentifier()))->getResponse();
