@@ -12,7 +12,7 @@ class Request
     {
         $e = [];
         $parts = explode(',', $editions);
-        if (count($parts > 0)) {
+        if (count($parts) > 0) {
             foreach ($parts as $part) {
                 if (trim($part) != '') {
                     $e[] = trim($part);
