@@ -1,0 +1,61 @@
+version: '2'
+services:
+  #######################################
+  # PHP application Docker container
+  #######################################
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    links:
+    - db
+    depends_on:
+    - db
+    environment:
+      MYSQL_USER: vesicaUser
+      MYSQL_PASSWORD: vesicaPassword
+      MYSQL_DATABASE: vesicaDb
+      MYSQL_HOST: quran-db
+    ports:
+    - "7070:8080"
+    volumes:
+    - .:/var/www
+    privileged: true
+    container_name: quran-app
+
+
+  #######################################
+  # MySQL server
+  #######################################
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_USER: vesicaUser
+      MYSQL_PASSWORD: vesicaPassword
+      MYSQL_DATABASE: vesicaDb
+      #MYSQL_ROOT_PASSWORD: "vesicaRooter"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    ports:
+    - "3306:3306"
+    container_name: quran-db
+  
+  #######################################
+  # PHPMyAdmin
+  #######################################
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: quran-db
+    ports:
+    - "7071:80"
+    links:
+    - db
+    depends_on:
+    - db
+    volumes:
+    - ./db-data:/var/lib/mysql
+    container_name: quran-pma
