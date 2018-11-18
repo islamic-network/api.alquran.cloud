@@ -10,7 +10,7 @@ $app->group('/v1', function() {
 
         $edition = 'quran-simple';
         $quran = new Quran\Api\CompleteResponse($edition);
-        $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($quran->get(), $quran->getCode());
     });
@@ -20,7 +20,7 @@ $app->group('/v1', function() {
 
         $edition = $request->getAttribute('edition');
         $quran = new Quran\Api\CompleteResponse($edition);
-        $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($quran->get(), $quran->getCode());
     });

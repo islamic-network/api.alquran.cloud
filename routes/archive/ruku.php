@@ -11,7 +11,7 @@ $app->get('/ruku/{number}', function (Request $request, Response $response) {
     $limit = $request->getQueryParam('limit');
     $edition = 'quran-simple';
     $ruku = new Quran\Api\RukuResponse($number, $edition, $offset, $limit);
-    $this->logger->addInfo('ruku ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('ruku ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($ruku->get(), $ruku->getCode());
 });
@@ -23,7 +23,7 @@ $app->get('/ruku/{number}/{edition}', function (Request $request, Response $resp
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
     $ruku = new Quran\Api\RukuResponse($number, $edition, $offset, $limit);
-    $this->logger->addInfo('ruku ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('ruku ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($ruku->get(), $ruku->getCode());
 });

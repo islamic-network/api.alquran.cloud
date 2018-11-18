@@ -9,7 +9,7 @@ $app->group('/v1', function() {
 
         $word = $request->getAttribute('word');
         $search = new Quran\Api\SearchResponse($word);
-        $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($search->get(), $search->getCode());
     });
@@ -19,7 +19,7 @@ $app->group('/v1', function() {
         $word = $request->getAttribute('word');
         $surat = $request->getAttribute('surah');
         $search = new Quran\Api\SearchResponse($word, $surat);
-        $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($search->get(), $search->getCode());
     });
@@ -30,7 +30,7 @@ $app->group('/v1', function() {
         $surat = $request->getAttribute('surah');
         $language = $request->getAttribute('language');
         $search = new Quran\Api\SearchResponse($word, $surat, $language);
-        $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($search->get(), $search->getCode());
     });

@@ -9,7 +9,7 @@ $app->group('/v1', function() {
 
         $edition = 'quran-simple';
         $sajda = new Quran\Api\SajdaResponse($edition);
-        $this->logger->addInfo('sajda ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('sajda ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($sajda->get(), $sajda->getCode());
     });
@@ -18,7 +18,7 @@ $app->group('/v1', function() {
 
         $edition = $request->getAttribute('edition');
         $sajda = new Quran\Api\SajdaResponse($edition);
-        $this->logger->addInfo('sajda ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('sajda ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($sajda->get(), $sajda->getCode());
     });

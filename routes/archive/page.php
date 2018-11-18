@@ -11,7 +11,7 @@ $app->get('/page/{number}', function (Request $request, Response $response) {
     $limit = $request->getQueryParam('limit');
     $edition = 'quran-simple';
     $page = new Quran\Api\PageResponse($number, $edition, $offset, $limit);
-    $this->logger->addInfo('page ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('page ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($page->get(), $page->getCode());
 });
@@ -23,7 +23,7 @@ $app->get('/page/{number}/{edition}', function (Request $request, Response $resp
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
     $page = new Quran\Api\PageResponse($number, $edition, $offset, $limit);
-    $this->logger->addInfo('page ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('page ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($page->get(), $page->getCode());
 });

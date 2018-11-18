@@ -11,7 +11,7 @@ $app->get('/juz/{number}', function (Request $request, Response $response) {
     $limit = $request->getQueryParam('limit');
     $edition = 'quran-simple';
     $juz = new Quran\Api\JuzResponse($number, $edition, $offset, $limit);
-    $this->logger->addInfo('juz ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('juz ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($juz->get(), $juz->getCode());
 });
@@ -23,7 +23,7 @@ $app->get('/juz/{number}/{edition}', function (Request $request, Response $respo
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
     $juz = new Quran\Api\JuzResponse($number, $edition, $offset, $limit);
-    $this->logger->addInfo('juz ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('juz ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($juz->get(), $juz->getCode());
 });

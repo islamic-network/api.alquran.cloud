@@ -15,7 +15,7 @@ $app->group('/v1', function() {
         } else {
             $ayat = new Quran\Api\AyatResponse($number, $edition);
         }
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($ayat->get(), $ayat->getCode());
     });
@@ -32,7 +32,7 @@ $app->group('/v1', function() {
                 $ayats[] = $ayat->get()->data;
             }
         }
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         $r = $ayat->get();
         $r->data = $ayats;
@@ -49,7 +49,7 @@ $app->group('/v1', function() {
         } else {
             $ayat = new Quran\Api\AyatResponse($number, $edition);
         }
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($ayat->get(), $ayat->getCode());
     });
@@ -67,7 +67,7 @@ $app->group('/v1', function() {
                 $ayats[] = $ayat->get()->data;
             }
         }
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         $r = $ayat->get();
         $r->data = $ayats;
@@ -84,7 +84,7 @@ $app->group('/v1', function() {
         } else {
             $ayat = new Quran\Api\AyatResponse($number, $edition);
         }
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($ayat->get(), $ayat->getCode());
     });
@@ -101,7 +101,7 @@ $app->group('/v1', function() {
                 $ayats[] = $ayat->get()->data;
             }
         }
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         $r = $ayat->get();
         $r->data = $ayats;
@@ -118,7 +118,7 @@ $app->group('/v1', function() {
         } else {
             $ayat = new Quran\Api\AyatResponse($number, $edition);
         }
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($ayat->get(), $ayat->getCode());
     });
@@ -136,7 +136,7 @@ $app->group('/v1', function() {
                 $ayats[] = $ayat->get()->data;
             }
         }
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         $r = $ayat->get();
         $r->data = $ayats;

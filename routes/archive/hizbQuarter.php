@@ -11,7 +11,7 @@ $app->get('/hizbQuarter/{number}', function (Request $request, Response $respons
     $limit = $request->getQueryParam('limit');
     $edition = 'quran-simple';
     $hizbQuarter = new Quran\Api\HizbQuarterResponse($number, $edition, $offset, $limit);
-    $this->logger->addInfo('hizbQuarter ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('hizbQuarter ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($hizbQuarter->get(), $hizbQuarter->getCode());
 });
@@ -23,7 +23,7 @@ $app->get('/hizbQuarter/{number}/{edition}', function (Request $request, Respons
     $offset = $request->getQueryParam('offset');
     $limit = $request->getQueryParam('limit');
     $hizbQuarter = new Quran\Api\HizbQuarterResponse($number, $edition, $offset, $limit);
-    $this->logger->addInfo('hizbQuarter ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('hizbQuarter ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($hizbQuarter->get(), $hizbQuarter->getCode());
 });

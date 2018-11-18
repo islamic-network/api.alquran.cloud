@@ -12,7 +12,7 @@ $app->group('/v1', function() {
         $limit = $request->getQueryParam('limit');
         $edition = 'quran-simple';
         $manzil = new Quran\Api\ManzilResponse($number, $edition, $offset, $limit);
-        $this->logger->addInfo('manzil ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('manzil ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($manzil->get(), $manzil->getCode());
     });
@@ -24,7 +24,7 @@ $app->group('/v1', function() {
         $offset = $request->getQueryParam('offset');
         $limit = $request->getQueryParam('limit');
         $manzil = new Quran\Api\ManzilResponse($number, $edition, $offset, $limit);
-        $this->logger->addInfo('manzil ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('manzil ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($manzil->get(), $manzil->getCode());
     });

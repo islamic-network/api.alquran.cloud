@@ -11,7 +11,7 @@ $app->group('/v1', function() {
         $number = $request->getAttribute('number');
         $edition = 'quran-simple';
         $surat = new Quran\Api\SuratResponse();
-        $this->logger->addInfo('surah ::: ' . time() . ' :: ', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('surah ::: ' . time() . ' :: ', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($surat->get(), $surat->getCode());
     });
@@ -24,7 +24,7 @@ $app->group('/v1', function() {
         $limit = $request->getQueryParam('limit');
         $edition = 'quran-simple';
         $surat = new Quran\Api\SuratResponse($number, true, $edition, true, $offset, $limit);
-        $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($surat->get(), $surat->getCode());
     });
@@ -42,7 +42,7 @@ $app->group('/v1', function() {
                 $surats[] = $surat->get()->data;
             }
         }
-        $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
         $r = $surat->get();
         $r->data = $surats;
 
@@ -57,7 +57,7 @@ $app->group('/v1', function() {
         $offset = $request->getQueryParam('offset');
         $limit = $request->getQueryParam('limit');
         $surat = new Quran\Api\SuratResponse($number, true, $edition, true, $offset, $limit);
-        $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($surat->get(), $surat->getCode());
     });
@@ -75,7 +75,7 @@ $app->group('/v1', function() {
                 $surats[] = $surat->get()->data;
             }
         }
-        $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
         $r = $surat->get();
         $r->data = $surats;
 

@@ -9,7 +9,7 @@ $app->get('/quran', function (Request $request, Response $response) {
 
     $edition = 'quran-simple';
     $quran = new Quran\Api\CompleteResponse($edition);
-    $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($quran->get(), $quran->getCode());
 });
@@ -19,7 +19,7 @@ $app->get('/quran/{edition}', function (Request $request, Response $response) {
 
     $edition = $request->getAttribute('edition');
     $quran = new Quran\Api\CompleteResponse($edition);
-    $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+    // $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
     return $response->withJson($quran->get(), $quran->getCode());
 });

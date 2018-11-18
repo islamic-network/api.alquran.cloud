@@ -11,7 +11,7 @@ $app->group('/v1', function() {
         $number = rand(1, 6326);
         $edition = 'quran-simple';
         $ayat = new Quran\Api\AyatResponse($number, $edition);
-        $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($ayat->get(), $ayat->getCode());
     });
