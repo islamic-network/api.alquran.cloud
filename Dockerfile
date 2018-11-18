@@ -13,4 +13,7 @@ ENV MYSQL_PASSWORD "somePassword"
 ENV MYSQL_DATABASE "someDb"
 ENV MYSQL_HOST "localhost"
 
-RUN cd/var/www && vendor/bin/doctrine orm:generate-proxies
+COPY doctrineProxies.sh /usr/local/bin/doctrineProxies.sh
+RUN chmod 755 /usr/local/bin/doctrineProxies.sh
+
+CMD ["/usr/local/bin/doctrineProxies.sh"]
