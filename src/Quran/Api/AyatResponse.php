@@ -118,7 +118,7 @@ class AyatResponse extends QuranResponse
         if ($number === null) {
             $this->setCode(400);
             $this->setStatus('Bad Request');
-            $this->response = 'Please specify an Ayah number (1 to 6326) or a reference in the format Surah:Ayat (2:255).';
+            $this->response = 'Please specify an Ayah number (1 to 6236) or a reference in the format Surah:Ayat (2:255).';
 
             return $number;
         }
@@ -126,10 +126,10 @@ class AyatResponse extends QuranResponse
         if (is_array($number)) {
             return $this->loadByReference($number[0], $number[1]);
         } else {
-            if ($number < 1 || $number > 6326) {
+            if ($number < 1 || $number > 6236) {
                 $this->setCode(400);
                 $this->setStatus('Bad Request');
-                $this->response = 'Please specify an Ayah number (1 to 6326).';
+                $this->response = 'Please specify an Ayah number (1 to 6236).';
             } else {
                 return $this->loadByNumber($number);
             }
@@ -160,7 +160,7 @@ class AyatResponse extends QuranResponse
         } else {
             $this->setCode(400);
             $this->setStatus('Bad Request');
-            $this->response = 'Please specify an Ayah number (1 to 6326)';
+            $this->response = 'Please specify an Ayah number (1 to 6236)';
         }
     }
 
