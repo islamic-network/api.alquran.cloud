@@ -13,6 +13,9 @@ ENV MYSQL_USER "someUser"
 ENV MYSQL_PASSWORD "somePassword"
 ENV MYSQL_DATABASE "someDb"
 ENV MYSQL_HOST "localhost"
+# 0 = disabled. 1 = enabled
+ENV WAF_PROXY_MODE "0"
+ENV WAF_KEY "someKey"
 
 COPY doctrineProxies.sh /usr/local/bin/doctrineProxies.sh
 RUN chmod 755 /usr/local/bin/doctrineProxies.sh

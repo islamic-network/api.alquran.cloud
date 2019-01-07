@@ -3,19 +3,20 @@ services:
   #######################################
   # PHP application Docker container
   #######################################
-  app:
+  alquran-app:
     build:
       context: .
       dockerfile: Dockerfile
     links:
-    - db
+    - alquran-db
     depends_on:
-    - db
+    - alquran-db
     environment:
       MYSQL_USER: vesicaUser
       MYSQL_PASSWORD: vesicaPassword
       MYSQL_DATABASE: vesicaDb
       MYSQL_HOST: quran-db
+      WAF_PROXY_MODE: 0
     ports:
     - "7070:8080"
     volumes:
@@ -27,7 +28,7 @@ services:
   #######################################
   # MySQL server
   #######################################
-  db:
+  alquran-db:
     build:
       context: .
       dockerfile: Dockerfile.db
@@ -42,26 +43,26 @@ services:
     ports:
     - "3306:3306"
     container_name: quran-db
-  
+
   #######################################
   # PHPMyAdmin
   #######################################
-  pma:
+  alquran-pma:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: quran-db
     ports:
     - "7071:80"
     links:
-    - db
+    - alquran-db
     depends_on:
-    - db
+    - alquran-db
     container_name: quran-pma
 
 #######################################
   # Memcached
   #######################################
-  memcached:
+  alquran-memcached:
     image: memcached:1.5
     ports:
     - "11211:11211"
@@ -70,7 +71,7 @@ services:
   #######################################
   # Memcached Admin
   #######################################
-  memadmin:
+  alquran-memadmin:
     image: vesica/memadmin:latest
     ports:
     - "7072:8080"

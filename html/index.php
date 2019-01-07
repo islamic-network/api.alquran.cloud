@@ -4,12 +4,10 @@ header('Access-Control-Allow-Origin: *');
 // Main AlQuran autoloader
 require realpath(__DIR__) . '/../config/autoloader.php';
 
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Quran\Helper\Log;
-use Quran\Helper\Request as ApiRequest;
 
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
@@ -48,21 +46,56 @@ $container['notFoundHandler'] = function ($c) {
 };
 
 $container['errorHandler'] = function ($c) {
-    return function ($request, $response) use ($c) {
+    return function ($request, $response, $exception) use ($c) {
+        if ($exception instanceof \Quran\Exception\WafKeyMismatchException) {
+            $r = [
+                'code' => 403,
+                'status' => 'Forbidden',
+                'data' => 'WAF Key Mismatch.'
+            ];
+
+            return $c['response']
+                ->withStatus(500)
+                ->withHeader('Content-Type', 'application/json')
+                ->write(json_encode($r));
+        };
+
+
         $r = [
         'code' => 500,
         'status' => 'Internal Server Error',
         'data' => 'Something went wrong when the server tried to process this request. Sorry!'
         ];
 
-        $resp = json_encode($r);
-
         return $c['response']
             ->withStatus(500)
             ->withHeader('Content-Type', 'application/json')
-            ->write($resp);
+            ->write(json_encode($r));
     };
 };
+
+
+/** Invoke Middleware for WAF Checks */
+$app->add(function (Request $request, Response $response, $next) {
+
+    $proxyMode = (bool)getenv('WAF_PROXY_MODE');
+
+    if ($proxyMode) {
+        // Validate Key
+        if (isset($request->getHeader('X-WAF-KEY')[0]) && $request->getHeader('X-WAF-KEY')[0] === getenv('WAF_KEY')) {
+            $response = $next($request, $response);
+
+            return $response;
+        }
+
+        throw new \Quran\Exception\WafKeyMismatchException();
+    }
+
+    $response = $next($request, $response);
+
+    return $response;
+
+});
 
 /** App Settings End **/
 
