@@ -55,7 +55,7 @@ $container['errorHandler'] = function ($c) {
             ];
 
             return $c['response']
-                ->withStatus(500)
+                ->withStatus(403)
                 ->withHeader('Content-Type', 'application/json')
                 ->write(json_encode($r));
         };
