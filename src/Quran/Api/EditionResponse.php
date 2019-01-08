@@ -69,8 +69,8 @@ class EditionResponse extends QuranResponse
                 $this->setCode(200);
                 $this->setStatus('OK');
             } else {
-                $this->setCode(400);
-                $this->setStatus('Bad Request');
+                $this->setCode(404);
+                $this->setStatus('Not Found');
                 $this->response ='Invalid ' . $filtertype . '.';
             }
         } else  {
@@ -80,8 +80,8 @@ class EditionResponse extends QuranResponse
                 $this->setCode(200);
                 $this->setStatus('OK');
             } else {
-                $this->setCode(400);
-                $this->setStatus('Bad Request');
+                $this->setCode(404);
+                $this->setStatus('Not Found');
                 $this->response ='Invalid identifier - such an edition does not exist.';
             }
         }
@@ -97,7 +97,7 @@ class EditionResponse extends QuranResponse
             $response[] = $this->prepare($edition);
         }
 
-        
+
         return $response;
     }
 

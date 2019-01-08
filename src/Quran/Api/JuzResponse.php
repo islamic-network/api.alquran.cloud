@@ -27,12 +27,12 @@ class JuzResponse extends QuranResponse
      * @var
      */
     private $edition;
-    
+
     /**
      * @var int
      */
     private $offset;
-    
+
     /**
      * @var int
      */
@@ -48,9 +48,9 @@ class JuzResponse extends QuranResponse
         parent::__construct();
 
         $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
-        
+
         $this->offset = $offset;
-        
+
         $this->limit = $limit;
 
         $this->load(self::sanitizeNumber($number));
@@ -80,8 +80,8 @@ class JuzResponse extends QuranResponse
 
         if ($number === null || $number < 1 || $number > 30) {
             $this->response = 'Juz number should be betwen 1 and 30';
-            $this->setCode(400);
-            $this->setStatus('Bad Request');
+            $this->setCode(404);
+            $this->setStatus('Not Found');
         } else  {
             $juz = $this->entityManager->getRepository('\Quran\Entity\Juz')->find($number);
             $this->response = $this->prepare($juz);
@@ -101,14 +101,14 @@ class JuzResponse extends QuranResponse
         if ($this->limit == null) {
             $this->limit = 1000; // No juz has this many ayahs, so this limit is high enough.
         }
-        
+
         // Load juz ayahs first.
         $ayats->loadByJuz($juz->getId(), $this->offset, $this->limit);
         $j = [
             'number' => $juz->getId(),
             'ayahs' => $ayats->getResponse()
         ];
-        
+
         // Now load juz surahs and add to the response.
         $ayats->loadAyahSurahsByJuz($juz->getId(), $this->offset, $this->limit);
         $j['surahs'] = $ayats->getResponse();

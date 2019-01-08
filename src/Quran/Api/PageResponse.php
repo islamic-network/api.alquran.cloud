@@ -80,8 +80,8 @@ class PageResponse extends QuranResponse
 
         if ($number === null || $number < 1 || $number > 604) {
             $this->response = 'Page number should be betwen 1 and 604';
-            $this->setCode(400);
-            $this->setStatus('Bad Request');
+            $this->setCode(404);
+            $this->setStatus('Not Found');
         } else  {
             $page = $this->entityManager->getRepository('\Quran\Entity\Page')->find($number);
             $this->response = $this->prepare($page);

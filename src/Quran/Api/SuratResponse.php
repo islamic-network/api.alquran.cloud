@@ -36,12 +36,12 @@ class SuratResponse extends QuranResponse
      * @var bool
      */
     private $loadEdition;
-    
+
     /**
      * @var int
      */
     private $offset;
-    
+
     /**
      * @var int
      */
@@ -62,9 +62,9 @@ class SuratResponse extends QuranResponse
         $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
 
         $this->loadEdition = $loadEdition;
-        
+
         $this->offset = $offset;
-        
+
         $this->limit = $limit;
 
         $this->load(self::sanitizeNumber($number));
@@ -106,8 +106,8 @@ class SuratResponse extends QuranResponse
                 $this->setCode(200);
                 $this->setStatus('OK');
             } else {
-                $this->setCode(400);
-                $this->setStatus('Bad Request');
+                $this->setCode(404);
+                $this->setStatus('Not Found');
                 $this->response ='Surat number should be between 1 and 114.';
             }
         }

@@ -116,8 +116,8 @@ class AyatResponse extends QuranResponse
             return $number;
         }
         if ($number === null) {
-            $this->setCode(400);
-            $this->setStatus('Bad Request');
+            $this->setCode(404);
+            $this->setStatus('Not Found');
             $this->response = 'Please specify an Ayah number (1 to 6236) or a reference in the format Surah:Ayat (2:255).';
 
             return $number;
@@ -127,8 +127,8 @@ class AyatResponse extends QuranResponse
             return $this->loadByReference($number[0], $number[1]);
         } else {
             if ($number < 1 || $number > 6236) {
-                $this->setCode(400);
-                $this->setStatus('Bad Request');
+                $this->setCode(404);
+                $this->setStatus('Not Found');
                 $this->response = 'Please specify an Ayah number (1 to 6236).';
             } else {
                 return $this->loadByNumber($number);
@@ -158,8 +158,8 @@ class AyatResponse extends QuranResponse
             $this->setCode(200);
             $this->setStatus('OK');
         } else {
-            $this->setCode(400);
-            $this->setStatus('Bad Request');
+            $this->setCode(404);
+            $this->setStatus('Not Found');
             $this->response = 'Please specify an Ayah number (1 to 6236)';
         }
     }
@@ -176,8 +176,8 @@ class AyatResponse extends QuranResponse
             $this->setCode(200);
             $this->setStatus('OK');
         } else {
-            $this->setCode(400);
-            $this->setStatus('Bad Request');
+            $this->setCode(404);
+            $this->setStatus('Not Found');
             $this->response = 'Please specify a valid surah reference in the format Surah:Ayat (2:255).';
         }
     }
@@ -202,8 +202,8 @@ class AyatResponse extends QuranResponse
             $this->setCode(200);
             $this->setStatus('OK');
         } else {
-            $this->setCode(400);
-            $this->setStatus('Bad Request');
+            $this->setCode(404);
+            $this->setStatus('Not Found');
             $this->response = 'Please specify a valid surah (1 to 114). If you have specified an offset or a limit, please ensure they are valid integers and fall within the number of ayahs the surah has.';
         }
     }
