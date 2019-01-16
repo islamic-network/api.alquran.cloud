@@ -1,3 +1,5 @@
+## بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
+
 # AlQuran API - api.alquran.cloud
 
 This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
