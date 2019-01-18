@@ -90,14 +90,14 @@ workflows:
   version: 2
   build-master:
     jobs:
-        #      - build-app:
-        #          filters:
-        #            branches:
-        #              only: master
+#      - build-app:
+#          filters:
+#            branches:
+#              only: master
       - push-git-tag:
           context: org-global
-          requires:
-        #    - build-app
+#          requires:
+#            - build-app
           filters:
             branches:
               only: master
