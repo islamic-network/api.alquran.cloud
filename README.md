@@ -1,5 +1,7 @@
 ## بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
 
+[![CircleCI](https://circleci.com/gh/islamic-network/api.alquran.cloud.svg?style=svg)](https://circleci.com/gh/islamic-network/api.alquran.cloud)
+
 # AlQuran API - api.alquran.cloud
 
 This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
