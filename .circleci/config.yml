@@ -116,15 +116,15 @@ workflows:
               only: master
   build-tags:
     jobs:
-      - build-app:
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /.*/
+#      - build-app:
+#          filters:
+#            tags:
+#              only: /.*/
+#            branches:
+#              ignore: /.*/
       - build-docker-image:
-          requires:
-            - build-app
+#          requires:
+#            - build-app
           filters:
             tags:
               only: /.*/
