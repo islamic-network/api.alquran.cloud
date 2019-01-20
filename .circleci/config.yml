@@ -43,6 +43,14 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: Add Version information
+          command: |
+            echo "commit: ${CIRCLE_SHA1}" > html/VERSION
+            echo "tag: ${CIRCLE_TAG}" >> html/VERSION
+            echo "branch: ${CIRCLE_BRANCH}" >> html/VERSION
+            echo "ci_build: ${CIRCLE_BUILD_NUM}" >> html/VERSION
+            echo "ci_workflow: ${CIRCLE_WORKFLOW_ID}" >> html/VERSION
+      - run:
           name: Build Production Docker image
           command: docker build -t $IMAGE_NAME:latest .
       - run:
