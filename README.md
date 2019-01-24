@@ -43,9 +43,11 @@ With the above ```docker-compose up``` command your code is mapped to the quran-
 
 ## Scaling and Sizing
 
-This app takes 20 MB per apache process / worker and is set to have a maximum of 30 Apache workers.
+This app takes 18-19 MB per apache process / worker and is set to have a maximum of 15 Apache workers.
 
-A single instance should be sized with a maximum of 960 MB RAM, after which you should scale it horizontally.
+OpCache takes 100 MB RAM.
+
+A single instance should be sized with a maximum of 400 MB RAM, after which you should scale it horizontally.
 
 ## Contributing Code
 
