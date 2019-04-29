@@ -19,7 +19,9 @@ This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
 
 The api and all its dependencies are fully Dockerised. You **just need docker and docker-compose** to spin everything up.
 
-A production ready Docker image of the api is published as quay.io/islamic-network/api.alquran.cloud on Quay.io.
+A production ready Docker image of the api is published as:
+* quay.io/islamic-network/api.alquran.cloud on Quay
+* islamicnetwork/api.alquran.cloud on Docker Hub
 
 To get your own instance up, simply run:
 
