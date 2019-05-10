@@ -1,7 +1,7 @@
 ## بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
 
 [![CircleCI](https://circleci.com/gh/islamic-network/api.alquran.cloud.svg?style=shield)](https://circleci.com/gh/islamic-network/api.alquran.cloud)
-[![](https://img.shields.io/docker/pulls/vesica/api.alquran.cloud.svg)](https://cloud.docker.com/u/vesica/repository/docker/vesica/api.alquran.cloud)
+[![](https://img.shields.io/docker/pulls/islamicnetwork/api.alquran.cloud.svg)](https://cloud.docker.com/u/islamicnetwork/repository/docker/vesica/api.alquran.cloud)
 [![](https://img.shields.io/github/release/islamic-network/api.alquran.cloud.svg)](https://github.com/islamic-network/api.alquran.cloud/releases)
 [![](https://img.shields.io/github/license/islamic-network/api.alquran.cloud.svg)](https://github.com/islamic-network/api.alquran.cloud/blob/master/LICENSE)
 
