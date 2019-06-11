@@ -26,6 +26,7 @@ A production ready Docker image of the api is published as:
 To get your own instance up, simply run:
 
 ```
+composer install
 docker-compose up
 ``` 
 
