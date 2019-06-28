@@ -12,9 +12,9 @@ services:
     depends_on:
     - alquran-db
     environment:
-      MYSQL_USER: vesicaUser
-      MYSQL_PASSWORD: vesicaPassword
-      MYSQL_DATABASE: vesicaDb
+      MYSQL_USER: quran
+      MYSQL_PASSWORD: quran
+      MYSQL_DATABASE: quran
       MYSQL_HOST: quran-db
       WAF_PROXY_MODE: 0
     ports:
@@ -29,17 +29,18 @@ services:
   # MySQL server
   #######################################
   alquran-db:
-    build:
-      context: .
-      dockerfile: Dockerfile.db
+    image: islamicnetwork/api.alquran.cloud-db:latest
+      #    build:
+      #context: .
+      #dockerfile: Dockerfile.db
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_USER: vesicaUser
-      MYSQL_PASSWORD: vesicaPassword
-      MYSQL_DATABASE: vesicaDb
-      #MYSQL_ROOT_PASSWORD: "vesicaRooter"
-      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_USER: quran
+      MYSQL_PASSWORD: quran
+      MYSQL_DATABASE: quran
+      MYSQL_ROOT_PASSWORD: "root"
+      #MYSQL_RANDOM_ROOT_PASSWORD: "yes"
     ports:
     - "3306:3306"
     container_name: quran-db
