@@ -37,6 +37,8 @@ for e in "${!APACHE_@}"; do
 	fi
 done
 
+source secrets
+
 cd /var/www && vendor/bin/doctrine orm:generate-proxies
 
 exec apache2 -DFOREGROUND "$@"
