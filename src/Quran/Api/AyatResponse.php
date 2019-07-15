@@ -448,8 +448,8 @@ class AyatResponse extends QuranResponse
                 $ax['number'] = $ayah->getNumber();
                 if (isset($this->audioEdition)) {
                     $ax['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
-                    $ax['audioAlternative1'] = $this->protocol . '://cdn.islamic.network/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
-                    $ax['audioAlternative2'] = $this->protocol . '://' . $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier()) . $ayah->getNumber() . '.mp3';
+                    //$ax['audioAlternative1'] = $this->protocol . '://cdn.islamic.network/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
+                    //$ax['audioAlternative2'] = $this->protocol . '://' . $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier()) . $ayah->getNumber() . '.mp3';
                 }
                 $ax['text'] = $ayah->getText();
                 if ($this->includeEdition) {
@@ -484,8 +484,8 @@ class AyatResponse extends QuranResponse
                 $a['number'] = $ayat->getNumber();
                 if (isset($this->audioEdition)) {
                     $a['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
-                    $a['audioAlternative1'] = $this->protocol . '://cdn.islamic.network/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
-                    $a['audioAlternative2'] = $this->protocol . '://' . $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier()) . $ayah->getNumber() . '.mp3';
+                    ///$a['audioAlternative1'] = $this->protocol . '://cdn.islamic.network/quran/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
+                    //$a['audioAlternative2'] = $this->protocol . '://' . $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier()) . $ayah->getNumber() . '.mp3';
                 }
                 $a['text'] = $ayat->getText();
                 $a['edition'] = (new EditionResponse($ayat->getEdition()->getIdentifier()))->getResponse();
