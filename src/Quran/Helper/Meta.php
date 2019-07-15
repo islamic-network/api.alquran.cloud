@@ -4,7 +4,7 @@ namespace Quran\Helper;
 
 class Meta
 {
-    const DO_CDN_BASE_URL = 'http://islam.cdn.damascus.network/';
+    const DO_CDN_BASE_URL = 'islam.cdn.damascus.network/';
     private $hizb_quarter;
     private $page;
     private $ruku;
