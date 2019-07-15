@@ -4,6 +4,7 @@ namespace Quran\Helper;
 
 class Meta
 {
+    const DO_CDN_BASE_URL = 'http://islam.cdn.damascus.network/';
     private $hizb_quarter;
     private $page;
     private $ruku;
@@ -78,5 +79,71 @@ class Meta
         }
 
         return $r;
+    }
+
+    public function getAudioBySize()
+    {
+        return [
+            '192' => [
+                'ar.abdulbasitmurattal',
+                'ar.abdullahbasfar',
+                'r.abdurrahmaansudais',
+                'ar.hanirifai',
+                'en.walk',
+            ],
+            '128' => [
+                'ar.ahmedajamy',
+                'ar.alafasy',
+                'ar.hudhaify',
+                'ar.husary',
+                'ar.husarymujawwad',
+                'ar.mahermuaiqly',
+                'ar.minshawi',
+                'ar.muhammadayyoub',
+                'ar.muhammadjibreel',
+                'ar.shaatree',
+                'fr.leclerc',
+                'zh.chinese',
+            ],
+            '64' => [
+                'ar.abdulbasitmurattal',
+                'ar.abdullahbasfar',
+                'ar.abdulsamad',
+                'ar.abdurrahmaansudais',
+                'ar.ahmedajamy',
+                'ar.alafasy',
+                'ar.aymanswoaid',
+                'ar.hanirifai',
+                'ar.hudhaify',
+                'ar.husary',
+                'ar.husarymujawwad',
+                'ar.mahermuaiqly',
+                'ar.minshawimujawwad',
+                'ar.saoodshuraym',
+                'ar.shaatree',
+                'ur.khan',
+            ],
+            '48' => [
+                'ar.parhizgar',
+            ],
+            '40' => [
+                'fa.hedayatfarfooladvand',
+            ],
+            '32' => [
+                'ar.abdullahbasfar',
+                'ar.hudhaify',
+                'ar.ibrahimakhbar',
+            ]
+        ];
+    }
+
+    public function getAudioUrlsByReciter($name = 'ar.alafasy')
+    {
+        $urls = [];
+        foreach ($this->getAudioBySize() as $size => $reciters) {
+            if (in_array($name, $reciters)) {
+                $urls[] = self::DO_CDN_BASE_URL . 'audio/' . $size . '/' . $name . '/';
+            }
+        }
     }
 }
