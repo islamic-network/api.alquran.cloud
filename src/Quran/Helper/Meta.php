@@ -4,7 +4,7 @@ namespace Quran\Helper;
 
 class Meta
 {
-    const DO_CDN_BASE_URL = 'islam.cdn.damascus.network/';
+    const DO_CDN_BASE_URL = 'islamic-network.fra1.cdn.digitaloceanspaces.com/';
     private $hizb_quarter;
     private $page;
     private $ruku;
@@ -137,12 +137,12 @@ class Meta
         ];
     }
 
-    public function getAudioUrlsByReciter($name = 'ar.alafasy', int $number, $protocol = 'http'): array
+    public function getAudioUrlsByReciter($name = 'ar.alafasy', int $number, $protocol = 'https'): array
     {
         $urls = [];
         foreach ($this->getAudioBySize() as $size => $reciters) {
             if (in_array($name, $reciters)) {
-                $urls[] = $protocol . '://' . self::DO_CDN_BASE_URL . 'audio/' . $size . '/' . $name . '/' . $number . '.mp3';
+                $urls[] = $protocol . '://' . self::DO_CDN_BASE_URL . '/quran/audio/' . $size . '/' . $name . '/' . $number . '.mp3';
             }
         }
 
