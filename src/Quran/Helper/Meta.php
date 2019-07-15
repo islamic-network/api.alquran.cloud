@@ -137,12 +137,12 @@ class Meta
         ];
     }
 
-    public function getAudioUrlsByReciter($name = 'ar.alafasy', int $number): array
+    public function getAudioUrlsByReciter($name = 'ar.alafasy', int $number, $protocol = 'http'): array
     {
         $urls = [];
         foreach ($this->getAudioBySize() as $size => $reciters) {
             if (in_array($name, $reciters)) {
-                $urls[] = self::DO_CDN_BASE_URL . 'audio/' . $size . '/' . $name . '/' . $number . '.mp3';
+                $urls[] = $protocol . '://' . self::DO_CDN_BASE_URL . 'audio/' . $size . '/' . $name . '/' . $number . '.mp3';
             }
         }
 

@@ -448,7 +448,7 @@ class AyatResponse extends QuranResponse
                 $ax['number'] = $ayah->getNumber();
                 if (isset($this->audioEdition)) {
                     $ax['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
-                    $ax['audioSecondary'] = $this->protocol . '://' .  $this->meta->getAudioBySize($this->audioEdition->getIdentifier(), $ayah->getNumber());
+                    $ax['audioSecondary'] = $this->meta->getAudioBySize($this->audioEdition->getIdentifier(), $ayah->getNumber(), $this->protocol);
                     
                 }
                 $ax['text'] = $ayah->getText();
@@ -484,7 +484,7 @@ class AyatResponse extends QuranResponse
                 $a['number'] = $ayat->getNumber();
                 if (isset($this->audioEdition)) {
                     $a['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
-                    $a['audioSecondary'] = $this->protocol . '://' . $this->meta->getAudioBySize($this->audioEdition->getIdentifier(), $ayah->getNumber());
+                    $a['audioSecondary'] = $this->meta->getAudioBySize($this->audioEdition->getIdentifier(), $ayah->getNumber(), $this->protocol);
                 }
                 $a['text'] = $ayat->getText();
                 $a['edition'] = (new EditionResponse($ayat->getEdition()->getIdentifier()))->getResponse();
