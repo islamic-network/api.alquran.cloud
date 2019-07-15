@@ -27,6 +27,9 @@ class Request
 
     public static function isHttps()
     {
+        return true; // Always force https - we can't really tell on a Swarm unless we get HA proxy to pass a parameter.
+        // But https is safe for this.
+
         if ( isset($_SERVER) ) {
             if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
                 return true;
