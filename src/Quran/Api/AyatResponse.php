@@ -484,7 +484,7 @@ class AyatResponse extends QuranResponse
                 $a['number'] = $ayat->getNumber();
                 if (isset($this->audioEdition)) {
                     $a['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
-                    $a['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayah->getNumber(), $this->protocol);
+                    $a['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayat->getNumber(), $this->protocol);
                 }
                 $a['text'] = $ayat->getText();
                 $a['edition'] = (new EditionResponse($ayat->getEdition()->getIdentifier()))->getResponse();
