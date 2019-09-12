@@ -12,7 +12,9 @@ RUN chown -R www-data:www-data /var/www/
 ENV MYSQL_USER "someUser"
 ENV MYSQL_PASSWORD "somePassword"
 ENV MYSQL_DATABASE "someDb"
-ENV MYSQL_HOST "localhost"
+ENV MYSQL_HOST_1 "localhost"
+ENV MYSQL_HOST_2 "localhost"
+ENV MYSQL_HOST_3 "localhost"
 # 0 = disabled. 1 = enabled
 ENV WAF_PROXY_MODE "0"
 ENV WAF_KEY "someKey"

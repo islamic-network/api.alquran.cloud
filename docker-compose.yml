@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   #######################################
   # PHP application Docker container
@@ -15,7 +15,11 @@ services:
       MYSQL_USER: quran
       MYSQL_PASSWORD: quran
       MYSQL_DATABASE: quran
-      MYSQL_HOST: quran-db
+      MYSQL_HOST_1: quran-db
+      MYSQL_HOST_2: quran-db
+      MYSQL_HOST_3: quran-db
+      MEMCACHED_HOST: quran-memcached
+      MEMCACHED_PORT: 11211
       WAF_PROXY_MODE: 0
     ports:
     - "7070:8080"

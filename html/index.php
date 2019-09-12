@@ -125,5 +125,6 @@ require realpath(__DIR__) . '/../routes/v1/edition.php';
 require realpath(__DIR__) . '/../routes/v1/quran.php';
 require realpath(__DIR__) . '/../routes/v1/search.php';
 require realpath(__DIR__) . '/../routes/v1/other.php';
+require realpath(__DIR__) . '/../routes/v1/status.php';
 
 $app->run();
