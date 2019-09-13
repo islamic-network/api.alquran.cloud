@@ -38,7 +38,6 @@ services:
       #context: .
       #dockerfile: Dockerfile.db
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
     environment:
       MYSQL_USER: quran
       MYSQL_PASSWORD: quran
