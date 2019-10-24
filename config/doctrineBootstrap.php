@@ -3,8 +3,6 @@
 require_once realpath(__DIR__) . '/../vendor/autoload.php';
 
 use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Cache;
 use Quran\Helper\Cacher;
 use Quran\Helper\Config;
 
@@ -18,7 +16,12 @@ if (!$isDevMode) {
 }
 
 // the connection configuration
-$databaseConfig = (new Config())->connection($cacher->get('DB_CONNECTION'));
+$connection = $cacher->get('DB_CONNECTION');
+if (!$connection) {
+    $databaseConfig = (new Config())->connection();
+} else {
+    $databaseConfig = (new Config())->connection($cacher->get('DB_CONNECTION'));
+}
 
 $dbParams = array(
     'driver'   => 'pdo_mysql',
