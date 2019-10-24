@@ -1,4 +1,4 @@
-FROM quay.io/vesica/php73:latest
+FROM vesica/php72:latest
 
 # Copy files
 RUN cd ../ && rm -rf /var/www/html
