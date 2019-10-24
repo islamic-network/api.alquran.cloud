@@ -34,7 +34,7 @@ This will bring up several containers:
 
 1. quran-app - This is the actual PHP / Apache instance. This runs on https://localhost:7070 - see https://localhost:7070/ayah/1.
 2. quran-db - This is the Percona DB Container.
-3. quran-memcached - This is the Memcached Container.
+3. quran-memcached - This is the Memcached Container. 
 4. quran-pma - PHPMYAdmin to acccess your Percona DB. This runs on https://localhost:7071. The default username and password are both 'vesicaUser' and 'vesicaPassword'.
 5. quran-memadmin - PHPMemcachedAdmin to access your Memcached container. This runs on https://localhost:7072. The default username and password are both 'quran'
 
