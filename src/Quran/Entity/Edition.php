@@ -65,6 +65,11 @@ class Edition
      * @OneToMany(targetEntity="Ayat", mappedBy="edition")
      **/
     protected $ayats;
+
+    /**
+     * @Column(type="string", length=2, unique=false, nullable=true)
+     **/
+    protected $direction;
     
     
 
@@ -253,6 +258,30 @@ class Edition
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * Set direction
+     *
+     * @param string $direction
+     *
+     * @return Edition
+     */
+    public function setDirection($direction)
+    {
+        $this->direction = $direction;
+
+        return $this;
+    }
+
+    /**
+     * Get direction
+     *
+     * @return string
+     */
+    public function getDirection()
+    {
+        return $this->direction;
     }
 
     /**

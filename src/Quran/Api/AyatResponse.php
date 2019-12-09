@@ -68,7 +68,7 @@ class AyatResponse extends QuranResponse
         $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
 
         if ($this->edition->getFormat() == 'audio') {
-            $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier('quran-simple');
+            $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier('quran-uthmani');
             $this->audioEdition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
         }
 
@@ -487,7 +487,7 @@ class AyatResponse extends QuranResponse
                     $a['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayat->getNumber(), $this->protocol);
                 }
                 $a['text'] = $ayat->getText();
-                $a['edition'] = (new EditionResponse($ayat->getEdition()->getIdentifier()))->getResponse();
+                $a['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
                 $a['surah'] = (new SuratResponse($ayat->getSurat()->getId()))->getResponse();
                 $a['numberInSurah'] = $ayat->getNumberInSurat();
                 $a['juz'] = $ayat->getJuz()->getId();

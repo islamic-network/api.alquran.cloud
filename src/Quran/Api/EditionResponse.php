@@ -34,7 +34,6 @@ class EditionResponse extends QuranResponse
             $this->load($identifier, $type, $language, $format);
         }
 
-
     }
 
     /**
@@ -102,7 +101,7 @@ class EditionResponse extends QuranResponse
     }
 
     /**
-     * @param $edition
+     * @param Edition $edition
      * @return array
      */
     private function prepare($edition)
@@ -113,7 +112,8 @@ class EditionResponse extends QuranResponse
             'name' => $edition->getName(),
             'englishName' => $edition->getEnglishName(),
             'format' => $edition->getFormat(),
-            'type' => $edition->getType()
+            'type' => $edition->getType(),
+            'direction' => $edition->getDirection()
         ];
 
         return $e;
