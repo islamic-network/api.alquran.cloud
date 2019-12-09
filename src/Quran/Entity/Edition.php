@@ -71,9 +71,6 @@ class Edition
      **/
     protected $direction;
     
-    
-
-
     /**
      * Constructor
      */
