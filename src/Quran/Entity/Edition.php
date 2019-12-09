@@ -67,7 +67,7 @@ class Edition
     protected $ayats;
 
     /**
-     * @Column(type="string", length=2, unique=false, nullable=true)
+     * @Column(type="string", length=3, unique=false, nullable=true)
      **/
     protected $direction;
     
