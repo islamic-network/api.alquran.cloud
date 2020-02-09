@@ -76,7 +76,7 @@ services:
   # Memcached Admin
   #######################################
   alquran-memadmin:
-    image: vesica/memadmin:latest
+    image: islamicnetwork/memadmin:latest
     ports:
     - "7072:8080"
     environment:
