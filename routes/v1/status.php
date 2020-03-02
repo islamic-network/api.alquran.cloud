@@ -10,6 +10,9 @@ $app->group('/v1', function() {
     $this->get('/status', function (Request $request, Response $response) {
         $mc = new Cacher();
         $dbx = new Database();
+        $dbResult = false;
+        $db2Result = false;
+        $db3Result = false;
         try {
             $db = $dbx->getConnection('database_pxc_1');
             $dbResult = $db->fetchAssoc("SELECT id FROM ayat WHERE id = ? ", [7]);
@@ -29,14 +32,15 @@ $app->group('/v1', function() {
             $db3Result = false;
         }
         if ($mc !== false) {
-            if ($db2Result !== false) {
-                $mc->set('DB_CONNECTION', 'database_pxc_2');
-            } elseif ($dbResult !== false) {
+            if ($dbResult !== false) {
                 $mc->set('DB_CONNECTION', 'database_pxc_1');
-            } elseif ($db3Result !== false) {
+            } elseif ($db2Result !== false && $dbResult === false) {
+                $mc->set('DB_CONNECTION', 'database_pxc_2');
+            } elseif ($db3Result !== false && $db2Result === false && $dbResult === false) {
                 $mc->set('DB_CONNECTION', 'database_pxc_3');
             }
         }
+
         $status = [
             'memcached' => $mc === false ? 'NOT OK' : 'OK',
             'pxc1' => $dbResult === false ? 'NOT OK' : 'OK (' . $dbResult['id']. ')',
