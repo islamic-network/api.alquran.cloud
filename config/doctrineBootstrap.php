@@ -28,7 +28,8 @@ $dbParams = array(
     'user'     => $databaseConfig->username,
     'password' => $databaseConfig->password,
     'dbname'   => $databaseConfig->dbname,
-    'host'     => $databaseConfig->host
+    'host'     => $databaseConfig->host,
+    'port'     => $databaseConfig->port,
 );
 $dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, $cache);
 
