@@ -39,6 +39,7 @@ class Database
             'user' => $c->username,
             'password' => $c->password,
             'host' => $c->host,
+            'port' => $c->port,
             'driver' => 'pdo_mysql',
         );
 
