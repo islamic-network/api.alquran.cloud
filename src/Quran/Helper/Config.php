@@ -24,21 +24,21 @@ class Config
                     'username' => getenv('MYSQL_USER'),
                     'password' => getenv('MYSQL_PASSWORD'),
                     'dbname' => getenv('MYSQL_DATABASE'),
-                    'port' => 3306
+                    'port' => getenv('MYSQL_PORT_1')
                 ],
                 'database_pxc_2' => [
                     'host' => getenv('MYSQL_HOST_2'),
                     'username' => getenv('MYSQL_USER'),
                     'password' => getenv('MYSQL_PASSWORD'),
                     'dbname' => getenv('MYSQL_DATABASE'),
-                    'port' => 3306
+                    'port' => getenv('MYSQL_PORT_2')
                 ],
                 'database_pxc_3' => [
                     'host' => getenv('MYSQL_HOST_3'),
                     'username' => getenv('MYSQL_USER'),
                     'password' => getenv('MYSQL_PASSWORD'),
                     'dbname' => getenv('MYSQL_DATABASE'),
-                    'port' => 3306
+                    'port' => getenv('MYSQL_PORT_3')
                 ],
                 'memcache' => [
                     'host' => getenv('MEMCACHED_HOST'),
