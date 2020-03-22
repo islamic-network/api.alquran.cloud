@@ -22,14 +22,14 @@ class Database
      * Returns a connection to the database
      * @return DriveManager
      */
-    public function getConnection($connection = 'database_pxc_2')
+    public function getConnection($connection = 'database_pxc_1')
     {
         $config = new \Doctrine\DBAL\Configuration();
 
         if ($this->cacher !== false &&
             in_array($this->cacher->get('DB_CONNECTION'), ['database_pxc_1', 'database_pxc_2', 'database_pxc_3'])) {
-            //$connection = $this->cacher->get('DB_CONNECTION');
-            $connection = $connection;
+            $connection = $this->cacher->get('DB_CONNECTION');
+            //$connection = $connection;
         }
 
         $c = $this->config->connection($connection);
