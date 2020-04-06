@@ -28,14 +28,14 @@ To get your own instance up, simply run:
 ```
 composer install
 docker-compose up
-``` 
+```
 
 This will bring up several containers:
 
 1. quran-app - This is the actual PHP / Apache instance. This runs on https://localhost:7070 - see https://localhost:7070/ayah/1.
 2. quran-db - This is the Percona DB Container.
-3. quran-memcached - This is the Memcached Container. 
-4. quran-pma - PHPMYAdmin to acccess your Percona DB. This runs on https://localhost:7071. The default username and password are both 'vesicaUser' and 'vesicaPassword'.
+3. quran-memcached - This is the Memcached Container.
+4. quran-pma - PHPMYAdmin to acccess your Percona DB. This runs on https://localhost:7071. The default username and password are both 'quran' and 'quran'.
 5. quran-memadmin - PHPMemcachedAdmin to access your Memcached container. This runs on https://localhost:7072. The default username and password are both 'quran'
 
 #### Build and Contribute
@@ -58,4 +58,4 @@ You can contribute code by raising a pull request.
 
 There's a backlog of stuff under issues for things that potentially need to be worked on, so please feel free to pick something up from there or contribute your own improvements.
 
-You can also join the Islamic Network Discord Server to discuss of the apps or APIs @ https://discord.gg/FwUy69M. 
+You can also join the Islamic Network Discord Server to discuss of the apps or APIs @ https://discord.gg/FwUy69M.

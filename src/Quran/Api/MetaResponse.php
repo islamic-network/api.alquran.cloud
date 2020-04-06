@@ -61,6 +61,7 @@ class MetaResponse extends QuranResponse
         $r['pages'] = ['count' => count($this->meta->getPages()), 'references' => $this->meta->getPages()];
         $r['manzils'] = ['count' => count($this->meta->getManzils()), 'references' => $this->meta->getManzils()];
         $r['hizbQuarters'] = ['count' => count($this->meta->getHizbQuarters()), 'references' => $this->meta->getHizbQuarters()];
+        $r['juzes'] = ['count' => count($this->meta->getJuzes()), 'references' => $this->meta->getJuzes()];
 
         return $r;
     }
