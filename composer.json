@@ -1,10 +1,10 @@
 {
-  "require": {
+    "require": {
         "monolog/monolog": "~1.17",
         "guzzlehttp/guzzle": "^6.1",
         "slim/slim": "^3.0",
-    "doctrine/dbal": "^2.10",
-    "doctrine/orm": "^2.7"
+        "doctrine/dbal": "^2.10",
+        "doctrine/orm": "^2.7"
     },
     "autoload": {
         "psr-0": {"": "src/"}
