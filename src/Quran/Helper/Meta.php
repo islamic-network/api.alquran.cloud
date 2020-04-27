@@ -85,7 +85,7 @@ class Meta
         return $r;
     }
 
-    public function getJuzes()
+    public function getJuzs()
     {
         $r = [];
         foreach($this->juz as $juz) {
