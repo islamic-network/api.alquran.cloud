@@ -8,7 +8,7 @@ use Quran\Helper\Config;
 
 $paths = array(realpath(__DIR__) . '/../src');
 
-$isDevMode = false;
+$isDevMode = true;
 if (!$isDevMode) {
     $cache = new \Doctrine\Common\Cache\MemcachedCache;
     $cacher = new Cacher();
