@@ -46,6 +46,12 @@ class AyatResponse extends QuranResponse
      */
     private $protocol = 'http';
 
+    /**
+     * Make some changes to font that makes it easy to render the uthmanic text - but without changing the grammatical arabic
+     * @var bool
+     */
+    private $fontHack = false;
+    
     private $cache = [];
 
     /**
@@ -63,6 +69,11 @@ class AyatResponse extends QuranResponse
             $this->protocol = 'https';
         }
 
+        // This is very unclean - but it is true to being a hack and does not touch any other part of the API.
+        if (isset($_GET['fontHack']) && $_GET['fontHack'] == 'true') {
+            $this->fontHack = true;
+        }
+
         $this->meta = new Meta();
 
         $this->edition = (new EditionResponse(null, null, null, null, false))->getEditionByIdentifier($edition);
@@ -76,7 +87,6 @@ class AyatResponse extends QuranResponse
 
         $this->includeEdition = $includeEdition;
         $this->includeSurat = $includeSurat;
-
 
         if ($number !== null) {
             $this->load(self::sanitizeNumber($number));
@@ -451,7 +461,7 @@ class AyatResponse extends QuranResponse
                     $ax['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayah->getNumber(), $this->protocol);
                     
                 }
-                $ax['text'] = $ayah->getText();
+                $ax['text'] = $this->fontHack ? str_replace('لْءَا', 'لْآ', $ayah->getText()) : $ayah->getText();
                 if ($this->includeEdition) {
                     $this->cacheEdition($ayah);
                     $ax['edition'] = $this->cache['edition'][$ayah->getEdition()->getId()];
@@ -486,7 +496,7 @@ class AyatResponse extends QuranResponse
                     $a['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
                     $a['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayat->getNumber(), $this->protocol);
                 }
-                $a['text'] = $ayat->getText();
+                $a['text'] = $this->fontHack ? str_replace('لْءَا', 'لْآ', $ayat->getText()) : $ayat->getText();
                 $a['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
                 $a['surah'] = (new SuratResponse($ayat->getSurat()->getId()))->getResponse();
                 $a['numberInSurah'] = $ayat->getNumberInSurat();
