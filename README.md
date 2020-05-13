@@ -15,6 +15,17 @@ This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
 * Memcached 1.5
 * Slim Framework v3
 
+## Adding Qur'an Editions
+
+### Add a new Text Edition
+
+#### Add a new Audio Edition
+1. Add entry in the edition table.
+2. The files then need to be uploaded to the Wasabi / s3 bucket with the folder name matching the edition name.
+https://github.com/islamic-network/cdn.alquran.cloud/blob/master/html/media/index.php#L37 needs to be updated with the appropriate information.
+3. https://github.com/islamic-network/api.alquran.cloud/blob/master/src/Quran/Helper/Meta.php#L98 needs to be updated.
+4. https://github.com/islamic-network/api.alquran.cloud/blob/master/cdn.txt needs to be updated.
+
 ### Running the App
 
 The api and all its dependencies are fully Dockerised. You **just need docker and docker-compose** to spin everything up.
@@ -40,7 +51,7 @@ This will bring up several containers:
 
 #### Build and Contribute
 
-**Please note that the Dockerfile included builds a production ready container which has opcache switched on and xdebug turned off, so you will only see your changes every 5 minutes if you are developing. To actively develop, change the ```FROM vesica/php72:latest``` line to ```vesica/php72:dev```.**
+**Please note that the Dockerfile included builds a production ready container which has opcache switched on and xdebug turned off, so you will only see your changes every 5 minutes if you are developing. To actively develop, change the ```FROM islamicnetwork/php73:latest``` line to ```islamicnetwork/php73:dev```.**
 
 With the above ```docker-compose up``` command your code is mapped to the quran-app docker container. You can make any changes and simply refresh the page to see them in real-time.
 
