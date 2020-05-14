@@ -17,7 +17,7 @@ services:
       MYSQL_DATABASE: quran
       MYSQL_HOST_1: quran-db
       MYSQL_HOST_2: quran-db
-      MYSQL_HOST_3: quran-db
+      MYSQL_HOST_3: quran-dbz
       MEMCACHED_HOST: quran-memcached
       MEMCACHED_PORT: 11211
       WAF_PROXY_MODE: 0

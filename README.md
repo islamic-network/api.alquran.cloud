@@ -18,6 +18,10 @@ This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
 ## Adding Qur'an Editions
 
 ### Add a new Text Edition
+1. You will need a file with with 6236 lines for each ayah.
+2. Place the file in the ```edition-importer``` directory.
+3. Fill in the ```edition-importer/edition.yml``` file.
+4. From the edition importer directory, run ```php import.php```.
 
 #### Add a new Audio Edition
 1. Add entry in the edition table.
