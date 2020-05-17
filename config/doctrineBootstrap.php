@@ -30,7 +30,6 @@ $dbParams = array(
     'dbname'   => $databaseConfig->dbname,
     'host'     => $databaseConfig->host,
     'port'     => $databaseConfig->port,
+    'charset'  => 'utf8'
 );
 $dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, $cache);
-
-//$entityManager = EntityManager::create($dbParams, $config);
