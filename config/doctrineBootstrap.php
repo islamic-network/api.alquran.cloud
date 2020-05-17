@@ -33,3 +33,5 @@ $dbParams = array(
     'charset'  => 'utf8'
 );
 $dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, $cache);
+$dbConfig->setQueryCacheImpl($cache);
+$dbConfig->setResultCacheImpl($cache);
