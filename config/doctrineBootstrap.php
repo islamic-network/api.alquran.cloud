@@ -7,13 +7,7 @@ use Quran\Helper\Cacher;
 use Quran\Helper\Config;
 
 $paths = array(realpath(__DIR__) . '/../src');
-
-$isDevMode = false;
-if (!$isDevMode) {
-    $cache = new \Doctrine\Common\Cache\MemcachedCache;
-    $cacher = new Cacher();
-    $cache->setMemcached($cacher->getMemcached());
-}
+$cacher = new Cacher();
 
 // the connection configuration
 $connection = $cacher->get('DB_CONNECTION');
@@ -32,6 +26,15 @@ $dbParams = array(
     'port'     => $databaseConfig->port,
     'charset'  => 'utf8'
 );
-$dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, $cache);
-$dbConfig->setQueryCacheImpl($cache);
-$dbConfig->setResultCacheImpl($cache);
+
+$isDevMode = false;
+
+if (!$isDevMode) {
+    $cache = new \Doctrine\Common\Cache\MemcachedCache;
+    $cache->setMemcached($cacher->getMemcached());
+    $dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, $cache);
+    $dbConfig->setQueryCacheImpl($cache);
+    $dbConfig->setResultCacheImpl($cache);
+} else {
+    $dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null);
+}
