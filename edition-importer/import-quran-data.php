@@ -1,4 +1,8 @@
 <?php
+// This script specifically imports the text from https://github.com/khaledhosny/quran-data.
+// It should be used to insert / update data for quran-uthmani-2
+// Clone the repo, remove the meta file from the quran folder and then execute the script.
+
 require ('../config/doctrineBootstrap.php');
 
 use Symfony\Component\Yaml\Yaml;
@@ -7,6 +11,22 @@ use Quran\Entity\Edition;
 use Quran\Entity\Ayat;
 
 global $dbParams, $dbConfig;
+
+$ayahs = [];
+$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath(__DIR__) . '/quran-data/quran'));
+$files = array_keys(array_filter(iterator_to_array($iterator), function($file) {
+    return $file->isFile();
+}));
+sort($files);
+foreach ($files as $file) {
+    $ayahs = array_merge($ayahs, file($file));
+}
+// Strip the numbers
+foreach ($ayahs as $key => $value) {
+    $text = explode('۝', $value);
+    $t = rtrim(ltrim($text[0]));
+    $ayahs[$key] = $t;
+}
 
 $em = EntityManager::create($dbParams, $dbConfig);
 
@@ -25,8 +45,6 @@ $edition->setDirection($yml->direction);
 $edition->setSource($yml->source);
 $em->persist($edition);
 $em->flush();
-
-$ayahs = file('ayahs.txt');
 
 $count = 0;
 foreach ($ayahs as $ayah) {
