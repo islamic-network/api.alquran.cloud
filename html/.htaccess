@@ -1,7 +1,4 @@
 RewriteEngine On
-<If "%{ENV:LOAD_BALANCER_MODE} == '1' && %{HTTP:X-LOAD-BALANCER} != %{ENV:LOAD_BALANCER_KEY}">
-    RewriteRule .* - [F]
-</If>
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]

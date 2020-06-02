@@ -75,28 +75,6 @@ $container['errorHandler'] = function ($c) {
 };
 
 
-/** Invoke Middleware for WAF Checks */
-$app->add(function (Request $request, Response $response, $next) {
-
-    $proxyMode = (bool)getenv('WAF_PROXY_MODE');
-
-    if ($proxyMode) {
-        // Validate Key
-        if (isset($request->getHeader('X-WAF-KEY')[0]) && $request->getHeader('X-WAF-KEY')[0] === getenv('WAF_KEY')) {
-            $response = $next($request, $response);
-
-            return $response;
-        }
-
-        throw new \Quran\Exception\WafKeyMismatchException();
-    }
-
-    $response = $next($request, $response);
-
-    return $response;
-
-});
-
 /** App Settings End **/
 
 /** Endpoint Definition ***/
