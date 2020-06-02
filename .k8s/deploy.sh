@@ -21,4 +21,4 @@ echo "$K8S_EUROPE_CERTIFICATE" | base64 --decode > cert.crt
   --certificate-authority=cert.crt \
   --token=$K8S_EUROPE_TOKEN \
   --namespace=alquran-cloud \
-  apply -f ./k8s/manifest.yml
+  apply -f ./.k8s/manifest.yml
