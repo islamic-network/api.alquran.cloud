@@ -103,7 +103,7 @@ jobs:
             chmod u+x ./kubectl
       - run:
           name: Deploy Code
-          command: chmod u+x ./kube/deploy.sh && sh ./kube/deploy.sh
+          command: chmod u+x ./k8s/deploy.sh && sh ./k8s/deploy.sh
 
 workflows:
   version: 2
