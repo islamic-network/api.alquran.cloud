@@ -92,6 +92,7 @@ jobs:
             IMAGE_TAG=${CIRCLE_TAG}
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:$IMAGE_TAG
+      - checkout
       - run:
           name: Install envsubst
           command: |
@@ -103,7 +104,7 @@ jobs:
             chmod u+x ./kubectl
       - run:
           name: Deploy Code
-          command: chmod u+x /var/www/.k8s/deploy.sh && sh /var/www/.k8s/deploy.sh
+          command: chmod u+x ./.k8s/deploy.sh && sh ./.k8s/deploy.sh
 
 workflows:
   version: 2
