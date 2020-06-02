@@ -1,0 +1,93 @@
+# Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alquran-cloud-api
+  namespace: alquran-cloud
+spec:
+  replicas: 3 # 16 requests each
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: alquran-cloud-api
+  template:
+    metadata:
+      labels:
+        app: alquran-cloud-api
+    spec:
+      hostAliases:
+        - ip: "192.168.141.220"
+          hostnames:
+            - "pxc1"
+        - ip: "192.168.140.152"
+          hostnames:
+            - "pxc2"
+        - ip: "192.168.133.47"
+          hostnames:
+            - "pxc3"
+      containers:
+        - name: alquran-cloud-api
+          image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
+          env:
+            - name:  MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: alquran-cloud-api-database
+                  key: username
+            - name:  MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: alquran-cloud-api-database
+                  key: password
+            - name:  MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: alquran-cloud-api-database
+                  key: database
+            - name:  MYSQL_HOST_1
+              value: "pxc1"
+            - name:  MYSQL_PORT_1
+              value: "3306"
+            - name:  MYSQL_HOST_2
+              value: "pxc2"
+            - name:  MYSQL_PORT_2
+              value: "3306"
+            - name:  MYSQL_HOST_3
+              value: "pxc3"
+            - name:  MYSQL_PORT_3
+              value: "3306"
+            - name:  MEMCACHED_HOST
+              value: "alquran-cloud-api-memcached"
+            - name:  MEMCACHED_PORT
+              value: "11211"
+          livenessProbe:
+            httpGet:
+              path: /v1/status
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /v1/status
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "0.25"
+              memory: 30Mi
+            limits:
+              cpu: "0.25"
+              memory: 512Mi
+          ports:
+            - containerPort: 8080
+              protocol: TCP
