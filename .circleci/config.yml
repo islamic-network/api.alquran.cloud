@@ -108,7 +108,6 @@ jobs:
       - run:
           name: Deploy Code
           command: |
-          IMAGE_TAG=${CIRCLE_TAG}
           chmod u+x ./.k8s/deploy.sh && sh ./.k8s/deploy.sh
 
 workflows:
