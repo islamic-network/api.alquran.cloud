@@ -76,7 +76,7 @@ jobs:
             IMAGE_TAG="${CIRCLE_BUILD_NUM}"
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:latest
             docker push $IMAGE_NAME:latest
-  publish-docker-tag-and-deploy:
+  publish-docker-tag:
     executor: docker-publisher
     steps:
       - attach_workspace:
@@ -92,6 +92,8 @@ jobs:
             IMAGE_TAG=${CIRCLE_TAG}
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:$IMAGE_TAG
+  deploy-docker-tag:
+    executor: docker-publisher
       - checkout
       - run:
           name: Install envsubst
@@ -104,7 +106,9 @@ jobs:
             chmod u+x ./kubectl
       - run:
           name: Deploy Code
-          command: chmod u+x ./.k8s/deploy.sh && sh ./.k8s/deploy.sh
+          command: |
+          IMAGE_TAG=${CIRCLE_TAG}
+          chmod u+x ./.k8s/deploy.sh && sh ./.k8s/deploy.sh
 
 workflows:
   version: 2
@@ -150,10 +154,19 @@ workflows:
               only: /.*/
             branches:
               ignore: /.*/
-      - publish-docker-tag-and-deploy:
+      - publish-docker-tag:
           context: org-global
           requires:
             - build-docker-image
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+      - deploy-docker-tag:
+          context: org-global
+          requires:
+            - publish-docker-tag
           filters:
             tags:
               only: /.*/
