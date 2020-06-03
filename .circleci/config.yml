@@ -94,6 +94,7 @@ jobs:
             docker push $IMAGE_NAME:$IMAGE_TAG
   deploy-docker-tag:
     executor: docker-publisher
+    steps:
       - checkout
       - run:
           name: Install envsubst
