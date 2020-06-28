@@ -461,8 +461,7 @@ class AyatResponse extends QuranResponse
                     $ax['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayah->getNumber(), $this->protocol);
                     
                 }
-                $ax['text'] = $this->fontHack ? str_replace('لْءَا', 'لْآ', $ayah->getText()) : $ayah->getText();
-                $ax['text'] = $this->fontHack ? str_replace('لۡءَا', 'لْآ', $ayah->getText()) : $ayah->getText();
+                $ax['text'] = $this->fontHack ? str_replace(['لْءَا', 'لۡءَا'], ['لْآ', 'لْآ'], $ayah->getText()) : $ayah->getText();
                 if ($this->includeEdition) {
                     $this->cacheEdition($ayah);
                     $ax['edition'] = $this->cache['edition'][$ayah->getEdition()->getId()];
@@ -497,8 +496,7 @@ class AyatResponse extends QuranResponse
                     $a['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
                     $a['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayat->getNumber(), $this->protocol);
                 }
-                $a['text'] = $this->fontHack ? str_replace('لْءَا', 'لْآ', $ayat->getText()) : $ayat->getText();
-                $a['text'] = $this->fontHack ? str_replace('لۡءَا', 'لْآ', $ayat->getText()) : $ayat->getText();
+                $a['text'] = $this->fontHack ? str_replace(['لْءَا', 'لۡءَا'], ['لْآ', 'لْآ'], $ayat->getText()) : $ayat->getText();
                 $a['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
                 $a['surah'] = (new SuratResponse($ayat->getSurat()->getId()))->getResponse();
                 $a['numberInSurah'] = $ayat->getNumberInSurat();
