@@ -462,7 +462,7 @@ class AyatResponse extends QuranResponse
                     
                 }
                 $ax['text'] = $this->fontHack ? str_replace('لْءَا', 'لْآ', $ayah->getText()) : $ayah->getText();
-                $ax['text'] = $this->fontHack ? str_replace('لْۡءَا', 'لْآ', $ayah->getText()) : $ayah->getText();
+                $ax['text'] = $this->fontHack ? str_replace('لۡءَا', 'لْآ', $ayah->getText()) : $ayah->getText();
                 if ($this->includeEdition) {
                     $this->cacheEdition($ayah);
                     $ax['edition'] = $this->cache['edition'][$ayah->getEdition()->getId()];
@@ -498,7 +498,7 @@ class AyatResponse extends QuranResponse
                     $a['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayat->getNumber(), $this->protocol);
                 }
                 $a['text'] = $this->fontHack ? str_replace('لْءَا', 'لْآ', $ayat->getText()) : $ayat->getText();
-                $a['text'] = $this->fontHack ? str_replace('لْۡءَا', 'لْآ', $ayat->getText()) : $ayat->getText();
+                $a['text'] = $this->fontHack ? str_replace('لۡءَا', 'لْآ', $ayat->getText()) : $ayat->getText();
                 $a['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
                 $a['surah'] = (new SuratResponse($ayat->getSurat()->getId()))->getResponse();
                 $a['numberInSurah'] = $ayat->getNumberInSurat();
