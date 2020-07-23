@@ -50,11 +50,11 @@ spec:
                   name: alquran-cloud-api-database
                   key: database
             - name:  MYSQL_HOST_1
-              value: "pxc1"
+              value: "pxc2"
             - name:  MYSQL_PORT_1
               value: "3306"
             - name:  MYSQL_HOST_2
-              value: "pxc2"
+              value: "pxc1"
             - name:  MYSQL_PORT_2
               value: "3306"
             - name:  MYSQL_HOST_3
