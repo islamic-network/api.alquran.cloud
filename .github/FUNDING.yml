@@ -1,6 +1,6 @@
 # These are supported funding model platforms
 
-github: [meezaan]
+github: [islamic-network]
 patreon: islamicnetwork
 # open_collective: # Replace with a single Open Collective username
 # ko_fi: # Replace with a single Ko-fi username
@@ -9,4 +9,4 @@ patreon: islamicnetwork
 # liberapay: # Replace with a single Liberapay username
 # issuehunt: # Replace with a single IssueHunt username
 # otechie: # Replace with a single Otechie username
-paypal: ['https://paypal.me/islamicnetwork']
+custom: ['https://paypal.me/islamicnetwork']
