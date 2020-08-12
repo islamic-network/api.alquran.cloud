@@ -31,6 +31,13 @@ spec:
           hostnames:
             - "pxc3"
       containers:
+        - name: apache-exporter-sidecar
+          image: lusotycoon/apache-exporter
+          args:
+            - '--scrape_uri=http://localhost:8080/server-status/?auto'
+          ports:
+            - containerPort: 9117
+              protocol: TCP
         - name: alquran-cloud-api
           image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
           env:
