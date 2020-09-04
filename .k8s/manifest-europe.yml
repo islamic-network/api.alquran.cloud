@@ -90,11 +90,11 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              cpu: "0.25"
-              memory: 512Mi
+              cpu: "0.22"
+              memory: 450Mi
             limits:
-              cpu: "0.25"
-              memory: 512Mi
+              cpu: "0.22"
+              memory: 450Mi
           ports:
             - containerPort: 8080
               protocol: TCP
