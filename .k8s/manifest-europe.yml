@@ -6,7 +6,7 @@ metadata:
   name: alquran-cloud-api
   namespace: alquran-cloud
 spec:
-  replicas: 3 # 16 requests each
+  replicas: 2 # 16 requests each
   strategy:
     type: RollingUpdate
     rollingUpdate:
