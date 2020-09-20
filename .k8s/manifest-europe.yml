@@ -94,7 +94,7 @@ spec:
               memory: 250Mi
             limits:
               cpu: "0.25"
-              memory: 450Mi
+              memory: 500Mi
           ports:
             - containerPort: 8080
               protocol: TCP
