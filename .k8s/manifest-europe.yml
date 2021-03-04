@@ -38,6 +38,13 @@ spec:
           ports:
             - containerPort: 9117
               protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
         - name: alquran-cloud-api
           image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
           env:
