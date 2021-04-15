@@ -117,6 +117,7 @@ class Meta
                 'ar.muhammadjibreel',
                 'ar.shaatree',
                 'fr.leclerc',
+                'ru.kuliev-audio',
                 'zh.chinese',
             ],
             '64' => [
