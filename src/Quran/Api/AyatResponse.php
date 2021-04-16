@@ -457,8 +457,9 @@ class AyatResponse extends QuranResponse
             foreach($ayat as $ayah) {
                 $ax['number'] = $ayah->getNumber();
                 if (isset($this->audioEdition)) {
-                    $ax['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayah->getNumber();
-                    $ax['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayah->getNumber(), $this->protocol);
+                    $audioUrls = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayah->getNumber(), $this->protocol);
+                    $ax['audio'] = $audioUrls[0];
+                    $ax['audioSecondary'] = $audioUrls;
                     
                 }
                 $ax['text'] = $this->fontHack ? str_replace(['لْءَا', 'لۡءَا'], ['لْآ', 'لْآ'], $ayah->getText()) : $ayah->getText();
@@ -493,8 +494,10 @@ class AyatResponse extends QuranResponse
         } else {
                 $a['number'] = $ayat->getNumber();
                 if (isset($this->audioEdition)) {
-                    $a['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
-                    $a['audioSecondary'] = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayat->getNumber(), $this->protocol);
+                    $audioUrls = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayat->getNumber(), $this->protocol);
+                    $a['audio'] = $audioUrls[0];
+                    //$a['audio'] = $this->protocol . '://cdn.alquran.cloud/media/audio/ayah/' . $this->audioEdition->getIdentifier() . '/' . $ayat->getNumber();
+                    $a['audioSecondary'] = $audioUrls;
                 }
                 $a['text'] = $this->fontHack ? str_replace(['لْءَا', 'لۡءَا'], ['لْآ', 'لْآ'], $ayat->getText()) : $ayat->getText();
                 $a['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
