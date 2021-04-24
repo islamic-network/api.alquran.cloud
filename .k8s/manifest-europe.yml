@@ -81,20 +81,18 @@ spec:
               value: "11211"
           livenessProbe:
             httpGet:
-              path: /v1/status
+              path: /v1/liveness
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 3
             failureThreshold: 3
-          readinessProbe:
+          startupProbe:
             httpGet:
-              path: /v1/status
+              path: /v1/liveness
               port: 8080
-            initialDelaySeconds: 3
-            periodSeconds: 15
-            timeoutSeconds: 3
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 10
           resources:
             requests:
               cpu: "150m"

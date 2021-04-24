@@ -55,4 +55,8 @@ $app->group('/v1', function() {
 
     });
 
+    $this->get('/liveness', function (Request $request, Response $response) {
+        return $response->withJson('OK', 200);
+    });
+
 });
