@@ -95,11 +95,26 @@ spec:
             failureThreshold: 10
           resources:
             requests:
-              cpu: "150m"
+              cpu: "350m"
               memory: 250Mi
             limits:
-              cpu: "300m"
+              cpu: "350m"
               memory: 500Mi
           ports:
             - containerPort: 8080
               protocol: TCP
+---
+# HPA
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: alquran-cloud-api
+  namespace: alquran-cloud
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: alquran-cloud-api
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 60
