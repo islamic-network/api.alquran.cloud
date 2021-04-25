@@ -115,6 +115,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: alquran-cloud-api
-  minReplicas: 3
+  minReplicas: 7
   maxReplicas: 10
   targetCPUUtilizationPercentage: 60
