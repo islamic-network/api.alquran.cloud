@@ -11,12 +11,7 @@ $paths = array(realpath(__DIR__) . '/../src');
 $cacher = new Cacher();
 
 // the connection configuration
-$connection = $cacher->get('DB_CONNECTION');
-if (!$connection) {
-    $databaseConfig = (new Config())->connection();
-} else {
-    $databaseConfig = (new Config())->connection($cacher->get('DB_CONNECTION'));
-}
+$databaseConfig = (new Config())->connection('database');
 
 $dbParams = array(
     'driver'   => 'pdo_mysql',
