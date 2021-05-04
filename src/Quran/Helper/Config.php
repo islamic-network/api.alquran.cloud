@@ -19,26 +19,12 @@ class Config
     {
         $this->config = [
             'connections' => [
-                'database_pxc_1' => [
+                'database' => [
                     'host' => getenv('MYSQL_HOST_1'),
                     'username' => getenv('MYSQL_USER'),
                     'password' => getenv('MYSQL_PASSWORD'),
                     'dbname' => getenv('MYSQL_DATABASE'),
                     'port' => getenv('MYSQL_PORT_1')
-                ],
-                'database_pxc_2' => [
-                    'host' => getenv('MYSQL_HOST_2'),
-                    'username' => getenv('MYSQL_USER'),
-                    'password' => getenv('MYSQL_PASSWORD'),
-                    'dbname' => getenv('MYSQL_DATABASE'),
-                    'port' => getenv('MYSQL_PORT_2')
-                ],
-                'database_pxc_3' => [
-                    'host' => getenv('MYSQL_HOST_3'),
-                    'username' => getenv('MYSQL_USER'),
-                    'password' => getenv('MYSQL_PASSWORD'),
-                    'dbname' => getenv('MYSQL_DATABASE'),
-                    'port' => getenv('MYSQL_PORT_3')
                 ],
                 'memcache' => [
                     'host' => getenv('MEMCACHED_HOST'),
@@ -54,7 +40,7 @@ class Config
      * @param String $id Defined in the config.yml file
      * @return Object
      */
-    public function connection($id = 'database_pxc_1')
+    public function connection($id = 'database')
     {
         return (object)$this->config['connections'][$id];
     }
