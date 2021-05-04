@@ -167,7 +167,8 @@ workflows:
       - deploy-docker-tag-europe:
           context: org-global
           requires:
-            - build-and-publish-docker-image
+            - build-and-publish-docker-image-to-docker-hub
+            - build-and-publish-docker-image-to-docker-quay
           filters:
             tags:
               only: /.*/
@@ -176,7 +177,8 @@ workflows:
       - deploy-docker-tag-asia:
           context: org-global
           requires:
-            - build-and-publish-docker-image
+            - build-and-publish-docker-image-to-docker-hub
+            - build-and-publish-docker-image-to-docker-quay
           filters:
             tags:
               only: /.*/
