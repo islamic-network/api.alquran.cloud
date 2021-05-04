@@ -36,7 +36,7 @@ jobs:
           command: |
             VERSION="${CIRCLE_BUILD_NUM}"
             ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ~/repo/
-  build-and-publish-docker-image-to-quay:
+  build-and-publish-docker-image-to-docker-hub:
     executor: docker-publisher
     steps:
       - checkout
