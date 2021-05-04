@@ -3,6 +3,7 @@ executors:
   docker-publisher:
     environment:
       IMAGE_NAME: islamicnetwork/api.alquran.cloud
+      QUAYIO_IMAGE_NAME: islamic-network/api.alquran.cloud
     docker:
       - image: circleci/buildpack-deps:stretch
   php74:
@@ -60,7 +61,6 @@ jobs:
             echo "Pushing tag $IMAGE_TAG to Docker Hub..."
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:$IMAGE_TAG
-            sleep 7
             echo "$QUAYIO_PASSWORD" | docker login quay.io --username "$QUAYIO_USERNAME" --password-stdin
             docker tag $IMAGE_NAME:latest $QUAYIO_IMAGE_NAME:latest
             echo "Pushing latest tag to quay.io..."
