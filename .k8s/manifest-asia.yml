@@ -5,7 +5,7 @@ metadata:
   name: alquran-cloud-api-memcached
   namespace: alquran-cloud
 spec:
-  replicas: 2
+  replicas: 3
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -158,7 +158,7 @@ spec:
                   name: alquran-cloud-api-database
                   key: database
             - name:  MYSQL_HOST_1
-              value: "alquran.db.europe.local.islamic.network"
+              value: "alquran.db.asia.local.islamic.network"
             - name:  MYSQL_PORT_1
               value: "3306"
             - name:  MEMCACHED_HOST
@@ -201,10 +201,9 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: alquran-cloud-api
-  minReplicas: 3
+  minReplicas: 4
   maxReplicas: 10
   targetCPUUtilizationPercentage: 60
-=======
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -219,7 +218,7 @@ spec:
   tls:
     - hosts:
         - "api.alquran.cloud"
-        - "europe.api.alquran.cloud"
+        - "asia.api.alquran.cloud"
       secretName: "alquran-cloud-api-tls"
   rules:
     - host: api.alquran.cloud
@@ -232,7 +231,7 @@ spec:
                 name: alquran-cloud-api
                 port:
                   number: 80
-    - host: europe.api.alquran.cloud
+    - host: asia.api.alquran.cloud
       http:
         paths:
           - path: /
