@@ -204,7 +204,6 @@ spec:
   minReplicas: 3
   maxReplicas: 10
   targetCPUUtilizationPercentage: 60
-=======
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
