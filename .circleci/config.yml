@@ -168,7 +168,7 @@ workflows:
           context: org-global
           requires:
             - build-and-publish-docker-image-to-docker-hub
-            - build-and-publish-docker-image-to-docker-quay
+            - build-and-publish-docker-image-to-quay
           filters:
             tags:
               only: /.*/
@@ -178,7 +178,7 @@ workflows:
           context: org-global
           requires:
             - build-and-publish-docker-image-to-docker-hub
-            - build-and-publish-docker-image-to-docker-quay
+            - build-and-publish-docker-image-to-quay
           filters:
             tags:
               only: /.*/
