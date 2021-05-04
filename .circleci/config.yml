@@ -3,7 +3,7 @@ executors:
   docker-publisher:
     environment:
       IMAGE_NAME: islamicnetwork/api.alquran.cloud
-      QUAYIO_IMAGE_NAME: islamic-network/api.alquran.cloud
+      QUAYIO_IMAGE_NAME: quay.io/islamic-network/api.alquran.cloud
     docker:
       - image: circleci/buildpack-deps:stretch
   php74:
