@@ -5,7 +5,7 @@ metadata:
   name: alquran-cloud-api-memcached
   namespace: alquran-cloud
 spec:
-  replicas: 3
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
