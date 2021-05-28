@@ -7,8 +7,10 @@ use Quran\Helper\Request as ApiRequest;
 $app->group('/v1', function() {
     $this->get('/search/{word}', function (Request $request, Response $response) {
 
-        $word = $request->getAttribute('word');
+        $word = urldecode($request->getAttribute('word'));
+
         $search = new Quran\Api\SearchResponse($word);
+
         // $this->logger->addInfo('edition ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
 
         return $response->withJson($search->get(), $search->getCode());

@@ -38,7 +38,7 @@ class SearchResponse extends QuranResponse
      * @param string $surat
      * @param string $lang
      */
-    public function __construct($keyword, $surat = 'all', $lang = 'en')
+    public function __construct($keyword, $surat = 'all', $lang = '')
     {
         parent::__construct();
 
@@ -60,27 +60,47 @@ class SearchResponse extends QuranResponse
     {
         $result = false;
         if ((int) $this->surat > 0 && (int) $this->surat < 115) {
-            $result = $this->entityManager->getRepository("\Quran\Entity\Ayat")->createQueryBuilder('a')
-                ->leftJoin('a.edition', 'e')
-                ->where('LOWER(a.text) LIKE :keyword')
-                ->andWhere('a.surat = :surat')
-                ->andWhere('e.language = :language OR e.identifier = :identifier')
-                ->setParameter('language', $this->lang)
-                ->setParameter('identifier', $this->lang)
-                ->setParameter('keyword', '%' . $this->keyword . '%')
-                ->setParameter('surat', $this->surat)
-                ->getQuery()
-                ->getResult();
+            if ($this->lang != '') {
+                $result = $this->entityManager->getRepository("\Quran\Entity\Ayat")->createQueryBuilder('a')
+                    ->leftJoin('a.edition', 'e')
+                    ->where('LOWER(a.text) LIKE :keyword')
+                    ->andWhere('a.surat = :surat')
+                    ->andWhere('e.language = :language OR e.identifier = :identifier')
+                    ->setParameter('language', $this->lang)
+                    ->setParameter('identifier', $this->lang)
+                    ->setParameter('keyword', '%' . $this->keyword . '%')
+                    ->setParameter('surat', $this->surat)
+                    ->getQuery()
+                    ->getResult();
+            } else {
+                $result = $this->entityManager->getRepository("\Quran\Entity\Ayat")->createQueryBuilder('a')
+                    ->leftJoin('a.edition', 'e')
+                    ->where('LOWER(a.text) LIKE :keyword')
+                    ->andWhere('a.surat = :surat')
+                    ->setParameter('keyword', '%' . $this->keyword . '%')
+                    ->setParameter('surat', $this->surat)
+                    ->getQuery()
+                    ->getResult();
+            }
         } else if ($this->surat == 'all') {
-            $result = $this->entityManager->getRepository("\Quran\Entity\Ayat")->createQueryBuilder('a')
-                ->leftJoin('a.edition', 'e')
-                ->where('LOWER(a.text) LIKE :keyword')
-                ->andWhere('e.language = :language OR e.identifier = :identifier')
-                ->setParameter('keyword', '%' . $this->keyword . '%')
-                ->setParameter('language', $this->lang)
-                ->setParameter('identifier', $this->lang)
-                ->getQuery()
-                ->getResult();
+            if ($this->lang != '') {
+                $result = $this->entityManager->getRepository("\Quran\Entity\Ayat")->createQueryBuilder('a')
+                    ->leftJoin('a.edition', 'e')
+                    ->where('LOWER(a.text) LIKE :keyword')
+                    ->andWhere('e.language = :language OR e.identifier = :identifier')
+                    ->setParameter('keyword', '%' . $this->keyword . '%')
+                    ->setParameter('language', $this->lang)
+                    ->setParameter('identifier', $this->lang)
+                    ->getQuery()
+                    ->getResult();
+            } else {
+                $result = $this->entityManager->getRepository("\Quran\Entity\Ayat")->createQueryBuilder('a')
+                    ->leftJoin('a.edition', 'e')
+                    ->where('LOWER(a.text) LIKE :keyword')
+                    ->setParameter('keyword', '%' . $this->keyword . '%')
+                    ->getQuery()
+                    ->getResult();
+            }
         }
 
         if (!$result || $result === null) {
