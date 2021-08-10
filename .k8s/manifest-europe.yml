@@ -56,8 +56,8 @@ kind: Service
 metadata:
   name: alquran-cloud-api
   namespace: alquran-cloud
-#  annotations:
-#    konghq.com/plugins: rate-limiting-alquran-api
+  annotations:
+    konghq.com/plugins: rate-limiting-alquran-api
 spec:
   ports:
     - port: 80
