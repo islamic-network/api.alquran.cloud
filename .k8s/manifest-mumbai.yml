@@ -5,7 +5,7 @@ metadata:
   name: alquran-cloud-api-memcached
   namespace: alquran-cloud
 spec:
-  replicas: 2
+  replicas: 3
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -60,8 +60,8 @@ metadata:
     konghq.com/plugins: rate-limiting-alquran-api
 spec:
   ports:
-    - port: 80
-      targetPort: 8080
+  - port: 80
+    targetPort: 8080
   selector:
     app: alquran-cloud-api
 ---
@@ -140,7 +140,7 @@ spec:
               cpu: 100m
               memory: 128Mi
         - name: alquran-cloud-api
-          image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
+          image: islamicnetwork/api.alquran.cloud:885
           env:
             - name:  MYSQL_USER
               valueFrom:
@@ -158,8 +158,16 @@ spec:
                   name: alquran-cloud-api-database
                   key: database
             - name:  MYSQL_HOST_1
-              value: "alquran.db.europe.local.islamic.network"
+              value: "db.mumbai.local.islamic.network"
             - name:  MYSQL_PORT_1
+              value: "3306"
+            - name:  MYSQL_HOST_2
+              value: "db.mumbai.local.islamic.network"
+            - name:  MYSQL_PORT_2
+              value: "3306"
+            - name:  MYSQL_HOST_3
+              value: "db.mumbai.local.islamic.network"
+            - name:  MYSQL_PORT_3
               value: "3306"
             - name:  MEMCACHED_HOST
               value: "alquran-cloud-api-memcached"
@@ -169,16 +177,16 @@ spec:
             httpGet:
               path: /v1/liveness
               port: 8080
-            initialDelaySeconds: 3
-            periodSeconds: 7
-            timeoutSeconds: 7
-            failureThreshold: 7
+            initialDelaySeconds: 7
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
           startupProbe:
             httpGet:
               path: /v1/status
               port: 8080
             periodSeconds: 7
-            failureThreshold: 1
+            failureThreshold: 3
           resources:
             requests:
               cpu: "150m"
@@ -201,7 +209,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: alquran-cloud-api
-  minReplicas: 2
+  minReplicas: 2 
   maxReplicas: 10
   targetCPUUtilizationPercentage: 60
 ---
@@ -216,28 +224,28 @@ metadata:
     kubernetes.io/ingress.class: kong
 spec:
   tls:
-    - hosts:
-        - "api.alquran.cloud"
-        - "europe.api.alquran.cloud"
-      secretName: "alquran-cloud-api-tls"
+  - hosts:
+    - "api.alquran.cloud"
+    - "mumbai.api.alquran.cloud"
+    secretName: "alquran-cloud-api-tls"
   rules:
-    - host: api.alquran.cloud
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: alquran-cloud-api
-                port:
-                  number: 80
-    - host: europe.api.alquran.cloud
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: alquran-cloud-api
-                port:
-                  number: 80
+  - host: api.alquran.cloud
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alquran-cloud-api
+              port: 
+                number: 80
+  - host: mumbai.api.alquran.cloud
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alquran-cloud-api
+              port: 
+                number: 80
