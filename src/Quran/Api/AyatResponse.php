@@ -459,7 +459,8 @@ class AyatResponse extends QuranResponse
                 if (isset($this->audioEdition)) {
                     $audioUrls = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayah->getNumber(), $this->protocol);
                     $ax['audio'] = $audioUrls[0];
-                    $ax['audioSecondary'] = $audioUrls;
+                    unset($audioUrls[0]);
+                    $ax['audioSecondary'] = array_values($audioUrls);
                     
                 }
                 $ax['text'] = $this->fontHack ? str_replace(['لْءَا', 'لۡءَا'], ['لْآ', 'لْآ'], $ayah->getText()) : $ayah->getText();
@@ -496,9 +497,8 @@ class AyatResponse extends QuranResponse
                 if (isset($this->audioEdition)) {
                     $audioUrls = $this->meta->getAudioUrlsByReciter($this->audioEdition->getIdentifier(), $ayat->getNumber(), $this->protocol);
                     $a['audio'] = $audioUrls[0];
-                    $secondaryAudioUrls = $audioUrls;
-                    unset($secondaryAudioUrls[0]);
-                    $a['audioSecondary'] = $secondaryAudioUrls;
+                    unset($audioUrls[0]);
+                    $a['audioSecondary'] = array_values($audioUrls);
                 }
                 $a['text'] = $this->fontHack ? str_replace(['لْءَا', 'لۡءَا'], ['لْآ', 'لْآ'], $ayat->getText()) : $ayat->getText();
                 $a['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
