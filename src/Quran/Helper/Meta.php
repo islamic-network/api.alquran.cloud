@@ -4,7 +4,8 @@ namespace Quran\Helper;
 
 class Meta
 {
-    const DO_CDN_BASE_URL = 'cdn.islamic.network';
+    const PRIMARY_CDN_BASE_URL = 'cdn.islamic.network';
+    const SECONDARY_CDN_BASE_URL = 'cdn2.islamic.network';
     private $hizb_quarter;
     private $page;
     private $ruku;
@@ -157,7 +158,8 @@ class Meta
         $urls = [];
         foreach ($this->getAudioBySize() as $size => $reciters) {
             if (in_array($name, $reciters)) {
-                $urls[] = $protocol . '://' . self::DO_CDN_BASE_URL . '/quran/audio/' . $size . '/' . $name . '/' . $number . '.mp3';
+                $urls[] = $protocol . '://' . self::PRIMARY_CDN_BASE_URL . '/quran/audio/' . $size . '/' . $name . '/' . $number . '.mp3';
+                $urls[] = $protocol . '://' . self::SECONDARY_CDN_BASE_URL . '/quran/audio/' . $size . '/' . $name . '/' . $number . '.mp3';
             }
         }
 
