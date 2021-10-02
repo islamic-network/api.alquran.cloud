@@ -140,7 +140,7 @@ spec:
               cpu: 100m
               memory: 128Mi
         - name: alquran-cloud-api
-          image: islamicnetwork/api.alquran.cloud:885
+          image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
           env:
             - name:  MYSQL_USER
               valueFrom:
