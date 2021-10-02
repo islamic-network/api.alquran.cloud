@@ -11,7 +11,7 @@
 This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
 
 # Technology Stack
-* PHP 7.3
+* PHP 8.0
 * PerconaDB 5.7
 * Memcached 1.5
 * Slim Framework v3
