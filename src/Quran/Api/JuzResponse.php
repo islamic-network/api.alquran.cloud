@@ -111,6 +111,9 @@ class JuzResponse extends QuranResponse
 
         // Now load juz surahs and add to the response.
         $ayats->loadAyahSurahsByJuz($juz->getId(), $this->offset, $this->limit);
+        
+        
+        // Here, surahs must be an array not a json object
         $j['surahs'] = $ayats->getResponse();
 
         $j['edition'] = (new EditionResponse($this->edition->getIdentifier()))->getResponse();
