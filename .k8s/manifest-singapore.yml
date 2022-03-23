@@ -189,10 +189,10 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              cpu: "150m"
+              cpu: "200m"
               memory: 250Mi
             limits:
-              cpu: "250m"
+              cpu: "350m"
               memory: 500Mi
           ports:
             - containerPort: 8080
