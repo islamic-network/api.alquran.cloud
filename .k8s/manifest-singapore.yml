@@ -211,7 +211,7 @@ spec:
     name: alquran-cloud-api
   minReplicas: 3 
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 60
+  targetCPUUtilizationPercentage: 50
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
