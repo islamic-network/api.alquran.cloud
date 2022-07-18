@@ -1,10 +1,12 @@
 {
     "require": {
-        "monolog/monolog": "~1.17",
-        "guzzlehttp/guzzle": "^6.1",
-        "slim/slim": "^3.0",
-        "doctrine/dbal": "^2.10",
-        "doctrine/orm": "^2.7"
+        "monolog/monolog": "~1.27",
+        "guzzlehttp/guzzle": "^7.1",
+        "slim/slim": "^4.10.0.0",
+        "doctrine/dbal": "^3.2",
+        "doctrine/orm": "^2.11",
+        "symfony/cache": "^5.4",
+        "doctrine/annotations": "^1.13"
     },
     "require-dev": {
         "symfony/yaml": "^5.0"

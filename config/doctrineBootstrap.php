@@ -5,7 +5,7 @@ require_once realpath(__DIR__) . '/../vendor/autoload.php';
 use Doctrine\ORM\Tools\Setup;
 use Quran\Helper\Cacher;
 use Quran\Helper\Config;
-use Doctrine\Common\Cache\MemcachedCache;
+
 
 $paths = array(realpath(__DIR__) . '/../src');
 $cacher = new Cacher();
@@ -26,11 +26,11 @@ $dbParams = array(
 $isDevMode = false;
 
 if (!$isDevMode) {
-    $cache = new MemcachedCache();
-    $cache->setMemcached($cacher->getMemcached());
-    $dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, $cache);
-    $dbConfig->setQueryCacheImpl($cache);
-    $dbConfig->setResultCacheImpl($cache);
+
+    $cache = new \Symfony\Component\Cache\Adapter\MemcachedAdapter($cacher->getMemcached());
+    $dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null);
+    $dbConfig->setQueryCache($cache);
+    $dbConfig->setResultCache($cache);
 } else {
     $dbConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null);
 }

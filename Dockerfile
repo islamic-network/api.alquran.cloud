@@ -1,4 +1,4 @@
-FROM islamicnetwork/php:8.0-apache
+FROM islamicnetwork/php:8.1-apache-dev
 
 # Copy files
 RUN cd ../ && rm -rf /var/www/html
@@ -13,13 +13,6 @@ ENV MYSQL_USER "someUser"
 ENV MYSQL_PASSWORD "somePassword"
 ENV MYSQL_DATABASE "someDb"
 ENV MYSQL_HOST_1 "localhost"
-ENV MYSQL_HOST_2 "localhost"
-ENV MYSQL_HOST_3 "localhost"
-# 0 = disabled. 1 = enabled
-ENV WAF_PROXY_MODE "0"
-ENV WAF_KEY "someKey"
-ENV LOAD_BALANCER_MODE "0"
-ENV LOAD_BALANCER_KEY "KEY"
 
 COPY doctrineProxies.sh /usr/local/bin/doctrineProxies.sh
 RUN chmod 755 /usr/local/bin/doctrineProxies.sh
