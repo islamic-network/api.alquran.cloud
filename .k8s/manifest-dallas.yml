@@ -227,6 +227,7 @@ spec:
   - hosts:
     - "api.alquran.cloud"
     - "dallas.api.alquran.cloud"
+    - "geo.alquran.cloud"
     secretName: "alquran-cloud-api-tls"
   rules:
   - host: api.alquran.cloud
@@ -240,6 +241,16 @@ spec:
               port: 
                 number: 80
   - host: dallas.api.alquran.cloud
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alquran-cloud-api
+              port: 
+                number: 80
+  - host: geo.alquran.cloud
     http:
       paths:
         - path: /
