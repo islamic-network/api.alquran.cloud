@@ -227,7 +227,6 @@ spec:
   - hosts:
     - "api.alquran.cloud"
     - "singapore.api.alquran.cloud"
-    - "geo.alquran.cloud"
     secretName: "alquran-cloud-api-tls"
   rules:
   - host: api.alquran.cloud
@@ -250,6 +249,22 @@ spec:
               name: alquran-cloud-api
               port: 
                 number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alquran-cloud-geo-ingress
+  namespace: alquran-cloud
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: kong
+spec:
+  tls:
+  - hosts:
+    - "geo.alquran.cloud"
+    secretName: "alquran-cloud-geo-tls"
+  rules:
   - host: geo.alquran.cloud
     http:
       paths:
