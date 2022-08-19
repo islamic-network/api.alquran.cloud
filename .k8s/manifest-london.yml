@@ -256,14 +256,8 @@ metadata:
   name: alquran-cloud-geo-ingress
   namespace: alquran-cloud
   annotations:
-    kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: kong
 spec:
-  tls:
-  - hosts:
-    - "geo.alquran.cloud"
-    secretName: "alquran-cloud-geo-tls"
   rules:
   - host: geo.alquran.cloud
     http:
