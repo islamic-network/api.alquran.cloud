@@ -26,7 +26,7 @@ return
             'primary' => [
                 // Enables or disables Doctrine metadata caching
                 // for either performance or convenience during development.
-                'dev_mode' => (bool) env('DEBUG', true),
+                'dev_mode' => (bool) env('DEBUG', false),
 
                 // List of paths where Doctrine will search for metadata.
                 // Metadata can be either YML/XML files or PHP classes annotated
@@ -47,7 +47,7 @@ return
                     ],
                     'file' => [
                         // Path where Doctrine will cache the processed metadata when 'dev_mode' is false
-                        'dir' => '/var/www/tmp',
+                        'dir' => '/tmp',
                     ]
                 ]
             ],

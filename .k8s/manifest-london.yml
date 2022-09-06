@@ -165,8 +165,6 @@ spec:
               value: "alquran-cloud-api-memcached"
             - name:  MEMCACHED_PORT
               value: "11211"
-            - name: DEBUG
-              value: "false"
           livenessProbe:
             httpGet:
               path: /liveness
