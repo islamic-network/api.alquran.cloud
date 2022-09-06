@@ -11,10 +11,10 @@
 This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
 
 # Technology Stack
-* PHP 8.0
+* PHP 8.1
 * PerconaDB 5.7
-* Memcached 1.5
-* Slim Framework v3
+* Memcached 1.6
+* Kipchak API Development Kit (https://github.com/mam-luk/kipchak)
 
 ## Adding Qur'an Editions
 

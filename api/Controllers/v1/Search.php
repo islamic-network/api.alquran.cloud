@@ -23,7 +23,7 @@ class Search extends AlQuranController
     {
         $word = urldecode(Http\Request::getAttribute($request, 'word'));
 
-        $result = $this->mc->get('search_' . $word, function (ItemInterface $item) use ($word) {
+        $result = $this->mc->get(md5('search_' . $word), function (ItemInterface $item) use ($word) {
             $item->expiresAfter(604800);
             $s = new SearchResponse($this->em, $word);
 
@@ -46,7 +46,7 @@ class Search extends AlQuranController
         $word = urldecode(Http\Request::getAttribute($request, 'word'));
         $surah = Http\Request::getAttribute($request, 'surah');
 
-        $result = $this->mc->get('search_' . $word . '_' . $surah, function (ItemInterface $item) use ($word, $surah) {
+        $result = $this->mc->get(md5('search_' . $word . '_' . $surah), function (ItemInterface $item) use ($word, $surah) {
             $item->expiresAfter(604800);
             $s = new SearchResponse($this->em, $word, $surah);
 
@@ -70,7 +70,7 @@ class Search extends AlQuranController
         $surah = Http\Request::getAttribute($request, 'surah');
         $language = Http\Request::getAttribute($request, 'language');
 
-        $result = $this->mc->get('search_' . $word . '_' . $surah . '_' . $language, function (ItemInterface $item) use ($word, $surah, $language) {
+        $result = $this->mc->get(md5('search_' . $word . '_' . $surah . '_' . $language), function (ItemInterface $item) use ($word, $surah, $language) {
             $item->expiresAfter(604800);
             $s = new SearchResponse($this->em, $word, $surah, $language);
 
