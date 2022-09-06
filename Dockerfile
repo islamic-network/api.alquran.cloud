@@ -1,4 +1,4 @@
-FROM islamicnetwork/php:8.1-apache-dev
+FROM islamicnetwork/php:8.1-apache
 
 # Copy files
 COPY . /var/www/
