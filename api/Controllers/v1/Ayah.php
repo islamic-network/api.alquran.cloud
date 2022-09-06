@@ -26,7 +26,7 @@ class Ayah extends AlQuranController
         $number = rand(1, 6326);
         $edition = 'quran-uthmani-quran-academy';
 
-        $result = $this->mc->get('ayah_' . $number . '_'. $edition, function (ItemInterface $item) use ($number, $edition) {
+        $result = $this->mc->get(md5('ayah_' . $number . '_'. $edition), function (ItemInterface $item) use ($number, $edition) {
             $item->expiresAfter(604800);
             $a = new AyatResponse($this->em, $number, $edition);
 
@@ -50,7 +50,7 @@ class Ayah extends AlQuranController
         $number = rand(1, 6326);
         $edition = Http\Request::getAttribute($request, 'edition');
 
-        $result = $this->mc->get('ayah_' . $number . '_' . $edition, function (ItemInterface $item) use ($number, $edition) {
+        $result = $this->mc->get(md5('ayah_' . $number . '_' . $edition), function (ItemInterface $item) use ($number, $edition) {
             $item->expiresAfter(604800);
             $a = new AyatResponse($this->em, $number, $edition);
 
@@ -81,7 +81,7 @@ class Ayah extends AlQuranController
         $number = Http\Request::getAttribute($request, 'number');
         $edition = 'quran-uthmani-quran-academy';
 
-        $result = $this->mc->get('ayah_' . $number . '_'. $edition, function (ItemInterface $item) use ($number, $edition) {
+        $result = $this->mc->get(md5('ayah_' . $number . '_'. $edition), function (ItemInterface $item) use ($number, $edition) {
             $item->expiresAfter(604800);
             if ($number == 'all') {
                 $a = new AyatResponse($this->em, $number, $edition, true);
@@ -109,7 +109,7 @@ class Ayah extends AlQuranController
         $number = Http\Request::getAttribute($request, 'number');
         $edition = Http\Request::getAttribute($request, 'edition');
 
-        $result = $this->mc->get('ayah_' . $number.'_'. $edition, function (ItemInterface $item) use ($number, $edition) {
+        $result = $this->mc->get(md5('ayah_' . $number.'_'. $edition), function (ItemInterface $item) use ($number, $edition) {
             $item->expiresAfter(604800);
             if ($number == 'all') {
                 $a = new AyatResponse($this->em, $number, $edition, true);
