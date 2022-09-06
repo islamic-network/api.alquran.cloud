@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: alquran-cloud-api-memcached
-          image: memcached:1.5
+          image: memcached:1.6
           args:
             - "memcached"
             - "-m"
