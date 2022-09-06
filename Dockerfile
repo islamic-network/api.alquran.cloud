@@ -11,6 +11,6 @@ RUN cd /var/www && composer install --no-dev
 RUN chown -R www-data:www-data /var/www/
 
 COPY doctrineProxies.sh /usr/local/bin/doctrineProxies.sh
-RUN chmod 755 /usr/local/bin/doctrineProxies.sh && chmod 777 /tmp
+RUN chmod 755 /usr/local/bin/doctrineProxies.sh && mkdir /tmp/primary && chmod 777 /tmp/primary
 
 CMD ["/usr/local/bin/doctrineProxies.sh"]
