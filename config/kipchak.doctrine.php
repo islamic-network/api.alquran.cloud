@@ -9,7 +9,7 @@ return
         'connections' => [
             // https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html
                 'primary' => [
-                    'dbname' => 'api',
+                    'dbname' => env('DB_NAME', 'api'),
                     'user' => env('DB_USER', 'api'),
                     'password' =>  env('DB_PASSWORD', 'api'),
                     'host' => env('DB_HOST', 'mysql'),

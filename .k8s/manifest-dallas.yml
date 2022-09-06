@@ -142,37 +142,31 @@ spec:
         - name: alquran-cloud-api
           image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
           env:
-            - name:  MYSQL_USER
+            - name:  DB_USER
               valueFrom:
                 secretKeyRef:
                   name: alquran-cloud-api-database
                   key: username
-            - name:  MYSQL_PASSWORD
+            - name:  DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: alquran-cloud-api-database
                   key: password
-            - name:  MYSQL_DATABASE
+            - name:  DB_NAME
               valueFrom:
                 secretKeyRef:
                   name: alquran-cloud-api-database
                   key: database
-            - name:  MYSQL_HOST_1
+            - name:  DB_HOST
               value: "db.dallas.local.islamic.network"
-            - name:  MYSQL_PORT_1
-              value: "3306"
-            - name:  MYSQL_HOST_2
-              value: "db.dallas.local.islamic.network"
-            - name:  MYSQL_PORT_2
-              value: "3306"
-            - name:  MYSQL_HOST_3
-              value: "db.dallas.local.islamic.network"
-            - name:  MYSQL_PORT_3
+            - name:  DB_PORT
               value: "3306"
             - name:  MEMCACHED_HOST
               value: "alquran-cloud-api-memcached"
             - name:  MEMCACHED_PORT
               value: "11211"
+            - name: DEBUG
+              value: "false"
           livenessProbe:
             httpGet:
               path: /liveness
