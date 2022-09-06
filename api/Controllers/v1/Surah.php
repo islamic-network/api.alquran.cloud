@@ -50,7 +50,7 @@ class Surah extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $offset = Http\Request::getQueryParam($request, 'offset');
 
-        $result = $this->mc->get('surah_' . $number, function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
+        $result = $this->mc->get(md5('surah_' . $number), function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
             $item->expiresAfter(604800);
             $s = new SuratResponse($this->em, $number, true, $edition, $offset, $limit);
 
@@ -76,7 +76,7 @@ class Surah extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $offset = Http\Request::getQueryParam($request, 'offset');
 
-        $result = $this->mc->get('surah_' . $number, function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
+        $result = $this->mc->get(md5('surah_' . $number), function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
             $item->expiresAfter(604800);
             $s = new SuratResponse($this->em, $number, true, $edition, $offset, $limit);
 
@@ -102,7 +102,7 @@ class Surah extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $offset = Http\Request::getQueryParam($request, 'offset');
 
-        $result = $this->mc->get('surah_' . $number, function (ItemInterface $item) use ($number, $editions, $limit, $offset) {
+        $result = $this->mc->get(md5('surah_' . $number), function (ItemInterface $item) use ($number, $editions, $limit, $offset) {
             $item->expiresAfter(604800);
 
             $surats = [];
@@ -112,7 +112,7 @@ class Surah extends AlQuranController
                     $surats[] = $s->get();
                 }
             }
-
+l
             return [
                 $surats,
                 $s->getCode()
@@ -127,7 +127,5 @@ class Surah extends AlQuranController
             86400
         );
     }
-
-
 
 }
