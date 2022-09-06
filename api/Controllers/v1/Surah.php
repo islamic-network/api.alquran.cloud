@@ -112,7 +112,7 @@ class Surah extends AlQuranController
                     $surats[] = $s->get();
                 }
             }
-l
+
             return [
                 $surats,
                 $s->getCode()
