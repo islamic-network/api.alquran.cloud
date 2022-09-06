@@ -47,7 +47,7 @@ return
                     ],
                     'file' => [
                         // Path where Doctrine will cache the processed metadata when 'dev_mode' is false
-                        'dir' => '/tmp/primary',
+                        'dir' => '/var/www/tmp',
                     ]
                 ]
             ],
