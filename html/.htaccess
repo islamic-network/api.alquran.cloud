@@ -1,6 +1,18 @@
 Options +FollowSymLinks
 RewriteEngine On
 
+RewriteRule ^ayah(.*)$ https://api.alquran.cloud/v1/ayah$1 [R=301,NC,L]
+RewriteRule ^edition(.*)$ https://api.alquran.cloud/v1/edition$1 [R=301,NC,L]
+RewriteRule ^hizbQuarter(.*)$ https://api.alquran.cloud/v1/hizbQuarter$1 [R=301,NC,L]
+RewriteRule ^juz(.*)$ https://api.alquran.cloud/v1/juz$1 [R=301,NC,L]
+RewriteRule ^manzil(.*)$ https://api.alquran.cloud/v1/manzil$1 [R=301,NC,L]
+RewriteRule ^meta(.*)$ https://api.alquran.cloud/v1/meta$1 [R=301,NC,L]
+RewriteRule ^page(.*)$ https://api.alquran.cloud/v1/page$1 [R=301,NC,L]
+RewriteRule ^ruku(.*)$ https://api.alquran.cloud/v1/ruku$1 [R=301,NC,L]
+RewriteRule ^sajda(.*)$ https://api.alquran.cloud/v1/sajda$1 [R=301,NC,L]
+RewriteRule ^search(.*)$ https://api.alquran.cloud/v1/search$1 [R=301,NC,L]
+RewriteRule ^surah(.*)$ https://api.alquran.cloud/v1/surah$1 [R=301,NC,L]
+
 RewriteCond %{REQUEST_URI} !=/server-status
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
