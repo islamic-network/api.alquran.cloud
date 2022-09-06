@@ -4,4 +4,4 @@
 cd /var/www && vendor/bin/doctrine orm:generate-proxies
 
 # Start apache
-apache2-foregrounds
+apache2-foreground
