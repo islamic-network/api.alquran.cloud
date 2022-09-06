@@ -1,4 +1,6 @@
+Options +FollowSymLinks
 RewriteEngine On
+
 RewriteCond %{REQUEST_URI} !=/server-status
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

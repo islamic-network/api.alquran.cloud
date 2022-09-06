@@ -1,1 +1,6 @@
 edition-importer/*
+.git/*
+.circleci/*
+.idea/*
+.gitignore
+

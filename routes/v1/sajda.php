@@ -1,25 +1,22 @@
 <?php
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-use Quran\Helper\Log;
-use Quran\Helper\Request as ApiRequest;
 
-$app->group('/v1', function() {
-    $this->get('/sajda', function (Request $request, Response $response) {
+use Api\Controllers;
+use Slim\Routing\RouteCollectorProxy;
 
-        $edition = 'quran-simple';
-        $sajda = new Quran\Api\SajdaResponse($edition);
-        // $this->logger->addInfo('sajda ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+$app->group('/v1', function(RouteCollectorProxy $group) {
 
-        return $response->withJson($sajda->get(), $sajda->getCode());
-    });
+    $group->get('/sajda',
+        [
+            Controllers\v1\Sajda::class,
+            'get'
+        ]
+    );
 
-    $this->get('/sajda/{edition}', function (Request $request, Response $response) {
+    $group->get('/sajda/{edition}',
+        [
+            Controllers\v1\Sajda::class,
+            'getByEdition'
+        ]
+    );
 
-        $edition = $request->getAttribute('edition');
-        $sajda = new Quran\Api\SajdaResponse($edition);
-        // $this->logger->addInfo('sajda ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        return $response->withJson($sajda->get(), $sajda->getCode());
-    });
 });

@@ -1,145 +1,15 @@
 <?php
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-use Quran\Helper\Log;
-use Quran\Helper\Request as ApiRequest;
 
-$app->group('/v1', function() {
-    // With Ayat Number or All
-    $this->get('/ayah/random', function (Request $request, Response $response) {
+use Api\Controllers;
+use Slim\Routing\RouteCollectorProxy;
 
-        $number = rand(1, 6326);
-        $edition = 'quran-simple';
-        if ($number == 'all') {
-            $ayat = new Quran\Api\AyatResponse($number, $edition, true);
-        } else {
-            $ayat = new Quran\Api\AyatResponse($number, $edition);
-        }
-        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+$app->group('/v1', function(RouteCollectorProxy $group) {
 
-        return $response->withJson($ayat->get(), $ayat->getCode());
-    });
+    $group->get('/ayah/random',[Controllers\v1\Ayah::class, 'getRandom']);
+    $group->get('/ayah/random/{edition}', [Controllers\v1\Ayah::class, 'getRandomEdition']);
+    $group->get('/ayah/random/editions/{editions}', [Controllers\v1\Ayah::class, 'getRandomEditions']);
+    $group->get('/ayah/{number}', [Controllers\v1\Ayah::class, 'getOneByNumber']);
+    $group->get('/ayah/{number}/{edition}', [Controllers\v1\Ayah::class, 'getOneByNumberAndEdition']);
+    $group->get('/ayah/{number}/editions/{editions}', [Controllers\v1\Ayah::class, 'getManyByNumberAndEditions']);
 
-    // With Ayat Number AND editions
-    $this->get('/ayah/random/editions', function (Request $request, Response $response) {
-
-        $number = rand(1, 6326);
-        $editions = ['quran-simple'];
-        $ayats = [];
-        if ($editions) {
-            foreach ($editions as $edition) {
-                $ayat = new Quran\Api\AyatResponse($number, $edition);
-                $ayats[] = $ayat->get()->data;
-            }
-        }
-        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        $r = $ayat->get();
-        $r->data = $ayats;
-        return $response->withJson($r, $ayat->getCode());
-    });
-
-    // With Ayat Number or All AND edition
-    $this->get('/ayah/random/{edition}', function (Request $request, Response $response) {
-
-        $number = rand(1, 6326);
-        $edition = $request->getAttribute('edition');
-        if ($number == 'all') {
-            $ayat = new Quran\Api\AyatResponse($number, $edition, true);
-        } else {
-            $ayat = new Quran\Api\AyatResponse($number, $edition);
-        }
-        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        return $response->withJson($ayat->get(), $ayat->getCode());
-    });
-
-
-    // With Ayat Number AND editions
-    $this->get('/ayah/random/editions/{editions}', function (Request $request, Response $response) {
-
-        $number = rand(1, 6326);
-        $editions = ApiRequest::editions($request->getAttribute('editions'));
-        $ayats = [];
-        if ($editions) {
-            foreach ($editions as $edition) {
-                $ayat = new Quran\Api\AyatResponse($number, $edition);
-                $ayats[] = $ayat->get()->data;
-            }
-        }
-        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        $r = $ayat->get();
-        $r->data = $ayats;
-        return $response->withJson($r, $ayat->getCode());
-    });
-
-    // With Ayat Number or All
-    $this->get('/ayah/{number}', function (Request $request, Response $response) {
-
-        $number = $request->getAttribute('number');
-        $edition = 'quran-simple';
-        if ($number == 'all') {
-            $ayat = new Quran\Api\AyatResponse($number, $edition, true);
-        } else {
-            $ayat = new Quran\Api\AyatResponse($number, $edition);
-        }
-        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        return $response->withJson($ayat->get(), $ayat->getCode());
-    });
-
-    // With Ayat Number AND editions
-    $this->get('/ayah/{number}/editions', function (Request $request, Response $response) {
-
-        $number = $request->getAttribute('number');
-        $editions = ['quran-simple'];
-        $ayats = [];
-        if ($editions) {
-            foreach ($editions as $edition) {
-                $ayat = new Quran\Api\AyatResponse($number, $edition);
-                $ayats[] = $ayat->get()->data;
-            }
-        }
-        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        $r = $ayat->get();
-        $r->data = $ayats;
-        return $response->withJson($r, $ayat->getCode());
-    });
-
-    // With Ayat Number or All AND edition
-    $this->get('/ayah/{number}/{edition}', function (Request $request, Response $response) {
-
-        $number = $request->getAttribute('number');
-        $edition = $request->getAttribute('edition');
-        if ($number == 'all') {
-            $ayat = new Quran\Api\AyatResponse($number, $edition, true);
-        } else {
-            $ayat = new Quran\Api\AyatResponse($number, $edition);
-        }
-        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        return $response->withJson($ayat->get(), $ayat->getCode());
-    });
-
-
-    // With Ayat Number AND editions
-    $this->get('/ayah/{number}/editions/{editions}', function (Request $request, Response $response) {
-
-        $number = $request->getAttribute('number');
-        $editions = ApiRequest::editions($request->getAttribute('editions'));
-        $ayats = [];
-        if ($editions) {
-            foreach ($editions as $edition) {
-                $ayat = new Quran\Api\AyatResponse($number, $edition);
-                $ayats[] = $ayat->get()->data;
-            }
-        }
-        // $this->logger->addInfo('ayah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        $r = $ayat->get();
-        $r->data = $ayats;
-        return $response->withJson($r, $ayat->getCode());
-    });
 });

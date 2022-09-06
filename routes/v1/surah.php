@@ -1,84 +1,13 @@
 <?php
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-use Quran\Helper\Log;
-use Quran\Helper\Request as ApiRequest;
 
-$app->group('/v1', function() {
-    // Without Surat Number
-    $this->get('/surah', function (Request $request, Response $response) {
+use Api\Controllers;
+use Slim\Routing\RouteCollectorProxy;
 
-        $number = $request->getAttribute('number');
-        $edition = 'quran-simple';
-        $surat = new Quran\Api\SuratResponse();
-        // $this->logger->addInfo('surah ::: ' . time() . ' :: ', Log::format($_SERVER, $_REQUEST));
+$app->group('/v1', function(RouteCollectorProxy $group) {
 
-        return $response->withJson($surat->get(), $surat->getCode());
-    });
+    $group->get('/surah',[Controllers\v1\Surah::class, 'get']);
+    $group->get('/surah/{number}', [Controllers\v1\Surah::class, 'getByNumber']);
+    $group->get('/surah/{number}/{edition}', [Controllers\v1\Surah::class, 'getOneByNumberAndEdition']);
+    $group->get('/surah/{number}/editions/{editions}', [Controllers\v1\Surah::class, 'getManyByNumberAndEdition']);
 
-    // With Surat Number
-    $this->get('/surah/{number}', function (Request $request, Response $response) {
-
-        $number = $request->getAttribute('number');
-        $offset = $request->getQueryParam('offset');
-        $limit = $request->getQueryParam('limit');
-        $edition = 'quran-simple';
-        $surat = new Quran\Api\SuratResponse($number, true, $edition, true, $offset, $limit);
-        // $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        return $response->withJson($surat->get(), $surat->getCode());
-    });
-
-    $this->get('/surah/{number}/editions', function (Request $request, Response $response) {
-
-        $number = $request->getAttribute('number');
-        $offset = $request->getQueryParam('offset');
-        $limit = $request->getQueryParam('limit');
-        $editions = ['quran-simple'];
-        $surats = [];
-        if ($editions) {
-            foreach ($editions as $edition) {
-                $surat = new Quran\Api\SuratResponse($number, true, $edition, true, $offset, $limit);
-                $surats[] = $surat->get()->data;
-            }
-        }
-        // $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-        $r = $surat->get();
-        $r->data = $surats;
-
-        return $response->withJson($r, $surat->getCode());
-    });
-
-    // With Surat Number and edition
-    $this->get('/surah/{number}/{edition}', function (Request $request, Response $response) {
-
-        $number = $request->getAttribute('number');
-        $edition = $request->getAttribute('edition');
-        $offset = $request->getQueryParam('offset');
-        $limit = $request->getQueryParam('limit');
-        $surat = new Quran\Api\SuratResponse($number, true, $edition, true, $offset, $limit);
-        // $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        return $response->withJson($surat->get(), $surat->getCode());
-    });
-
-    $this->get('/surah/{number}/editions/{editions}', function (Request $request, Response $response) {
-
-        $number = $request->getAttribute('number');
-        $offset = $request->getQueryParam('offset');
-        $limit = $request->getQueryParam('limit');
-        $editions = ApiRequest::editions($request->getAttribute('editions'));
-        $surats = [];
-        if ($editions) {
-            foreach ($editions as $edition) {
-                $surat = new Quran\Api\SuratResponse($number, true, $edition, true, $offset, $limit);
-                $surats[] = $surat->get()->data;
-            }
-        }
-        // $this->logger->addInfo('surah ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-        $r = $surat->get();
-        $r->data = $surats;
-
-        return $response->withJson($r, $surat->getCode());
-    });
 });

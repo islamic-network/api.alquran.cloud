@@ -175,7 +175,7 @@ spec:
               value: "11211"
           livenessProbe:
             httpGet:
-              path: /v1/liveness
+              path: /liveness
               port: 8080
             initialDelaySeconds: 7
             periodSeconds: 30
@@ -183,7 +183,7 @@ spec:
             failureThreshold: 3
           startupProbe:
             httpGet:
-              path: /v1/status
+              path: /status
               port: 8080
             periodSeconds: 7
             failureThreshold: 3

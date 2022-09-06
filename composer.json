@@ -1,15 +1,28 @@
 {
+    "name": "mamluk/kipchak-template",
+    "type": "template",
     "require": {
-        "monolog/monolog": "~1.17",
-        "guzzlehttp/guzzle": "^6.1",
-        "slim/slim": "^3.0",
-        "doctrine/dbal": "^2.10",
-        "doctrine/orm": "^2.7"
+        "doctrine/annotations": "^1.13",
+        "mamluk/kipchak": "0.8"
     },
     "require-dev": {
-        "symfony/yaml": "^5.0"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
-        "psr-0": {"": "src/"}
-    }
+        "psr-4": {
+            "Api\\": "api/",
+            "Database\\": "database/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

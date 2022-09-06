@@ -1,85 +1,56 @@
 version: '3'
 services:
-  #######################################
-  # PHP application Docker container
-  #######################################
-  alquran-app:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
     links:
-    - alquran-db
+      - memcached
+      - mysql
     depends_on:
-    - alquran-db
+      - memcached
+      - mysql
     environment:
-      MYSQL_USER: quran
-      MYSQL_PASSWORD: quran
-      MYSQL_DATABASE: quran
-      MYSQL_HOST_1: quran-db
-      MEMCACHED_HOST: quran-memcached
+      DEBUG: "true"
+      DB_USER: "api"
+      DB_PASSWORD: "api"
+      DB_NAME: "api"
+      DB_HOST: "mysql"
+      DB_PORT: "3306"
+      MEMCACHED_HOST: "memcached"
       MEMCACHED_PORT: 11211
-      WAF_PROXY_MODE: 0
     ports:
-    - "7070:8080"
+      - "80:8080"
     volumes:
-    - .:/var/www
+      - .:/var/www
     privileged: true
-    container_name: quran-app
+    container_name: api
 
-
-  #######################################
-  # MySQL server
-  #######################################
-  alquran-db:
+  mysql:
     image: islamicnetwork/api.alquran.cloud-db:latest
-      #    build:
-      #context: .
-      #dockerfile: Dockerfile.db
-    command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_USER: quran
-      MYSQL_PASSWORD: quran
-      MYSQL_DATABASE: quran
       MYSQL_ROOT_PASSWORD: "root"
-      #MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_USER: "api"
+      MYSQL_PASSWORD: "api"
+      MYSQL_DATABASE: "api"
+    container_name: mysql
     ports:
-    - "3306:3306"
-    container_name: quran-db
+      - "3306:3306"
 
-  #######################################
-  # PHPMyAdmin
-  #######################################
-  alquran-pma:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: quran-db
-    ports:
-    - "7071:80"
-    links:
-    - alquran-db
-    depends_on:
-    - alquran-db
-    container_name: quran-pma
+#  couchdb:
+#    image: couchdb:3.2
+#    environment:
+#      COUCHDB_USER: "api"
+#      COUCHDB_PASSWORD: "api"
+#    ports:
+#      - "5984:5984"
+#    container_name: couchdb
 
-#######################################
-  # Memcached
-  #######################################
-  alquran-memcached:
-    image: memcached:1.5
-    ports:
-    - "11211:11211"
-    container_name: quran-memcached
+  memcached:
+    image: memcached:1.6
+    command:
+      - "memcached"
+      - "-m"
+      - "64"
+    container_name: memcached
 
-  #######################################
-  # Memcached Admin
-  #######################################
-  alquran-memadmin:
-    image: islamicnetwork/phpmemadmin:latest
-    ports:
-    - "7072:8080"
-    environment:
-      MEMADMIN_USERNAME: quran
-      MEMADMIN_PASSWORD: quran
-      MEMCACHED_HOST: quran-memcached
-      MEMCACHED_PORT: 11211
-    container_name: quran-memadmin

@@ -1,31 +1,22 @@
 <?php
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-use Quran\Helper\Log;
-use Quran\Helper\Request as ApiRequest;
 
-$app->group('/v1', function() {
-    $this->get('/hizbQuarter/{number}', function (Request $request, Response $response) {
+use Api\Controllers;
+use Slim\Routing\RouteCollectorProxy;
 
-        $number = $request->getAttribute('number');
-        $offset = $request->getQueryParam('offset');
-        $limit = $request->getQueryParam('limit');
-        $edition = 'quran-simple';
-        $hizbQuarter = new Quran\Api\HizbQuarterResponse($number, $edition, $offset, $limit);
-        // $this->logger->addInfo('hizbQuarter ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
+$app->group('/v1', function(RouteCollectorProxy $group) {
 
-        return $response->withJson($hizbQuarter->get(), $hizbQuarter->getCode());
-    });
+    $group->get('/hizbQuarter/{number}',
+        [
+            Controllers\v1\HizbQuarter::class,
+            'getByNumber'
+        ]
+    );
 
-    $this->get('/hizbQuarter/{number}/{edition}', function (Request $request, Response $response) {
+    $group->get('/hizbQuarter/{number}/{edition}',
+        [
+            Controllers\v1\HizbQuarter::class,
+            'getByEdition'
+        ]
+    );
 
-        $number = $request->getAttribute('number');
-        $edition = $request->getAttribute('edition');
-        $offset = $request->getQueryParam('offset');
-        $limit = $request->getQueryParam('limit');
-        $hizbQuarter = new Quran\Api\HizbQuarterResponse($number, $edition, $offset, $limit);
-        // $this->logger->addInfo('hizbQuarter ::: ' . time() . ' ::', Log::format($_SERVER, $_REQUEST));
-
-        return $response->withJson($hizbQuarter->get(), $hizbQuarter->getCode());
-    });
 });
