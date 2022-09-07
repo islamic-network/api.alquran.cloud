@@ -100,7 +100,7 @@ class Surah extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $offset = Http\Request::getQueryParam($request, 'offset');
 
-        $result = $this->mc->get(md5('surah_' . $number . '_' . $editions . '_' . $limit . '_' . $offset), function (ItemInterface $item) use ($number, $editions, $limit, $offset) {
+        $result = $this->mc->get(md5('surah_' . $number . '_' . json_encode($editions) . '_' . $limit . '_' . $offset), function (ItemInterface $item) use ($number, $editions, $limit, $offset) {
             $item->expiresAfter(604800);
 
             $surats = [];
