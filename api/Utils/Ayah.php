@@ -24,7 +24,7 @@ class Ayah
         $editions = Request::editions(Http\Request::getAttribute($request, 'editions'));
 
         if (!empty($editions)) {
-            $result = $mc->get('ayah_' . $number . '_' . md5(json_encode($editions)), function (ItemInterface $item) use ($number, $editions, $em) {
+            $result = $mc->get(md5('ayah_' . $number . '_' . json_encode($editions)), function (ItemInterface $item) use ($number, $editions, $em) {
                 $item->expiresAfter(604800);
                 $ayats = [];
                 foreach ($editions as $edition) {

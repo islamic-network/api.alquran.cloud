@@ -25,7 +25,7 @@ class Edition extends AlQuranController
         $format = Http\Request::getQueryParam($request,'format');
         $language = Http\Request::getQueryParam($request,'language');
 
-        $result = $this->mc->get('edition_' . $type . '_'. $format . '_' . $language,
+        $result = $this->mc->get(md5('edition_' . $type . '_'. $format . '_' . $language),
             function (ItemInterface $item) use ($type, $format, $language) {
             $item->expiresAfter(604800);
             $e = new EditionResponse($this->em, null, $type, $language, $format);
@@ -63,7 +63,7 @@ class Edition extends AlQuranController
     {
         $type = Http\Request::getAttribute($request, 'type');
 
-        $result = $this->mc->get('edition_' . $type, function (ItemInterface $item) use ($type) {
+        $result = $this->mc->get(md5('edition_' . $type), function (ItemInterface $item) use ($type) {
                 $item->expiresAfter(604800);
                 $e = new EditionResponse($this->em,null, $type);
 
@@ -100,7 +100,7 @@ class Edition extends AlQuranController
         $format = Http\Request::getAttribute($request, 'format');
 
 
-        $result = $this->mc->get('edition_' . $format, function (ItemInterface $item) use ($format) {
+        $result = $this->mc->get(md5('edition_' . $format), function (ItemInterface $item) use ($format) {
             $item->expiresAfter(604800);
             $e = new EditionResponse($this->em,null, null, null, $format);
 
@@ -135,7 +135,7 @@ class Edition extends AlQuranController
     {
         $lang = $request->getAttribute('lang');
 
-        $result = $this->mc->get('edition_' . $lang, function (ItemInterface $item) use ($lang) {
+        $result = $this->mc->get(md5('edition_' . $lang), function (ItemInterface $item) use ($lang) {
             $item->expiresAfter(604800);
             $e = new EditionResponse($this->em,null, null, null, $lang);
 
