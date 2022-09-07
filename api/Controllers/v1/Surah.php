@@ -9,8 +9,6 @@ use Mamluk\Kipchak\Components\Http;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Contracts\Cache\ItemInterface;
-use Api\Models\AyatResponse;
-use Api\Utils\Ayah as AyahUtil;
 
 /**
  * All Controllers extending Controllers\Slim Contain the Service / DI Container as a protected property called $container.
@@ -50,7 +48,7 @@ class Surah extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $offset = Http\Request::getQueryParam($request, 'offset');
 
-        $result = $this->mc->get(md5('surah_' . $number), function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
+        $result = $this->mc->get(md5('surah_' . $number . '_' . $edition . '_' . $limit . '_' . $offset), function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
             $item->expiresAfter(604800);
             $s = new SuratResponse($this->em, $number, true, $edition, $offset, $limit);
 
@@ -76,7 +74,7 @@ class Surah extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $offset = Http\Request::getQueryParam($request, 'offset');
 
-        $result = $this->mc->get(md5('surah_' . $number), function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
+        $result = $this->mc->get(md5('surah_' . $number . '_' . $edition . '_' . $limit . '_' . $offset), function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
             $item->expiresAfter(604800);
             $s = new SuratResponse($this->em, $number, true, $edition, $offset, $limit);
 
@@ -102,7 +100,7 @@ class Surah extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $offset = Http\Request::getQueryParam($request, 'offset');
 
-        $result = $this->mc->get(md5('surah_' . $number), function (ItemInterface $item) use ($number, $editions, $limit, $offset) {
+        $result = $this->mc->get(md5('surah_' . $number . '_' . $editions . '_' . $limit . '_' . $offset), function (ItemInterface $item) use ($number, $editions, $limit, $offset) {
             $item->expiresAfter(604800);
 
             $surats = [];
