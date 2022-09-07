@@ -50,7 +50,7 @@ class Surah extends AlQuranController
 
         $result = $this->mc->get(md5('surah_' . $number . '_' . $edition . '_' . $limit . '_' . $offset), function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
             $item->expiresAfter(604800);
-            $s = new SuratResponse($this->em, $number, true, $edition, $offset, $limit);
+            $s = new SuratResponse($this->em, $number, true, $edition, true, $offset, $limit);
 
             return [
                 $s->get(),
@@ -76,7 +76,7 @@ class Surah extends AlQuranController
 
         $result = $this->mc->get(md5('surah_' . $number . '_' . $edition . '_' . $limit . '_' . $offset), function (ItemInterface $item) use ($number, $edition, $limit, $offset) {
             $item->expiresAfter(604800);
-            $s = new SuratResponse($this->em, $number, true, $edition, $offset, $limit);
+            $s = new SuratResponse($this->em, $number, true, $edition, true, $offset, $limit);
 
             return [
                 $s->get(),
