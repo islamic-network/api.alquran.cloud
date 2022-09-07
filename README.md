@@ -47,11 +47,9 @@ docker-compose up
 
 This will bring up several containers:
 
-1. quran-app - This is the actual PHP / Apache instance. This runs on https://localhost:7070 - see https://localhost:7070/ayah/1.
-2. quran-db - This is the Percona DB Container.
-3. quran-memcached - This is the Memcached Container.
-4. quran-pma - PHPMYAdmin to acccess your Percona DB. This runs on https://localhost:7071. The default username and password are both 'quran' and 'quran'.
-5. quran-memadmin - PHPMemcachedAdmin to access your Memcached container. This runs on https://localhost:7072. The default username and password are both 'quran'
+1. api - This is the actual PHP / Apache instance. This runs on https://localhost - see https://localhost/v1/ayah/1.
+2. mysql - This is the Percona DB Container.
+3. memcached - This is the Memcached Container.
 
 #### Build and Contribute
 

@@ -9,6 +9,6 @@ COPY bin/doctrine/proxies.sh /usr/local/bin/doctrine-proxies.sh
 RUN cd /var/www && composer install --no-dev
 
 # Set the correct permissions
-RUN chown -R www-data:www-data /var/www/ && chmod -R 777 /tmp && chmod 755 /usr/local/bin/doctrine-proxies.sh
+RUN chown -R www-data:www-data /var/www/ && chmod 755 /usr/local/bin/doctrine-proxies.sh
 
 CMD ["/usr/local/bin/doctrine-proxies.sh"]

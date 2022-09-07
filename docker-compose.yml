@@ -11,7 +11,7 @@ services:
       - memcached
       - mysql
     environment:
-      DEBUG: "true" # Any value will make it true. For false, remove the variable.
+      # DEBUG: "true" # Any value will make it true. For false, remove the variable.
       DB_USER: "api"
       DB_PASSWORD: "api"
       DB_NAME: "api"

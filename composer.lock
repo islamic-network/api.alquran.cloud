@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d43a9e7bb3f361950632d35d85b7359e",
+    "content-hash": "74e10fe31adf5bcd7dbb13a9d75dfb7b",
     "packages": [
         {
             "name": "bryanjhv/slim-session",
@@ -2136,16 +2136,16 @@
         },
         {
             "name": "mamluk/kipchak",
-            "version": "0.11",
+            "version": "0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mam-luk/kipchak.git",
-                "reference": "cd55bb2a44a7b006007d319b2cb675c4431c1900"
+                "reference": "da7ca8953b6ce0794fbcf0029fc7d45b6c64648b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mam-luk/kipchak/zipball/cd55bb2a44a7b006007d319b2cb675c4431c1900",
-                "reference": "cd55bb2a44a7b006007d319b2cb675c4431c1900",
+                "url": "https://api.github.com/repos/mam-luk/kipchak/zipball/da7ca8953b6ce0794fbcf0029fc7d45b6c64648b",
+                "reference": "da7ca8953b6ce0794fbcf0029fc7d45b6c64648b",
                 "shasum": ""
             },
             "require": {
@@ -2185,9 +2185,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mam-luk/kipchak/issues",
-                "source": "https://github.com/mam-luk/kipchak/tree/0.11"
+                "source": "https://github.com/mam-luk/kipchak/tree/0.12"
             },
-            "time": "2022-09-06T18:27:23+00:00"
+            "time": "2022-09-07T08:15:04+00:00"
         },
         {
             "name": "monolog/monolog",

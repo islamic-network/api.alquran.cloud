@@ -38,7 +38,7 @@ return
                 'connection' => 'primary', // Name of connection from 'dbal' above to use for the ORM
                 'cache' => [
                     'enabled' => true, // Kipchak will only look at this if dev_mode = false
-                    'store' => 'memcached', // file or memcached.
+                    'store' => 'file', // file or memcached.
                 ],
                 'cache_config' => [
                     'memcached' => [
@@ -47,7 +47,7 @@ return
                     ],
                     'file' => [
                         // Path where Doctrine will cache the processed metadata when 'dev_mode' is false
-                        'dir' => '/tmp',
+                        'dir' => realpath(__DIR__) . '/../tmp/doctrine/cache',
                     ]
                 ]
             ],
