@@ -38,7 +38,7 @@ return
                 'connection' => 'primary', // Name of connection from 'dbal' above to use for the ORM
                 'cache' => [
                     'enabled' => true, // Kipchak will only look at this if dev_mode = false
-                    'store' => 'file', // file or memcached.
+                    'store' => 'memcached', // file or memcached.
                 ],
                 'cache_config' => [
                     'memcached' => [
