@@ -26,7 +26,7 @@ class Ruku extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $edition = 'quran-uthmani-quran-academy';
 
-        $result = $this->mc->get('ruku_' . $number . '_'. $offset . '_' . $limit, function (ItemInterface $item) use ($number, $offset, $limit, $edition) {
+        $result = $this->mc->get('ruku_' . $number . '_' . $edition . '_' . $offset . '_' . $limit, function (ItemInterface $item) use ($number, $offset, $limit, $edition) {
             $item->expiresAfter(604800);
             $r = new RukuResponse($this->em, $number, $edition, $offset, $limit);
 

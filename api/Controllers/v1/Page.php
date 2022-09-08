@@ -26,7 +26,7 @@ class Page extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $edition = 'quran-uthmani-quran-academy';
 
-        $result = $this->mc->get('page_' . $number . '_'. $offset . '_' . $limit, function (ItemInterface $item) use ($number, $offset, $limit, $edition) {
+        $result = $this->mc->get('page_' . $number . '_'. $edition . '_' . $offset . '_' . $limit, function (ItemInterface $item) use ($number, $offset, $limit, $edition) {
             $item->expiresAfter(604800);
             $p = new PageResponse($this->em, $number, $edition, $offset, $limit);
 

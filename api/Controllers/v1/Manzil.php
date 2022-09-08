@@ -26,7 +26,7 @@ class Manzil extends AlQuranController
         $limit = Http\Request::getQueryParam($request, 'limit');
         $edition = 'quran-uthmani-quran-academy';
 
-        $result = $this->mc->get('manzil_' . $number . '_'. $offset . '_' . $limit, function (ItemInterface $item) use ($number, $offset, $limit, $edition) {
+        $result = $this->mc->get('manzil_' . $number . '_'. $edition . '_' . $offset . '_' . $limit, function (ItemInterface $item) use ($number, $offset, $limit, $edition) {
             $item->expiresAfter(604800);
             $m = new ManzilResponse($this->em, $number, $edition, $offset, $limit);
 
