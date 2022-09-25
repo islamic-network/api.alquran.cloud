@@ -137,7 +137,7 @@ class Edition extends AlQuranController
 
         $result = $this->mc->get(md5('edition_' . $lang), function (ItemInterface $item) use ($lang) {
             $item->expiresAfter(604800);
-            $e = new EditionResponse($this->em,null, null, null, $lang);
+            $e = new EditionResponse($this->em,null, null, $lang);
 
             return [
                 $e->get(),
