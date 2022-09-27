@@ -1,6 +1,8 @@
 Options +FollowSymLinks
 RewriteEngine On
 
+RewriteCond %{REQUEST_URI} .*ar.miqbas*
+RewriteRule ^ - [F]
 RewriteRule ^ayah(.*)$ https://api.alquran.cloud/v1/ayah$1 [R=301,NC,L]
 RewriteRule ^edition(.*)$ https://api.alquran.cloud/v1/edition$1 [R=301,NC,L]
 RewriteRule ^hizbQuarter(.*)$ https://api.alquran.cloud/v1/hizbQuarter$1 [R=301,NC,L]
