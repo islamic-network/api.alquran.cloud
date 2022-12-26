@@ -1,6 +1,6 @@
 version: '3'
 services:
-  api:
+  alquran_api:
     build:
       context: .
       dockerfile: Dockerfile
@@ -24,16 +24,16 @@ services:
     volumes:
       - .:/var/www
     privileged: true
-    container_name: api
+    container_name: alquran_api
 
-  mysql:
+  alquran_api_mysql:
     image: islamicnetwork/api.alquran.cloud-db:latest
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_USER: "api"
       MYSQL_PASSWORD: "api"
       MYSQL_DATABASE: "api"
-    container_name: mysql
+    container_name: alquran_api_mysql
     ports:
       - "3306:3306"
 
@@ -46,11 +46,11 @@ services:
 #      - "5984:5984"
 #    container_name: couchdb
 
-  memcached:
+  alquran_api_memcached:
     image: memcached:1.6
     command:
       - "memcached"
       - "-m"
       - "64"
-    container_name: memcached
+    container_name: alquran_api_memcached
 
