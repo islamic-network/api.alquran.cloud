@@ -102,7 +102,9 @@ metadata:
   namespace: alquran-cloud
 config:
   second: 5 # 2 Ingress Pods. 60 requests per minute per IP - so 4 requests per IP per second, effectively.
-  policy: local
+  policy: redis
+  redis_host: redis-master
+  redis_port: 6379
 plugin: rate-limiting
 # Deployment
 ---
