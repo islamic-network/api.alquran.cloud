@@ -88,7 +88,7 @@ metadata:
 config:
   second: 5 # 2 Ingress Pods. 60 requests per minute per IP - so 4 requests per IP per second, effectively.
   policy: redis
-  redis_host: redis-master
+  redis_host: redis-ratelimit-master
   redis_port: 6379
   limit_by: ip
 plugin: rate-limiting
