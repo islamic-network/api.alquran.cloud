@@ -5,7 +5,7 @@ metadata:
   name: alquran-cloud-api-memcached
   namespace: alquran-cloud
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,6 +19,8 @@ spec:
       labels:
         app: alquran-cloud-api-memcached
     spec:
+      nodeSelector:
+        lke.linode.com/pool-id: "130426"
       containers:
         - name: alquran-cloud-api-memcached
           image: memcached:1.6
