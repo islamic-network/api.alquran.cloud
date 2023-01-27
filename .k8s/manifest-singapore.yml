@@ -27,7 +27,7 @@ spec:
           args:
             - "memcached"
             - "-m"
-            - "256"
+            - "220"
           resources:
             requests:
               memory: 256Mi
