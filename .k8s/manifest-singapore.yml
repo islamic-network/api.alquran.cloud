@@ -83,7 +83,7 @@ config:
   content_type:
     - application/json
   cache_ttl: 86400
-  cache_control: true
+  cache_control: false
   storage_ttl: 259200
   redis_port: 6379
   redis_host: redis-cache-master
