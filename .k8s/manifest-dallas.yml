@@ -112,9 +112,9 @@ config:
     - application/json
   cache_ttl: 86400
   cache_control: false
-  storage_ttl: 259200
+  storage_ttl: 86400
   redis_port: 6379
-  redis_host: redis-cache-master
+  redis_host: redis-cache-alquran-master
 plugin: proxy-cache-redis
 # Deployment
 ---
