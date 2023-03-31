@@ -5,20 +5,21 @@ services:
       context: .
       dockerfile: Dockerfile
     links:
-      - memcached
-      - mysql
+      - alquran_api_memcached
+      - alquran_api_mysql
     depends_on:
-      - memcached
-      - mysql
+      - alquran_api_memcached
+      - alquran_api_mysql
     environment:
       # DEBUG: "true" # Any value will make it true. For false, remove the variable.
       DB_USER: "api"
       DB_PASSWORD: "api"
       DB_NAME: "api"
-      DB_HOST: "mysql"
+      DB_HOST: "alquran_api_mysql"
       DB_PORT: "3306"
       MEMCACHED_HOST: "memcached"
       MEMCACHED_PORT: 11211
+      IMPORTER_KEY: 'KEY'
     ports:
       - "80:8080"
     volumes:

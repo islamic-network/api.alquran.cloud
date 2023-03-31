@@ -19,4 +19,11 @@ $app->group('/v1', function(RouteCollectorProxy $group) {
         ]
     );
 
+    $group->post('/quran',
+        [
+            Controllers\v1\Quran::class,
+            'createEdition'
+        ]
+    );
+
 });

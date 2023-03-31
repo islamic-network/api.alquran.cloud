@@ -179,6 +179,11 @@ spec:
               value: "alquran-cloud-api-memcached"
             - name:  MEMCACHED_PORT
               value: "11211"
+            - name: IMPORTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: alquran-cloud-api-database
+                  key: importerkey
           livenessProbe:
             httpGet:
               path: /liveness
