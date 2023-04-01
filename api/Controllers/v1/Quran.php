@@ -101,10 +101,10 @@ class Quran extends AlQuranController
         $yml = (object) Yaml::parse($info);
         $ayahs = explode("\n", $text);
 
-        // TODO: Add duplicate check in edition to number of ayahs
+        // TODO: Add duplicate check in addition to number of ayahs
         if (count($ayahs) !== 6236) {
             return Http\Response::json($response,
-                'edition.txt must contain 6236 lines.',
+                'edition.txt must contain 6236 lines. It currently contains ' . count($ayahs) . '.',
                 400
             );
         }
