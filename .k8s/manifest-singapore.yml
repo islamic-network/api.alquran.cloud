@@ -152,20 +152,6 @@ spec:
         app: alquran-cloud-api
     spec:
       containers:
-        - name: apache-exporter-sidecar
-          image: lusotycoon/apache-exporter
-          args:
-            - '--scrape_uri=http://localhost:8080/server-status?auto'
-          ports:
-            - containerPort: 9117
-              protocol: TCP
-          resources:
-            requests:
-              cpu: 50m
-              memory: 32Mi
-            limits:
-              cpu: 100m
-              memory: 128Mi
         - name: alquran-cloud-api
           image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
           env:

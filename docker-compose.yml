@@ -17,7 +17,7 @@ services:
       DB_NAME: "api"
       DB_HOST: "alquran_api_mysql"
       DB_PORT: "3306"
-      MEMCACHED_HOST: "memcached"
+      MEMCACHED_HOST: "alquran_api_memcached"
       MEMCACHED_PORT: 11211
       IMPORTER_KEY: 'KEY'
     ports:

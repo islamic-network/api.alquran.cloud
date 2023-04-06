@@ -1,0 +1,58 @@
+{
+  "listeners": {
+    "*:8080": {
+      "pass": "routes/main"
+    }
+  },
+  "applications": {
+    "api.alquran.cloud": {
+      "type": "php",
+      "user": "nobody",
+      "limits": {
+        "timeout": 5,
+        "requests": 5000
+      },
+      "processes": {
+        "max": 25,
+        "spare": 5,
+        "idle_timeout": 5
+      },
+      "root": "/var/www/html",
+      "index": "index.php",
+      "script": "index.php"
+    }
+  },
+  "routes": {
+    "main": [
+      {
+        "match": {
+          "uri": [
+            "/ayah*",
+            "/edition*",
+            "/hizbQuarter*",
+            "/juz*",
+            "/manzil*",
+            "/meta*",
+            "/page*",
+            "/ruku*",
+            "/sajda*",
+            "/search*",
+            "/surah*"
+          ]
+        },
+        "action": {
+          "return": 301,
+          "location": "/v1$request_uri"
+        }
+      },
+      {
+        "match": {
+          "uri": "*"
+        },
+        "action": {
+          "pass": "applications/api.alquran.cloud"
+        }
+      }
+    ]
+  }
+}
