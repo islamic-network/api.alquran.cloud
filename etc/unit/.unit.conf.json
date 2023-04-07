@@ -9,7 +9,7 @@
       "type": "php",
       "user": "nobody",
       "limits": {
-        "timeout": 5,
+        "timeout": 30,
         "requests": 5000
       },
       "processes": {
