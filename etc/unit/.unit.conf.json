@@ -1,4 +1,7 @@
 {
+  "setttings": {
+    "max_body_size": 20971520
+  },
   "listeners": {
     "*:8080": {
       "pass": "routes/main"
