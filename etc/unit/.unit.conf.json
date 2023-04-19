@@ -14,7 +14,7 @@
       "type": "php",
       "user": "nobody",
       "limits": {
-        "timeout": 30,
+        "timeout": 60,
         "requests": 5000
       },
       "processes": {
