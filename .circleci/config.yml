@@ -5,11 +5,11 @@ executors:
       IMAGE_NAME: islamicnetwork/api.alquran.cloud
       QUAYIO_IMAGE_NAME: quay.io/islamic-network/api.alquran.cloud
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: cimg/base:2023.04
   php81:
     docker:
       - image: islamicnetwork/php:8.1-cli
-      - image: memcached:1.5
+      - image: memcached:1.6
     working_directory: ~/repo
 jobs:
   build-app:
