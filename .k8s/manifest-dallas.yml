@@ -35,23 +35,6 @@ spec:
             - containerPort: 11211
               protocol: TCP
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: alquran-cloud-api-metrics
-  namespace: monitoring
-  labels:
-    release: lke-monitor
-spec:
-  selector:
-    matchLabels:
-      name: alquran-cloud-api-metrics
-  namespaceSelector:
-    any: true
-  endpoints:
-    - port: "metrics"
-      interval: 30s
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -63,22 +46,6 @@ spec:
       targetPort: 11211
   selector:
     app: alquran-cloud-api-memcached
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: alquran-cloud-api-metrics
-  namespace: alquran-cloud
-  labels:
-    name: alquran-cloud-api-metrics
-spec:
-  type: ClusterIP
-  selector:
-    app: alquran-cloud-api
-  ports:
-    - name: metrics
-      port: 9117
-      targetPort: 9117
 ---
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
