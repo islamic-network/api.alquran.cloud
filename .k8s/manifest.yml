@@ -81,6 +81,21 @@ config:
   redis_port: 6379
   redis_host: redis-cache-alquran-master
 plugin: proxy-cache-redis
+---
+#  Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: alquran-cloud-api
+  namespace: alquran-cloud
+  annotations:
+    konghq.com/plugins: rate-limiting-alquran-api, proxy-cache-redis-alquran-api
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: alquran-cloud-api
 # Deployment
 ---
 apiVersion: apps/v1
@@ -123,7 +138,7 @@ spec:
                   name: alquran-cloud-api-database
                   key: database
             - name:  DB_HOST
-              value: "db.dallas.local.islamic.network"
+              value: "mysql"
             - name:  DB_PORT
               value: "3306"
             - name:  MEMCACHED_HOST
@@ -151,29 +166,14 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              cpu: "150m"
+              cpu: "225m"
               memory: 250Mi
             limits:
-              cpu: "250m"
+              cpu: "350m"
               memory: 500Mi
           ports:
             - containerPort: 8080
               protocol: TCP
----
-#  Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: alquran-cloud-api
-  namespace: alquran-cloud
-  annotations:
-    konghq.com/plugins: rate-limiting-alquran-api, proxy-cache-redis-alquran-api
-spec:
-  ports:
-    - port: 80
-      targetPort: 8080
-  selector:
-    app: alquran-cloud-api
 ---
 # HPA
 apiVersion: autoscaling/v1
@@ -186,9 +186,9 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: alquran-cloud-api
-  minReplicas: 2 
+  minReplicas: 2
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 60
+  targetCPUUtilizationPercentage: 50
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -203,7 +203,7 @@ spec:
   tls:
   - hosts:
     - "api.alquran.cloud"
-    - "dallas.api.alquran.cloud"
+    - "dubai.api.alquran.cloud"
     secretName: "alquran-cloud-api-tls"
   rules:
   - host: api.alquran.cloud
@@ -216,7 +216,7 @@ spec:
               name: alquran-cloud-api
               port: 
                 number: 80
-  - host: dallas.api.alquran.cloud
+  - host: dubai.api.alquran.cloud
     http:
       paths:
         - path: /
