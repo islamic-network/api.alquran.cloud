@@ -19,6 +19,15 @@ spec:
       labels:
         app: alquran-cloud-api-memcached
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+      tolerations:
+        - key: kubernetes.azure.com/scalesetpriority
+          operator: "Equal"
+          value: spot
+          effect: NoSchedule
       containers:
         - name: alquran-cloud-api-memcached
           image: memcached:1.6
@@ -104,7 +113,7 @@ metadata:
   name: alquran-cloud-api
   namespace: alquran-cloud
 spec:
-  replicas: 3 # 16 requests each
+  replicas: 2 # 16 requests each
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -166,10 +175,10 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              cpu: "225m"
+              cpu: "350m"
               memory: 250Mi
             limits:
-              cpu: "350m"
+              cpu: "500m"
               memory: 500Mi
           ports:
             - containerPort: 8080
