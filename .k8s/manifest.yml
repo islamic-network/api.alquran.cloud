@@ -5,7 +5,7 @@ metadata:
   name: alquran-cloud-api-memcached
   namespace: alquran-cloud
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,6 +19,15 @@ spec:
       labels:
         app: alquran-cloud-api-memcached
     spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+      tolerations:
+        - key: kubernetes.azure.com/scalesetpriority
+          operator: "Equal"
+          value: spot
+          effect: NoSchedule
       containers:
         - name: alquran-cloud-api-memcached
           image: memcached:1.6
