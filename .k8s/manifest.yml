@@ -20,7 +20,7 @@ spec:
         app: alquran-cloud-api-memcached
     spec:
       nodeSelector:
-        "kubernetes.azure.com/scalesetpriority": "spot"
+        kubernetes.azure.com/scalesetpriority: "spot"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
