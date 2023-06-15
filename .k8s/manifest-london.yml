@@ -211,7 +211,7 @@ spec:
   tls:
   - hosts:
     - "api.alquran.cloud"
-    - "dubai.api.alquran.cloud"
+    - "london.api.alquran.cloud"
     secretName: "alquran-cloud-api-tls"
   rules:
   - host: api.alquran.cloud
@@ -224,7 +224,7 @@ spec:
               name: alquran-cloud-api
               port: 
                 number: 80
-  - host: dubai.api.alquran.cloud
+  - host: london.api.alquran.cloud
     http:
       paths:
         - path: /
