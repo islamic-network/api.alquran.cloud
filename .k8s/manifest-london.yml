@@ -1,0 +1,256 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alquran-cloud-api-memcached
+  namespace: alquran-cloud
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: alquran-cloud-api-memcached
+  template:
+    metadata:
+      labels:
+        app: alquran-cloud-api-memcached
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+      containers:
+        - name: alquran-cloud-api-memcached
+          image: memcached:1.6
+          args:
+            - "memcached"
+            - "-m"
+            - "220"
+          resources:
+            requests:
+              memory: 256Mi
+            limits:
+              memory: 256Mi
+          ports:
+            - containerPort: 11211
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alquran-cloud-api-memcached
+  namespace: alquran-cloud
+spec:
+  ports:
+    - port: 11211
+      targetPort: 11211
+  selector:
+    app: alquran-cloud-api-memcached
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: rate-limiting-alquran-api
+  namespace: alquran-cloud
+config:
+  second: 10
+  policy: redis
+  redis_host: redis-ratelimit-master
+  redis_port: 6379
+  limit_by: ip
+plugin: rate-limiting
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: proxy-cache-redis-alquran-api
+  namespace: alquran-cloud
+config:
+  response_code:
+    - 200
+    - 400
+    - 301
+  request_method:
+    - GET
+    - HEAD
+  content_type:
+    - application/json
+  cache_ttl: 86400
+  cache_control: false
+  storage_ttl: 86400
+  redis_port: 6379
+  redis_host: redis-cache-alquran-master
+plugin: proxy-cache-redis
+---
+#  Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: alquran-cloud-api
+  namespace: alquran-cloud
+  annotations:
+    konghq.com/plugins: rate-limiting-alquran-api, proxy-cache-redis-alquran-api
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: alquran-cloud-api
+# Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alquran-cloud-api
+  namespace: alquran-cloud
+spec:
+  replicas: 2 # 16 requests each
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: alquran-cloud-api
+  template:
+    metadata:
+      labels:
+        app: alquran-cloud-api
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+      containers:
+        - name: alquran-cloud-api
+          image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
+          env:
+            - name:  DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: alquran-cloud-api-database
+                  key: username
+            - name:  DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: alquran-cloud-api-database
+                  key: password
+            - name:  DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: alquran-cloud-api-database
+                  key: database
+            - name:  DB_HOST
+              value: "mysql"
+            - name:  DB_PORT
+              value: "3306"
+            - name:  MEMCACHED_HOST
+              value: "alquran-cloud-api-memcached"
+            - name:  MEMCACHED_PORT
+              value: "11211"
+            - name: IMPORTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: alquran-cloud-api-database
+                  key: importerkey
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 8080
+            initialDelaySeconds: 7
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          startupProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            periodSeconds: 7
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "350m"
+              memory: 250Mi
+            limits:
+              cpu: "500m"
+              memory: 500Mi
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+# HPA
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: alquran-cloud-api
+  namespace: alquran-cloud
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: alquran-cloud-api
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alquran-cloud-api-ingress
+  namespace: alquran-cloud
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: kong
+spec:
+  tls:
+  - hosts:
+    - "api.alquran.cloud"
+    - "dubai.api.alquran.cloud"
+    secretName: "alquran-cloud-api-tls"
+  rules:
+  - host: api.alquran.cloud
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alquran-cloud-api
+              port: 
+                number: 80
+  - host: dubai.api.alquran.cloud
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alquran-cloud-api
+              port: 
+                number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alquran-cloud-geo-ingress
+  namespace: alquran-cloud
+  annotations:
+    kubernetes.io/ingress.class: kong
+spec:
+  rules:
+  - host: geo.alquran.cloud
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alquran-cloud-api
+              port: 
+                number: 80
