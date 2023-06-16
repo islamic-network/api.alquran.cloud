@@ -19,10 +19,17 @@ spec:
       labels:
         app: alquran-cloud-api-memcached
     spec:
+      nodeSelector:
+        kubernetes.azure.com/scalesetpriority: "spot"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: ScheduleAnyway
+      tolerations:
+        - key: kubernetes.azure.com/scalesetpriority
+          operator: "Equal"
+          value: spot
+          effect: NoSchedule
       containers:
         - name: alquran-cloud-api-memcached
           image: memcached:1.6
@@ -126,6 +133,11 @@ spec:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: ScheduleAnyway
+      tolerations:
+        - key: kubernetes.azure.com/scalesetpriority
+          operator: "Equal"
+          value: spot
+          effect: NoSchedule
       containers:
         - name: alquran-cloud-api
           image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG

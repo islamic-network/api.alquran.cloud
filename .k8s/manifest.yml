@@ -19,17 +19,10 @@ spec:
       labels:
         app: alquran-cloud-api-memcached
     spec:
-      nodeSelector:
-        kubernetes.azure.com/scalesetpriority: "spot"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: ScheduleAnyway
-      tolerations:
-        - key: kubernetes.azure.com/scalesetpriority
-          operator: "Equal"
-          value: spot
-          effect: NoSchedule
       containers:
         - name: alquran-cloud-api-memcached
           image: memcached:1.6
@@ -133,11 +126,6 @@ spec:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: ScheduleAnyway
-      tolerations:
-        - key: kubernetes.azure.com/scalesetpriority
-          operator: "Equal"
-          value: spot
-          effect: NoSchedule
       containers:
         - name: alquran-cloud-api
           image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
@@ -223,7 +211,8 @@ spec:
   tls:
   - hosts:
     - "api.alquran.cloud"
-    - "dubai.api.alquran.cloud"
+    - "london.api.alquran.cloud"
+    - "mumbai.api.alquran.cloud"
     secretName: "alquran-cloud-api-tls"
   rules:
   - host: api.alquran.cloud
@@ -236,7 +225,17 @@ spec:
               name: alquran-cloud-api
               port: 
                 number: 80
-  - host: dubai.api.alquran.cloud
+  - host: london.api.alquran.cloud
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alquran-cloud-api
+              port: 
+                number: 80
+  - host: mumbai.api.alquran.cloud
     http:
       paths:
         - path: /
