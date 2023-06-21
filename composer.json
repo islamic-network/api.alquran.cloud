@@ -3,7 +3,7 @@
     "type": "template",
     "require": {
         "doctrine/annotations": "^1.13",
-        "mamluk/kipchak": "0.30",
+        "mamluk/kipchak": "0.33",
         "symfony/yaml": "^6.2"
     },
     "require-dev": {
