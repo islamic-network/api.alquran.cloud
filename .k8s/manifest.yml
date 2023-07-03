@@ -57,7 +57,7 @@ metadata:
   name: rate-limiting-alquran-api
   namespace: alquran-cloud
 config:
-  second: 10
+  second: 15
   policy: redis
   redis_host: redis-ratelimit-master
   redis_port: 6379
