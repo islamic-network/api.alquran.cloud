@@ -29,12 +29,14 @@ spec:
           args:
             - "memcached"
             - "-m"
-            - "220"
+            - "900"
+            - "I"
+            - "64M"
           resources:
             requests:
-              memory: 256Mi
+              memory: 1000Mi
             limits:
-              memory: 256Mi
+              memory: 1000Mi
           ports:
             - containerPort: 11211
               protocol: TCP
