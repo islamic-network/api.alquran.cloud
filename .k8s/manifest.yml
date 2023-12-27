@@ -60,33 +60,9 @@ metadata:
   namespace: alquran-cloud
 config:
   second: 20
-  policy: redis
-  redis_host: redis-ratelimit-master
-  redis_port: 6379
+  policy: cluster
   limit_by: ip
 plugin: rate-limiting
----
-apiVersion: configuration.konghq.com/v1
-kind: KongPlugin
-metadata:
-  name: proxy-cache-redis-alquran-api
-  namespace: alquran-cloud
-config:
-  response_code:
-    - 200
-    - 400
-    - 301
-  request_method:
-    - GET
-    - HEAD
-  content_type:
-    - application/json
-  cache_ttl: 86400
-  cache_control: false
-  storage_ttl: 86400
-  redis_port: 6379
-  redis_host: redis-cache-alquran-master
-plugin: proxy-cache-redis
 ---
 #  Service
 apiVersion: v1
@@ -95,7 +71,7 @@ metadata:
   name: alquran-cloud-api
   namespace: alquran-cloud
   annotations:
-    konghq.com/plugins: rate-limiting-alquran-api, proxy-cache-redis-alquran-api
+    konghq.com/plugins: rate-limiting-alquran-api
 spec:
   ports:
     - port: 80
