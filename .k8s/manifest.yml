@@ -30,7 +30,7 @@ spec:
             - "memcached"
             - "-m"
             - "900"
-            - "I"
+            - "-I"
             - "64M"
           resources:
             requests:
