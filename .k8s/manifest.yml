@@ -78,6 +78,9 @@ config:
   - GET
   - HEAD
   cache_ttl: 86400
+  cache_control: false
+  content_type:
+  - application/json
   strategy: memory
   memory:
     dictionary_name: mamluk_proxy_cache
