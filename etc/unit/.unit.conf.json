@@ -20,7 +20,7 @@
       "processes": {
         "max": 25,
         "spare": 5,
-        "idle_timeout": 5
+        "idle_timeout": 30
       },
       "root": "/var/www/html",
       "index": "index.php",

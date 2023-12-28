@@ -60,7 +60,7 @@ metadata:
   namespace: alquran-cloud
 config:
   second: 20
-  policy: cluster
+  policy: local
   limit_by: ip
 plugin: rate-limiting
 ---
