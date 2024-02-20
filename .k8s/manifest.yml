@@ -19,10 +19,6 @@ spec:
       labels:
         app: alquran-cloud-api-memcached
     spec:
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: ScheduleAnyway
       containers:
         - name: alquran-cloud-api-memcached
           image: memcached:1.6
@@ -126,6 +122,9 @@ spec:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: alquran-cloud-app
       containers:
         - name: alquran-cloud-api
           image: islamicnetwork/api.alquran.cloud:$COMMIT_TAG
