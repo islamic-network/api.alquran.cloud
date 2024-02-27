@@ -205,13 +205,13 @@ metadata:
   annotations:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    kubernetes.io/ingress.class: kong
 spec:
+  ingressClassName: kong
   tls:
   - hosts:
     - "api.alquran.cloud"
-    - "london.api.alquran.cloud"
-    - "mumbai.api.alquran.cloud"
+    - "alparslan.api.alquran.cloud"
+    - "cagri.api.alquran.cloud"
     secretName: "alquran-cloud-api-tls"
   rules:
   - host: api.alquran.cloud
@@ -224,7 +224,7 @@ spec:
               name: alquran-cloud-api
               port: 
                 number: 80
-  - host: london.api.alquran.cloud
+  - host: alparslan.api.alquran.cloud
     http:
       paths:
         - path: /
@@ -234,7 +234,7 @@ spec:
               name: alquran-cloud-api
               port: 
                 number: 80
-  - host: mumbai.api.alquran.cloud
+  - host: cagri.api.alquran.cloud
     http:
       paths:
         - path: /
