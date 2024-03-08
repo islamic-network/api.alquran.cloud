@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   alquran_api:
     build:
@@ -10,16 +10,8 @@ services:
     depends_on:
       - alquran_api_memcached
       - alquran_api_mysql
-    environment:
-      # DEBUG: "true" # Any value will make it true. For false, remove the variable.
-      DB_USER: "api"
-      DB_PASSWORD: "api"
-      DB_NAME: "api"
-      DB_HOST: "alquran_api_mysql"
-      DB_PORT: "3306"
-      MEMCACHED_HOST: "alquran_api_memcached"
-      MEMCACHED_PORT: 11211
-      IMPORTER_KEY: 'KEY'
+    env_file:
+      - alquran_api.env
     ports:
       - "80:8080"
     volumes:
@@ -29,23 +21,20 @@ services:
 
   alquran_api_mysql:
     image: islamicnetwork/api.alquran.cloud-db:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_USER: "api"
-      MYSQL_PASSWORD: "api"
-      MYSQL_DATABASE: "api"
+    env_file:
+      - alquran_api.env
     container_name: alquran_api_mysql
     ports:
       - "3306:3306"
 
-#  couchdb:
-#    image: couchdb:3.2
-#    environment:
-#      COUCHDB_USER: "api"
-#      COUCHDB_PASSWORD: "api"
-#    ports:
-#      - "5984:5984"
-#    container_name: couchdb
+  #  couchdb:
+  #    image: couchdb:3.2
+  #    environment:
+  #      COUCHDB_USER: "api"
+  #      COUCHDB_PASSWORD: "api"
+  #    ports:
+  #      - "5984:5984"
+  #    container_name: couchdb
 
   alquran_api_memcached:
     image: memcached:1.6
@@ -54,4 +43,3 @@ services:
       - "-m"
       - "64"
     container_name: alquran_api_memcached
-
