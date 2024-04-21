@@ -99,10 +99,13 @@ class Meta
     public function getAudioBySize()
     {
         return [
+            '320' => [
+                'ru.kuliev-audio-2',
+            ],
             '192' => [
                 'ar.abdulbasitmurattal',
                 'ar.abdullahbasfar',
-                'r.abdurrahmaansudais',
+                'ar.abdurrahmaansudais',
                 'ar.hanirifai',
                 'en.walk',
             ],
