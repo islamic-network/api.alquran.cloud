@@ -86,6 +86,12 @@ class Quran extends AlQuranController
         }
 
         $files = $request->getUploadedFiles();
+
+        if (count($files) < 2) {
+            return Http\Response::json($response, 'Please provide the 2 files', 400);
+        }
+
+
         foreach ($files as $file) {
             /**
              * @var $file UploadedFileInterface
@@ -161,6 +167,84 @@ class Quran extends AlQuranController
             );
         }
 
+    }
+
+    public function updateEdition(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        $secretkey = $this->container->get('config')['kipchak.api']['importerkey'];
+        $apikey = Http\Request::getQueryParam($request, 'apikey');
+        $editionId = Http\Request::getAttribute($request, 'edition');
+
+        if ($secretkey !== $apikey) {
+            return Http\Response::json($response,
+                "Unable to verify key.",
+                401
+            );
+        }
+
+        $files = $request->getUploadedFiles();
+
+        if (count($files) < 1) {
+            return Http\Response::json($response, 'Please provide a file with 6236 lines', 400);
+        }
+
+        foreach ($files as $file) {
+            /**
+             * @var $file UploadedFileInterface
+             */
+            if ($file->getClientFilename() === 'edition.txt') {
+                $text = (string) $file->getStream();
+            }
+        }
+
+        $ayahs = explode("\n", $text);
+
+        if (count($ayahs) !== 6236) {
+            return Http\Response::json($response,
+                'edition.txt must contain 6236 lines. It currently contains ' . count($ayahs) . '.',
+                400
+            );
+        }
+
+        try {
+            // Get Edition
+            $edition = $this->em->getRepository(Edition::class)->findOneBy(['identifier' => $editionId]);
+            if ($edition === null) {
+                return Http\Response::json($response, 'Unable to find edition with ID: ' . $editionId, 404);
+            }
+
+            // Get all Ayahs
+            $ayahEntities = $this->em->getRepository(Ayat::class)->findBy(['edition' => $edition]);
+            if (count($ayahEntities) !== 6236) {
+                return Http\Response::json($response,
+                    'This edition does not contain the right number of ayahs: ' . count($ayahEntities) . '.',
+                    400
+                );
+            }
+            $count = 0;
+            foreach ($ayahEntities as $ayat) {
+                $count++;
+                if ($ayat->getNumber() !== $count) {
+                    $ayat->setText($ayahs[$count]);
+                    $this->em->persist($ayat);
+                }
+            }
+
+            $this->em->flush();
+
+            return Http\Response::json($response,
+                $edition->getIdentifier() . ' updated.',
+                200
+            );
+
+        } catch (Exception $e) {
+            $this->logger->error('Quran Importer: ' . $e->getMessage());
+
+            return Http\Response::json($response,
+                "Import failed: " . $e->getMessage(),
+                400
+            );
+        }
     }
 
 }

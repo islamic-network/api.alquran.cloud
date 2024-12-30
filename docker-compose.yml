@@ -1,4 +1,3 @@
-version: "3"
 services:
   alquran_api:
     build:
@@ -20,21 +19,12 @@ services:
     container_name: alquran_api
 
   alquran_api_mysql:
-    image: islamicnetwork/api.alquran.cloud-db:latest
+    image: islamicnetwork/api.alquran.cloud-db
     env_file:
       - alquran_api.env
     container_name: alquran_api_mysql
     ports:
       - "3306:3306"
-
-  #  couchdb:
-  #    image: couchdb:3.2
-  #    environment:
-  #      COUCHDB_USER: "api"
-  #      COUCHDB_PASSWORD: "api"
-  #    ports:
-  #      - "5984:5984"
-  #    container_name: couchdb
 
   alquran_api_memcached:
     image: memcached:1.6

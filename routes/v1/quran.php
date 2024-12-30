@@ -26,4 +26,11 @@ $app->group('/v1', function(RouteCollectorProxy $group) {
         ]
     );
 
+    $group->put('/quran/{edition}',
+        [
+            Controllers\v1\Quran::class,
+            'updateEdition'
+        ]
+    );
+
 });

@@ -11,20 +11,29 @@
 This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
 
 # Technology Stack
-* PHP 8.1
-* PerconaDB 5.7
+* PHP 8.2
+* MySQL 8
 * Memcached 1.6
 * Kipchak API Development Kit (https://github.com/mam-luk/kipchak)
 
 ## Adding Qur'an Editions
 
 ### Add a new Text Edition
-1. You will need a file with with 6236 lines for each ayah.
-2. Place the file in the ```edition-importer``` directory.
-3. Fill in the ```edition-importer/edition.yml``` file.
-4. From the edition importer directory, run ```php import.php```.
+1. Look at the `edition-importer` directory.
+2. You will need a file with  6236 lines for each ayah. Name it `edition.txt`/
+3. Fill in the `edition-importer/edition.yml` file.
+4. Call the POST `v1/quran?apikey=<<key>>` endpoint to create the edition - post the 2 files with the filenames `edition.txt` and `edition.yml`.
 
-#### Add a new Audio Edition
+Example API call: curl -X POST -F "file=@edition.txt" -F "file=@edition.yml"  "http://localhost/v1/quran?apikey=KEY"
+### Update a  Text Edition
+1. Look at the `edition-importer` directory.
+2. You will need a file with 6236 lines for each ayah. Name it `edition.txt`/
+3. Fill in the `edition-importer/edition.yml` file.
+4. Call the PUT `v1/quran/{editionIdentifier}?apikey=<<key>>` endpoint to update the edition. 
+
+Example API call: `curl -X PUT -F "file=@edition.txt" "http://localhost/v1/quran/lg.edition?apikey=KEY"`
+
+### Add a new Audio Edition
 1. Add entry in the edition table.
 2. The files then need to be uploaded to the Wasabi / s3 bucket with the folder name matching the edition name.
 https://github.com/islamic-network/cdn.alquran.cloud/blob/master/html/media/index.php#L37 needs to be updated with the appropriate information.
