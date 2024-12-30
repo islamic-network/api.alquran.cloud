@@ -24,7 +24,8 @@ This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
 3. Fill in the `edition-importer/edition.yml` file.
 4. Call the POST `v1/quran?apikey=<<key>>` endpoint to create the edition - post the 2 files with the filenames `edition.txt` and `edition.yml`.
 
-Example API call: curl -X POST -F "file=@edition.txt" -F "file=@edition.yml"  "http://localhost/v1/quran?apikey=KEY"
+Example API call: `curl -X POST -F "file=@edition.txt" -F "file=@edition.yml"  "http://localhost/v1/quran?apikey=KEY"`
+
 ### Update a  Text Edition
 1. Look at the `edition-importer` directory.
 2. You will need a file with 6236 lines for each ayah. Name it `edition.txt`/
