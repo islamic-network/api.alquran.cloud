@@ -4,7 +4,8 @@
     "require": {
         "doctrine/annotations": "^1.13",
         "mamluk/kipchak": "0.33",
-        "symfony/yaml": "^6.2"
+        "symfony/yaml": "^6.2",
+        "zircote/swagger-php": "^4.11"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
