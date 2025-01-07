@@ -13,6 +13,7 @@ services:
       - alquran_api.env
     ports:
       - "80:8080"
+      - "9090:9090"
     volumes:
       - .:/var/www
     privileged: true

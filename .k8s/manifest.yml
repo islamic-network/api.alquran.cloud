@@ -115,6 +115,10 @@ spec:
       app: alquran-cloud-api
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
       labels:
         app: alquran-cloud-api
     spec:
@@ -180,6 +184,8 @@ spec:
               memory: 500Mi
           ports:
             - containerPort: 8080
+              protocol: TCP
+            - containerPort: 9090
               protocol: TCP
 ---
 # HPA
