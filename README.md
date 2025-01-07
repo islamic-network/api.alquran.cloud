@@ -11,7 +11,7 @@
 This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
 
 # Technology Stack
-* PHP 8.2
+* PHP 8.3
 * MySQL 8
 * Memcached 1.6
 * Kipchak API Development Kit (https://github.com/mam-luk/kipchak)

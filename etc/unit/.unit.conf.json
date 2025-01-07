@@ -7,10 +7,13 @@
   "listeners": {
     "*:8080": {
       "pass": "routes/main"
+    },
+    "*:9090": {
+      "pass": "routes/metrics"
     }
   },
   "applications": {
-    "api.alquran.cloud": {
+    "api_alquran_cloud": {
       "type": "php",
       "user": "nobody",
       "limits": {
@@ -25,9 +28,31 @@
       "root": "/var/www/html",
       "index": "index.php",
       "script": "index.php"
+    },
+    "metrics": {
+      "type": "php",
+      "root": "/var/www/metrics",
+      "index": "metrics.php",
+      "script": "metrics.php",
+      "user": "root",
+      "environment": {
+        "control_socket": "/var/run/control.unit.sock"
+      }
     }
   },
   "routes": {
+    "metrics": [
+      {
+        "match": {
+          "uri": [
+            "/metrics"
+          ]
+        },
+        "action": {
+          "pass": "applications/metrics"
+        }
+      }
+    ],
     "main": [
       {
         "match": {
@@ -55,7 +80,7 @@
           "uri": "*"
         },
         "action": {
-          "pass": "applications/api.alquran.cloud"
+          "pass": "applications/api_alquran_cloud"
         }
       }
     ]
