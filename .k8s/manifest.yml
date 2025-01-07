@@ -213,6 +213,7 @@ spec:
     - "alparslan.api.alquran.cloud"
     - "cagri.api.alquran.cloud"
     - "tugrul.api.alquran.cloud"
+    - "beyazid.api.alquran.cloud"
     secretName: "alquran-cloud-api-tls"
   rules:
   - host: api.alquran.cloud
@@ -254,6 +255,16 @@ spec:
             service:
               name: alquran-cloud-api
               port: 
+                number: 80
+  - host: beyazid.api.alquran.cloud
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: alquran-cloud-api
+              port:
                 number: 80
 ---
 apiVersion: networking.k8s.io/v1
