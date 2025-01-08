@@ -1,54 +1,4 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: alquran-cloud-api-memcached
-  namespace: alquran-cloud
-spec:
-  replicas: 1 
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  selector:
-    matchLabels:
-      app: alquran-cloud-api-memcached
-  template:
-    metadata:
-      labels:
-        app: alquran-cloud-api-memcached
-    spec:
-      containers:
-        - name: alquran-cloud-api-memcached
-          image: memcached:1.6.25
-          args:
-            - "memcached"
-            - "-m"
-            - "900"
-            - "-I"
-            - "64M"
-          resources:
-            requests:
-              memory: 1000Mi
-            limits:
-              memory: 1000Mi
-          ports:
-            - containerPort: 11211
-              protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: alquran-cloud-api-memcached
-  namespace: alquran-cloud
-spec:
-  ports:
-    - port: 11211
-      targetPort: 11211
-  selector:
-    app: alquran-cloud-api-memcached
----
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
@@ -153,7 +103,7 @@ spec:
             - name:  DB_PORT
               value: "3306"
             - name:  MEMCACHED_HOST
-              value: "alquran-cloud-api-memcached"
+              value: "memcached"
             - name:  MEMCACHED_PORT
               value: "11211"
             - name: IMPORTER_KEY
