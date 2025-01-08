@@ -13,6 +13,7 @@ use Api\Models\CompleteResponse;
 use Api\Entities\Doctrine\Primary\Edition;
 use Api\Entities\Doctrine\Primary\Ayat;
 use Symfony\Component\Yaml\Yaml;
+use OpenApi\Attributes as OA;
 
 /**
  * All Controllers extending Controllers\Slim Contain the Service / DI Container as a protected property called $container.
@@ -21,8 +22,93 @@ use Symfony\Component\Yaml\Yaml;
  * logger - which returns an instance of \Monolog\Logger. This is also a protected property on your controller. Access it using $this->logger.
  */
 
+#[OA\OpenApi(
+    openapi: '3.1.0',
+    info: new OA\Info(
+        version: 'v1',
+        description: '<p><b />AlQuran API - Quran
+        <br />The Holy Quran is a divine book from Allah SWT.</p>
+        You can get the text for complete edition using the endpoints below.',
+        title: 'بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ'
+    ),
+    servers: [
+        new OA\Server(url: 'https://api.alquran.cloud/v1'),
+        new OA\Server(url: 'http://api.alquran.cloud/v1')
+    ],
+    tags: [
+        new OA\Tag(name: 'Quran')
+    ]
+)]
+#[OA\Components(
+    schemas: [
+        new OA\Schema(
+            schema: '200QuranUthmaniEditionResponse',
+            properties: [
+                new OA\Property(property: 'identifier', type: 'string', example: 'quran-uthmani-quran-academy'),
+                new OA\Property(property: 'language', type: 'string', example: 'ar'),
+                new OA\Property(property: 'name', type: 'string', example: "القرآن الكريم برسم العثماني (quran-academy)" ),
+                new OA\Property(property: 'englishName', type: 'string', example: "Modified Quran Uthmani Text from the Quran Academy to work with the Kitab font"),
+                new OA\Property(property: 'format', type: 'string', example: 'text'),
+                new OA\Property(property: 'type', type: 'string', example: 'quran')
+            ]
+        ),
+        new OA\Schema(
+            schema: '200QuranUthmaniResponse',
+            properties: [
+                new OA\Property(property: 'surahs', type: 'array',
+                    items: new OA\Items(
+                        properties: [
+                            new OA\Property(property: 'number', type: 'integer', example: 1),
+                            new OA\Property(property: 'name', type: 'string', example: "سُورَةُ ٱلْفَاتِحَةِ"),
+                            new OA\Property(property: 'englishName', type: 'string', example: "Al-Faatiha"),
+                            new OA\Property(property: 'englishNameTranslation', type: 'string', example: "The Opening"),
+                            new OA\Property(property: 'revelationType', type: 'string', example: 'Meccan'),
+                            new OA\Property(property: 'ayahs', type: 'array',
+                                items: new OA\Items(
+                                    properties: [
+                                        new OA\Property(property: 'number', type: 'integer', example: 1),
+                                        new OA\Property(property: 'text', type: 'string', example: "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ"),
+                                        new OA\Property(property: 'numberInSurah', type: 'integer', example: 1),
+                                        new OA\Property(property: 'juz', type: 'integer', example: 1),
+                                        new OA\Property(property: 'manzil', type: 'integer', example: 1),
+                                        new OA\Property(property: 'page', type: 'integer', example: 1),
+                                        new OA\Property(property: 'ruku', type: 'integer', example: 1),
+                                        new OA\Property(property: 'hizbQuarter', type: 'integer', example: 1),
+                                        new OA\Property(property: 'sajda', type: 'boolean', example: false)
+                                    ], type: 'object'
+                                )
+                            )
+                        ], type: 'object'
+                    )
+                ),
+                new OA\Property(property: 'edition', ref: '#/components/schemas/200QuranUthmaniEditionResponse', type: 'object')
+            ], type: 'object'
+        ),
+    ],
+)]
+
 class Quran extends AlQuranController
 {
+
+    #[OA\Get(
+        path: '/quran',
+        description: 'Returns a complete Holy Quran edition.',
+        summary: 'Complete Holy Quran edition',
+        tags: ['Quran'],
+        responses: [
+            new OA\Response(response: '200', description: 'Returns a complete Holy Quran edition.',
+                content: new OA\MediaType(mediaType: 'application/json',
+                    schema: new OA\Schema(
+                        properties: [
+                            new OA\Property(property: 'code', type: 'integer', example: 200),
+                            new OA\Property(property: 'status', type: 'string', example: 'OK'),
+                            new OA\Property(property: 'data', ref: '#/components/schemas/200QuranUthmaniResponse', type: 'object')
+                        ]
+                    )
+                )
+            )
+        ]
+    )]
 
     public function get(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
@@ -47,6 +133,30 @@ class Quran extends AlQuranController
         );
 
     }
+
+    #[OA\Get(
+        path: '/quran/{edition}',
+        description: 'Returns a complete Holy Quran edition as per the given edition.',
+        summary: 'Complete Holy Quran edition as per the given edition.',
+        tags: ['Quran'],
+        parameters: [
+            new OA\QueryParameter(name: 'edition', description: 'Edition name',
+                in: 'query', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy'),
+        ],
+        responses: [
+            new OA\Response(response: '200', description: 'Returns a complete Holy Quran edition as per the given edition.',
+                content: new OA\MediaType(mediaType: 'application/json',
+                    schema: new OA\Schema(
+                        properties: [
+                            new OA\Property(property: 'code', type: 'integer', example: 200),
+                            new OA\Property(property: 'status', type: 'string', example: 'OK'),
+                            new OA\Property(property: 'data', ref: '#/components/schemas/200QuranUthmaniResponse', type: 'object')
+                        ]
+                    )
+                )
+            )
+        ]
+    )]
 
     public function getByEdition(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {

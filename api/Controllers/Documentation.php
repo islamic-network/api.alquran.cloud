@@ -166,11 +166,11 @@ class Documentation extends Controllers\Slim
         $controller = explode('/', $urlPattern);
 
         if ($controller[3] === 'ayah') {
-            $openApi = OApi\Generator::scan(['/var/www/api/Controllers/partials/Ayat.php', '/var/www/api/Controllers/v1/Ayah.php']);
+            $openApi = OApi\Generator::scan(['/var/www/api/Controllers/Documentation/Ayat.php', '/var/www/api/Controllers/v1/Ayah.php']);
         } elseif ($controller[3] === 'edition') {
-            $openApi = OApi\Generator::scan(['/var/www/api/Controllers/partials/Edition.php', '/var/www/api/Controllers/v1/Edition.php']);
+            $openApi = OApi\Generator::scan(['/var/www/api/Controllers/Documentation/Edition.php', '/var/www/api/Controllers/v1/Edition.php']);
         } elseif ($controller[3] === 'hizb-quarter') {
-            $openApi = OApi\Generator::scan(['/var/www/api/Controllers/partials/HizbQuarter.php', '/var/www/api/Controllers/v1/HizbQuarter.php']);
+            $openApi = OApi\Generator::scan(['/var/www/api/Controllers/Documentation/HizbQuarter.php', '/var/www/api/Controllers/v1/HizbQuarter.php']);
         } else {
             $openApi = OApi\Generator::scan(['/var/www/api/Controllers/Documentation.php', '/var/www/api/Controllers/v1/']);
         }
