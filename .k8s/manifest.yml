@@ -5,7 +5,7 @@ metadata:
   name: rate-limiting-alquran-api
   namespace: alquran-cloud
 config:
-  second: 20
+  second: 10
   policy: local
   limit_by: ip
 plugin: rate-limiting
