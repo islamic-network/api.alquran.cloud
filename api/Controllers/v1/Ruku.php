@@ -159,7 +159,7 @@ class Ruku extends AlQuranController
         tags: ['Ruku'],
         parameters: [
             new OA\PathParameter(ref: '#/components/parameters/RukuNumberParameter'),
-            new OA\PathPArameter(name: 'edition', description: 'Edition name',
+            new OA\PathParameter(name: 'edition', description: 'Edition name',
                 in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy'),
             new OA\QueryParameter(ref: '#/components/parameters/RukuOffsetQueryParameter'),
             new OA\QueryParameter(ref: '#/components/parameters/RukuLimitQueryParameter')

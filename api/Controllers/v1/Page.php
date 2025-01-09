@@ -159,7 +159,7 @@ class Page extends AlQuranController
         tags: ['Page'],
         parameters: [
             new OA\PathParameter(ref: '#/components/parameters/PageNumberParameter'),
-            new OA\PathPArameter(name: 'edition', description: 'Edition name',
+            new OA\PathParameter(name: 'edition', description: 'Edition name',
                 in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy'),
             new OA\QueryParameter(ref: '#/components/parameters/PageOffsetQueryParameter'),
             new OA\QueryParameter(ref: '#/components/parameters/PageLimitQueryParameter')

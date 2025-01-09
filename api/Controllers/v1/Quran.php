@@ -140,8 +140,8 @@ class Quran extends AlQuranController
         summary: 'Complete Holy Quran edition as per the given edition.',
         tags: ['Quran'],
         parameters: [
-            new OA\QueryParameter(name: 'edition', description: 'Edition name',
-                in: 'query', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy'),
+            new OA\PathParameter(name: 'edition', description: 'Edition name',
+                in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy'),
         ],
         responses: [
             new OA\Response(response: '200', description: 'Returns a complete Holy Quran edition as per the given edition.',
