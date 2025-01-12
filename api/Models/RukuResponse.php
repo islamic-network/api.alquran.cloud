@@ -80,7 +80,7 @@ class RukuResponse extends QuranResponse
     {
 
         if ($number === null || $number < 1 || $number > 556) {
-            $this->response = 'Ruku number should be betwen 1 and 556';
+            $this->response = 'Ruku number should be between 1 and 556';
             $this->setCode(404);
             $this->setStatus('Not Found');
         } else  {
