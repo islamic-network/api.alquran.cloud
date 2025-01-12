@@ -10,6 +10,9 @@
     },
     "*:9090": {
       "pass": "routes/metrics"
+    },
+    "*:9091": {
+      "pass": "routes/status"
     }
   },
   "applications": {
@@ -38,6 +41,16 @@
       "environment": {
         "control_socket": "/var/run/control.unit.sock"
       }
+    },
+    "status": {
+      "type": "php",
+      "root": "/var/www/metrics",
+      "index": "status.php",
+      "script": "status.php",
+      "user": "root",
+      "environment": {
+        "control_socket": "/var/run/control.unit.sock"
+      }
     }
   },
   "routes": {
@@ -50,6 +63,18 @@
         },
         "action": {
           "pass": "applications/metrics"
+        }
+      }
+    ],
+    "status": [
+      {
+        "match": {
+          "uri": [
+            "/status"
+          ]
+        },
+        "action": {
+          "pass": "applications/status"
         }
       }
     ],
