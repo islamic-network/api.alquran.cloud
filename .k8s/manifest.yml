@@ -65,10 +65,10 @@ spec:
       app: alquran-cloud-api
   template:
     metadata:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "9090"
-        prometheus.io/path: "/metrics"
+#      annotations:
+#        prometheus.io/scrape: "true"
+#        prometheus.io/port: "9090"
+#        prometheus.io/path: "/metrics"
       labels:
         app: alquran-cloud-api
     spec:
