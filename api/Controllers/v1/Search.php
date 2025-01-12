@@ -71,7 +71,18 @@ use OpenApi\Attributes as OA;
                     )
                 )
             ], type: 'object'
-        ),
+        )
+    ],
+    responses: [
+        new OA\Response(response: '404SearchResponse', description: "User's Search - Not Found",content: new OA\MediaType(mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'code', type: 'integer', example: 404),
+                    new OA\Property(property: 'status', type: 'string', example: 'NOT FOUND'),
+                    new OA\Property(property: 'data', type: 'string', example: "Nothing matching your search was found..")
+                ]
+            )
+        ))
     ],
     parameters: [
         new OA\PathParameter(parameter: 'SearchWordParameter', name: 'word', description: 'Word to search in text',
@@ -105,7 +116,8 @@ class Search extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SearchResponse', response: '404')
         ]
     )]
 
@@ -153,7 +165,8 @@ class Search extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SearchResponse', response: '404')
         ]
     )]
 
@@ -205,7 +218,8 @@ class Search extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SearchResponse', response: '404')
         ]
     )]
 

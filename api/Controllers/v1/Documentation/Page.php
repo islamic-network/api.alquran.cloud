@@ -12,6 +12,6 @@ class Page extends Documentation
     {
         $openapi = OApi\Generator::scan([$this->dir . '/Controllers/v1/Page.php']);
 
-        return Response::raw($response, $openapi->toYaml(), 200, ['Content-Type' => 'text/json']);
+        return Response::raw($response, $openapi->toYaml(), 200, ['Content-Type' => 'text/yaml']);
     }
 }

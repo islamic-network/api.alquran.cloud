@@ -85,7 +85,20 @@ use OpenApi\Attributes as OA;
                 ),
                 new OA\Property(property: 'edition', ref: '#/components/schemas/200SajdaEditionQuranUthmaniResponse', type: 'object')
             ], type: 'object'
-        ),
+        )
+    ],
+    responses: [
+        new OA\Response(response: '404SajdaResponse', description: 'Unable to find the requested resource',
+            content: new OA\MediaType(mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'code', type: 'integer', example: 404),
+                        new OA\Property(property: 'status', type: 'string', example: 'RESOURCE_NOT_FOUND'),
+                        new OA\Property(property: 'data', type: 'string', example: 'Not found.')
+                    ]
+                )
+            )
+        )
     ]
 )]
 
@@ -109,7 +122,8 @@ class Sajda extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SajdaResponse', response: '404')
         ]
     )]
 
@@ -157,7 +171,8 @@ class Sajda extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SajdaResponse', response: '404')
         ]
     )]
 

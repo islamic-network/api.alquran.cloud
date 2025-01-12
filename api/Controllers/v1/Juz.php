@@ -85,7 +85,18 @@ use OpenApi\Attributes as OA;
                 ),
                 new OA\Property(property: 'edition', ref: '#/components/schemas/200JuzEditionQuranUthmaniResponse', type: 'object')
             ], type: 'object'
-        ),
+        )
+    ],
+    responses: [
+        new OA\Response(response: '404JuzResponse', description: 'Juz - Not Found',content: new OA\MediaType(mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'code', type: 'integer', example: 404),
+                    new OA\Property(property: 'status', type: 'string', example: 'NOT FOUND'),
+                    new OA\Property(property: 'data', type: 'string', example: "Juz number should be between 1 and 30")
+                ]
+            )
+        ))
     ],
     parameters: [
         new OA\PathParameter(parameter: 'JuzNumberParameter', name: 'number', description: 'Juz Number',
@@ -121,7 +132,8 @@ class Juz extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404JuzResponse', response: '404')
         ]
     )]
 
@@ -175,7 +187,8 @@ class Juz extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404JuzResponse', response: '404')
         ]
     )]
 

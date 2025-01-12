@@ -85,7 +85,18 @@ use OpenApi\Attributes as OA;
                 ),
                 new OA\Property(property: 'edition', ref: '#/components/schemas/200EditionQuranUthmaniResponse', type: 'object')
             ], type: 'object'
-        ),
+        )
+    ],
+    responses: [
+        new OA\Response(response: '404HizbQuarterResponse', description: 'Hizb Quarter - Not Found',content: new OA\MediaType(mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'code', type: 'integer', example: 404),
+                    new OA\Property(property: 'status', type: 'string', example: 'NOT FOUND'),
+                    new OA\Property(property: 'data', type: 'string', example: "HizbQuarter number should be between 1 and 240")
+                ]
+            )
+        ))
     ],
     parameters: [
         new OA\PathParameter(parameter: 'HizbQuarterNumberParameter', name: 'number', description: 'Hizb Quarter Number',
@@ -121,7 +132,8 @@ class HizbQuarter extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404HizbQuarterResponse', response: '404')
         ]
     )]
 
@@ -175,7 +187,8 @@ class HizbQuarter extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404HizbQuarterResponse', response: '404')
         ]
     )]
 

@@ -124,7 +124,29 @@ use OpenApi\Attributes as OA;
                 ),
                 new OA\Property(property: 'edition', ref: '#/components/schemas/200SurahEditionQuranSimpleResponse', type: 'object'),
             ], type: 'object'
-        ),
+        )
+    ],
+    responses: [
+        new OA\Response(response: '404SurahResponse', description: 'Surah - Not Found',content: new OA\MediaType(mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'code', type: 'integer', example: 404),
+                    new OA\Property(property: 'status', type: 'string', example: 'NOT FOUND'),
+                    new OA\Property(property: 'data', type: 'string', example: "Surat number should be between 1 and 114.")
+                ]
+            )
+        )),
+        new OA\Response(response: '404SurahResourceResponse', description: 'Unable to find the requested resource',
+            content: new OA\MediaType(mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'code', type: 'integer', example: 404),
+                        new OA\Property(property: 'status', type: 'string', example: 'RESOURCE_NOT_FOUND'),
+                        new OA\Property(property: 'data', type: 'string', example: 'Not found.')
+                    ]
+                )
+            )
+        )
     ],
     parameters: [
         new OA\PathParameter(parameter: 'SurahNumberParameter', name: 'number', description: 'Surah Number',
@@ -158,7 +180,8 @@ class Surah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SurahResourceResponse', response: '404')
         ]
     )]
 
@@ -204,7 +227,8 @@ class Surah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SurahResponse', response: '404')
         ]
     )]
 
@@ -257,7 +281,8 @@ class Surah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SurahResponse', response: '404')
         ]
     )]
 
@@ -317,7 +342,8 @@ class Surah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404SurahResourceResponse', response: '404')
         ]
     )]
 

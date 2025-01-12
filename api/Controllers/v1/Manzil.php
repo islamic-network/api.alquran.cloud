@@ -85,7 +85,18 @@ use OpenApi\Attributes as OA;
                 ),
                 new OA\Property(property: 'edition', ref: '#/components/schemas/200ManzilEditionQuranUthmaniResponse', type: 'object')
             ], type: 'object'
-        ),
+        )
+    ],
+    responses: [
+        new OA\Response(response: '404ManzilResponse', description: 'Manzil - Not Found',content: new OA\MediaType(mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'code', type: 'integer', example: 404),
+                    new OA\Property(property: 'status', type: 'string', example: 'NOT FOUND'),
+                    new OA\Property(property: 'data', type: 'string', example: "Manzil number should be between 1 and 7")
+                ]
+            )
+        ))
     ],
     parameters: [
         new OA\PathParameter(parameter: 'ManzilNumberParameter', name: 'number', description: 'Manzil Number',
@@ -120,7 +131,8 @@ class Manzil extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404ManzilResponse', response: '404')
         ]
     )]
 
@@ -174,7 +186,8 @@ class Manzil extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404ManzilResponse', response: '404')
         ]
     )]
 

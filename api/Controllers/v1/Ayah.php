@@ -112,6 +112,28 @@ use OpenApi\Attributes as OA;
             ], type: 'object'
         )
     ],
+    responses:[
+        new OA\Response(response: '404AyahResponse', description: 'Ayah - Not Found',content: new OA\MediaType(mediaType: 'application/json',
+            schema: new OA\Schema(
+                properties: [
+                    new OA\Property(property: 'code', type: 'integer', example: 404),
+                    new OA\Property(property: 'status', type: 'string', example: 'NOT FOUND'),
+                    new OA\Property(property: 'data', type: 'string', example: "Please specify an Ayah number (1 to 6236).")
+                ]
+            )
+        )),
+        new OA\Response(response: '404AyahResourceResponse', description: 'Unable to find the requested resource',
+            content: new OA\MediaType(mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'code', type: 'integer', example: 404),
+                        new OA\Property(property: 'status', type: 'string', example: 'RESOURCE_NOT_FOUND'),
+                        new OA\Property(property: 'data', type: 'string', example: 'Not found.')
+                    ]
+                )
+            )
+        )
+    ],
     parameters: [
         new OA\PathParameter(parameter: 'AyahNumberParameter', name: 'number', description: 'Ayah Number',
             in: 'path', required: true, schema: new OA\Schema(type: 'integer'), example: 5),
@@ -141,7 +163,8 @@ class Ayah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404AyahResourceResponse', response: '404')
         ]
     )]
 
@@ -188,7 +211,8 @@ class Ayah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404AyahResourceResponse', response: '404')
         ]
     )]
 
@@ -242,7 +266,8 @@ class Ayah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404AyahResourceResponse', response: '404')
         ]
     )]
 
@@ -272,7 +297,8 @@ class Ayah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404AyahResponse', response: '404')
         ]
     )]
 
@@ -324,7 +350,8 @@ class Ayah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404AyahResponse', response: '404')
         ]
     )]
 
@@ -383,7 +410,8 @@ class Ayah extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404AyahResponse', response: '404')
         ]
     )]
 

@@ -83,8 +83,21 @@ use OpenApi\Attributes as OA;
                 ),
                 new OA\Property(property: 'edition', ref: '#/components/schemas/200QuranUthmaniEditionResponse', type: 'object')
             ], type: 'object'
-        ),
+        )
     ],
+    responses: [
+        new OA\Response(response: '404QuranResponse', description: 'Unable to find the requested resource',
+            content: new OA\MediaType(mediaType: 'application/json',
+                schema: new OA\Schema(
+                    properties: [
+                        new OA\Property(property: 'code', type: 'integer', example: 404),
+                        new OA\Property(property: 'status', type: 'string', example: 'RESOURCE_NOT_FOUND'),
+                        new OA\Property(property: 'data', type: 'string', example: 'Not found.')
+                    ]
+                )
+            )
+        )
+    ]
 )]
 
 class Quran extends AlQuranController
@@ -106,7 +119,8 @@ class Quran extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404QuranResponse', response: '404')
         ]
     )]
 
@@ -154,7 +168,8 @@ class Quran extends AlQuranController
                         ]
                     )
                 )
-            )
+            ),
+            new OA\Response(ref: '#/components/responses/404QuranResponse', response: '404')
         ]
     )]
 
