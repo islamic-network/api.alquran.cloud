@@ -6,8 +6,11 @@ metadata:
   namespace: alquran-cloud
 config:
   second: 10
-  policy: local
+  policy: redis
   limit_by: ip
+  redis:
+    host: valkey-ratelimiting-primary
+    port: 6379
 plugin: rate-limiting
 ---
 apiVersion: configuration.konghq.com/v1
