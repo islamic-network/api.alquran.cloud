@@ -5,9 +5,10 @@ metadata:
   name: rate-limiting-alquran-api
   namespace: alquran-cloud
 config:
-  second: 10
+  second: 12
   policy: redis
   limit_by: ip
+  fault_tolerant: true
   redis:
     host: valkey-ratelimiting-primary
     port: 6379
