@@ -135,7 +135,7 @@ spec:
               memory: 400Mi
             limits:
               cpu: "500m"
-              memory: 500Mi
+              memory: 700Mi
           ports:
             - containerPort: 8080
               name: api
