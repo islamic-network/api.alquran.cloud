@@ -18,33 +18,6 @@ use OpenApi\Attributes as OA;
  * logger - which returns an instance of \Monolog\Logger. This is also a protected property on your controller. Access it using $this->logger.
  */
 
-#[OA\OpenApi(
-    openapi: '3.1.0',
-    info: new OA\Info(
-        version: 'v1',
-        description: '<p><b />AlQuran API - Meta</p>
-        Get metadata about Surahs, Pages, Hizbs and Juzs using the endpoint below.',
-        title: 'بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ'
-    ),
-    servers: [
-        new OA\Server(url: 'https://api.alquran.cloud/v1'),
-        new OA\Server(url: 'http://api.alquran.cloud/v1')
-    ],
-    tags: [
-        new OA\Tag(name: 'Meta')
-    ]
-)]
-#[OA\Components(
-    schemas: [
-        new OA\Schema(
-            schema: '200MetaReferenceResponse',
-            properties: [
-                new OA\Property(property: 'surah', type: 'integer', example: 1),
-                new OA\Property(property: 'ayah', type: 'integer', example: 1)
-            ], type: 'object'
-        )
-    ]
-)]
 
 class Meta extends AlQuranController
 {
@@ -146,17 +119,7 @@ class Meta extends AlQuranController
                     )
                 )
             ),
-            new OA\Response(response: '404', description: 'Unable to find the requested resource',
-                content: new OA\MediaType(mediaType: 'application/json',
-                    schema: new OA\Schema(
-                        properties: [
-                            new OA\Property(property: 'code', type: 'integer', example: 404),
-                            new OA\Property(property: 'status', type: 'string', example: 'RESOURCE_NOT_FOUND'),
-                            new OA\Property(property: 'data', type: 'string', example: 'Not found.')
-                        ]
-                    )
-                )
-            )
+            new OA\Response(ref: '#/components/responses/404NotFoundResourceResponse', response: '404')
         ]
     )]
 
