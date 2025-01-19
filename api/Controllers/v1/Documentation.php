@@ -1,12 +1,14 @@
 <?php
 
-namespace Api\Controllers\v1\Documentation;
+namespace Api\Controllers\v1;
 
+use Api\Controllers\AlQuranController;
 use Api\Utils\Response;
+use OpenApi as OApi;
 use OpenApi\Attributes as OA;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use OpenApi as OApi;
 use Symfony\Component\Cache\Adapter\MemcachedAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 
@@ -457,9 +459,15 @@ use Symfony\Contracts\Cache\ItemInterface;
             required: false, schema: new OA\Schema(type: 'integer'), example: 1),
     ]
 )]
-class AlQuranOpenApi extends Documentation
+class Documentation extends AlQuranController
 {
-    public MemcachedAdapter $mc;
+    public string $dir;
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+        $this->dir = realpath(__DIR__ . '/../../../');
+    }
     public function generate(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $this->mc = $this->container->get('cache.memcached.cache');
@@ -468,7 +476,7 @@ class AlQuranOpenApi extends Documentation
 
             return OApi\Generator::scan(
                 [
-                    $this->dir . '/Controllers/v1/Documentation/AlQuranOpenApi.php',
+                    $this->dir . '/Controllers/v1/Documentation/Documentation.php',
                     $this->dir . '/Controllers/v1/Ayah.php',
                     $this->dir . '/Controllers/v1/Edition.php',
                     $this->dir . '/Controllers/v1/HizbQuarter.php',
