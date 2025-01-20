@@ -5,7 +5,6 @@ namespace Api\Utils;
 class Meta
 {
     const PRIMARY_CDN_BASE_URL = 'cdn.islamic.network';
-    const SECONDARY_CDN_BASE_URL = 'cdn2.islamic.network';
     private $hizb_quarter;
     private $page;
     private $ruku;
