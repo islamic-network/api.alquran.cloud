@@ -413,35 +413,35 @@ use Symfony\Contracts\Cache\ItemInterface;
 
     ],
     parameters: [
-        new OA\PathParameter(parameter: 'AyahNumberParameter', name: 'number', description: 'Ayah Number - An integer enum value between 1 and 6236',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer'), example: 5),
-        new OA\PathParameter(parameter: 'AyahEditionNameParameter', name: 'edition', description: 'Edition name - A string enum value',
+        new OA\PathParameter(parameter: 'AyahNumberParameter', name: 'number', description: 'A number between 1 and 6236',
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', maximum: 6236, minimum: 1), example: 5),
+        new OA\PathParameter(parameter: 'AyahEditionNameParameter', name: 'edition', description: 'Edition name',
             in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy'),
         new OA\PathParameter(parameter: 'AyahEditionsListParameter', name: 'editions', description: 'Comma separated list of edition names',
             in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy,quran-simple'),
 
-        new OA\PathParameter(parameter: 'HizbQuarterNumberParameter', name: 'number', description: 'Hizb Quarter Number - An integer enum value between 1 and 240',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer'), example: 1),
+        new OA\PathParameter(parameter: 'HizbQuarterNumberParameter', name: 'number', description: 'A number between 1 and 240',
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10]), example: 1),
         new OA\QueryParameter(parameter: 'HizbQuarterOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Hizb Quarter by the given number',
             in: 'query', required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
-        new OA\PathParameter(parameter: 'JuzNumberParameter', name: 'number', description: 'Juz Number - An integer enum value between 1 and 30',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer'), example: 1),
+        new OA\PathParameter(parameter: 'JuzNumberParameter', name: 'number', description: 'A number between 1 and 30',
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]), example: 1),
         new OA\QueryParameter(parameter: 'JuzOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Juz by the given number', in: 'query',
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
-        new OA\PathParameter(parameter: 'ManzilNumberParameter', name: 'number', description: 'Manzil Number - An integer enum value between 1 and 7',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer'), example: 1),
+        new OA\PathParameter(parameter: 'ManzilNumberParameter', name: 'number', description: 'A number between 1 and 7',
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7]), example: 1),
         new OA\QueryParameter(parameter: 'ManzilOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Manzil by the given number', in: 'query',
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
-        new OA\PathParameter(parameter: 'PageNumberParameter', name: 'number', description: 'Page Number - An integer enum value between 1 and 604',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer'), example: 1),
+        new OA\PathParameter(parameter: 'PageNumberParameter', name: 'number', description: 'A number between 1 and 604',
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10]), example: 1),
         new OA\QueryParameter(parameter: 'PageOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Page by the given number', in: 'query',
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
-        new OA\PathParameter(parameter: 'RukuNumberParameter', name: 'number', description: 'Ruku Number - An integer enum value between 1 and 556',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer'), example: 1),
+        new OA\PathParameter(parameter: 'RukuNumberParameter', name: 'number', description: 'A number between 1 and 556',
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10]), example: 1),
         new OA\QueryParameter(parameter: 'RukuOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Ruku by the given number', in: 'query',
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
@@ -450,8 +450,8 @@ use Symfony\Contracts\Cache\ItemInterface;
         new OA\PathParameter(parameter: 'SearchSurahParameter', name: 'surah', description: "Enter a surah number - An integer enum value (between 1 and 114) to search a specific surah or 'all' to search all the text",
             in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: '1'),
 
-        new OA\PathParameter(parameter: 'SurahNumberParameter', name: 'number', description: 'Surah Number - An integer enum value between 1 and 114',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer'), example: 1),
+        new OA\PathParameter(parameter: 'SurahNumberParameter', name: 'number', description: 'A number between 1 and 114',
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10]), example: 1),
         new OA\QueryParameter(parameter: 'SurahOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Surah by the given number', in: 'query',
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
