@@ -9,7 +9,6 @@ use OpenApi\Attributes as OA;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Symfony\Component\Cache\Adapter\MemcachedAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 
 #[OA\OpenApi(
@@ -421,7 +420,7 @@ use Symfony\Contracts\Cache\ItemInterface;
             in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy,quran-simple'),
 
         new OA\PathParameter(parameter: 'HizbQuarterNumberParameter', name: 'number', description: 'A number between 1 and 240',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10]), example: 1),
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', maximum: 240, minimum: 1), example: 1),
         new OA\QueryParameter(parameter: 'HizbQuarterOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Hizb Quarter by the given number',
             in: 'query', required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
@@ -436,22 +435,22 @@ use Symfony\Contracts\Cache\ItemInterface;
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
         new OA\PathParameter(parameter: 'PageNumberParameter', name: 'number', description: 'A number between 1 and 604',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10]), example: 1),
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', maximum: 604, minimum: 1), example: 1),
         new OA\QueryParameter(parameter: 'PageOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Page by the given number', in: 'query',
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
         new OA\PathParameter(parameter: 'RukuNumberParameter', name: 'number', description: 'A number between 1 and 556',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10]), example: 1),
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', maximum: 556, minimum: 1), example: 1),
         new OA\QueryParameter(parameter: 'RukuOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Ruku by the given number', in: 'query',
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
         new OA\PathParameter(parameter: 'SearchWordParameter', name: 'word', description: 'Word to search in text',
             in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'Path'),
         new OA\PathParameter(parameter: 'SearchSurahParameter', name: 'surah', description: "Enter a surah number - An integer enum value (between 1 and 114) to search a specific surah or 'all' to search all the text",
-            in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: '1'),
+            in: 'path', required: true, schema: new OA\Schema(type: 'string', maximum: 114, minimum: 1), example: 1),
 
         new OA\PathParameter(parameter: 'SurahNumberParameter', name: 'number', description: 'A number between 1 and 114',
-            in: 'path', required: true, schema: new OA\Schema(type: 'integer', enum: [1,2,3,4,5,6,7,8,9,10]), example: 1),
+            in: 'path', required: true, schema: new OA\Schema(type: 'integer', maximum: 114, minimum: 1), example: 1),
         new OA\QueryParameter(parameter: 'SurahOffsetQueryParameter', name: 'offset', description: 'Offset ayahs in a Surah by the given number', in: 'query',
             required: false, schema: new OA\Schema(type: 'integer'), example: 4),
 
@@ -459,6 +458,7 @@ use Symfony\Contracts\Cache\ItemInterface;
             required: false, schema: new OA\Schema(type: 'integer'), example: 1),
     ]
 )]
+
 class Documentation extends AlQuranController
 {
     public string $dir;
@@ -467,49 +467,32 @@ class Documentation extends AlQuranController
     {
         parent::__construct($container);
         $this->dir = realpath(__DIR__ . '/../../../');
+
     }
     public function generate(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-//        $this->mc = $this->container->get('cache.memcached.cache');
-//        $openapi = $this->mc->get('oa_alquran', function (ItemInterface $item) {
-//            $item->expiresAfter(300);
-//
-//            return OApi\Generator::scan(
-//                [
-//                    $this->dir . '/Controllers/v1/Documentation.php',
-//                    $this->dir . '/Controllers/v1/Ayah.php',
-//                    $this->dir . '/Controllers/v1/Edition.php',
-//                    $this->dir . '/Controllers/v1/HizbQuarter.php',
-//                    $this->dir . '/Controllers/v1/Juz.php',
-//                    $this->dir . '/Controllers/v1/Manzil.php',
-//                    $this->dir . '/Controllers/v1/Meta.php',
-//                    $this->dir . '/Controllers/v1/Page.php',
-//                    $this->dir . '/Controllers/v1/Quran.php',
-//                    $this->dir . '/Controllers/v1/Ruku.php',
-//                    $this->dir . '/Controllers/v1/Sajda.php',
-//                    $this->dir . '/Controllers/v1/Search.php',
-//                    $this->dir . '/Controllers/v1/Surah.php'
-//                ]
-//            );
-//        });
+        $this->mc = $this->container->get('cache.memcached.cache');
+        $openapi = $this->mc->get('oa_alquran', function (ItemInterface $item) {
+            $item->expiresAfter(300);
 
-        $openapi = OApi\Generator::scan(
-            [
-                $this->dir . '/api/Controllers/v1/Documentation.php',
-                $this->dir . '/api/Controllers/v1/Ayah.php',
-                $this->dir . '/api/Controllers/v1/Edition.php',
-                $this->dir . '/api/Controllers/v1/HizbQuarter.php',
-                $this->dir . '/api/Controllers/v1/Juz.php',
-                $this->dir . '/api/Controllers/v1/Manzil.php',
-                $this->dir . '/api/Controllers/v1/Meta.php',
-                $this->dir . '/api/Controllers/v1/Page.php',
-                $this->dir . '/api/Controllers/v1/Quran.php',
-                $this->dir . '/api/Controllers/v1/Ruku.php',
-                $this->dir . '/api/Controllers/v1/Sajda.php',
-                $this->dir . '/api/Controllers/v1/Search.php',
-                $this->dir . '/api/Controllers/v1/Surah.php'
-            ]
-        );
+            return OApi\Generator::scan(
+                [
+                    $this->dir . '/api/Controllers/v1/Documentation.php',
+                    $this->dir . '/api/Controllers/v1/Ayah.php',
+                    $this->dir . '/api/Controllers/v1/Edition.php',
+                    $this->dir . '/api/Controllers/v1/HizbQuarter.php',
+                    $this->dir . '/api/Controllers/v1/Juz.php',
+                    $this->dir . '/api/Controllers/v1/Manzil.php',
+                    $this->dir . '/api/Controllers/v1/Meta.php',
+                    $this->dir . '/api/Controllers/v1/Page.php',
+                    $this->dir . '/api/Controllers/v1/Quran.php',
+                    $this->dir . '/api/Controllers/v1/Ruku.php',
+                    $this->dir . '/api/Controllers/v1/Sajda.php',
+                    $this->dir . '/api/Controllers/v1/Search.php',
+                    $this->dir . '/api/Controllers/v1/Surah.php'
+                ]
+            );
+        });
 
         return Response::raw($response, $openapi->toYaml(), 200, ['Content-Type' => 'text/yaml']);
     }

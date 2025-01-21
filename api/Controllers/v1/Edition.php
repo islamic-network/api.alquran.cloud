@@ -133,7 +133,7 @@ class Edition extends AlQuranController
         tags: ['Edition'],
         parameters: [
             new OA\PathParameter(name: 'type', description: 'Type of the editions', in: 'path',
-                required: true, schema: new OA\Schema(type: 'string'), example: 'quran')
+                required: true, schema: new OA\Schema(type: 'string', enum:["quran", "versebyverse", "transliteration", "translation", "tafsir"]), example: 'quran')
         ],
         responses: [
             new OA\Response(response: '200', description: 'Returns a list of all editions that belong to the requested type',
@@ -236,7 +236,7 @@ class Edition extends AlQuranController
         tags: ['Edition'],
         parameters: [
             new OA\PathParameter(name: 'format', description: 'Format of the editions', in: 'path',
-                required: true, schema: new OA\Schema(type: 'string'), example: 'text')
+                required: true, schema: new OA\Schema(type: 'string', enum:["text", "audio"]), example: 'text')
         ],
         responses: [
             new OA\Response(response: '200', description: 'Returns a list of all editions that belong to the requested format',
@@ -338,7 +338,10 @@ class Edition extends AlQuranController
         tags: ['Edition'],
         parameters: [
             new OA\PathParameter(name: 'lang', description: 'Language of the editions', in: 'path',
-                required: true, schema: new OA\Schema(type: 'string'), example: 'ar')
+                required: true, schema: new OA\Schema(type: 'string',
+                    enum:["ar", "am", "az", "ber", "bn", "cs", "de", "dv", "en", "es", "fa", "fr", "ha",
+                        "hi", "id", "it", "ja", "ko", "ku", "ml", "nl", "no", "pl", "ps", "pt", "ro", "ru",
+                        "sd", "so", "sq", "sv", "sw", "ta", "tg", "th", "tr", "tt", "ug", "ur", "uz"]), example: 'ar')
         ],
         responses: [
             new OA\Response(response: '200', description: 'Returns a list of all editions that belong to the requested language',
