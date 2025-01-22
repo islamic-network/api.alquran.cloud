@@ -310,7 +310,7 @@ class Edition extends AlQuranController
                             new OA\Property(property: 'code', type: 'integer', example: 200),
                             new OA\Property(property: 'status', type: 'string', example: 'OK'),
                             new OA\Property(property: 'data', type: 'array', items: new OA\Items(type: 'string'),
-                                example: ['ar', 'am', 'az', 'ber', 'bn', 'cs', 'de', 'dv', 'en', 'es', 'fa', 'fr','ha', 'hi', 'id', 'it', 'ja', 'ko', 'ku', 'ml', 'nl', 'no', 'pl','ps', 'pt', 'ro', 'ru', 'sd', 'so', 'sq', 'sv', 'sw', 'ta', 'tg', 'th', 'tr', 'tt', 'ug', 'ur', 'uz'],
+                                example: ['ar', 'am', 'az', 'ber', 'bn', 'cs', 'ce', 'de', 'dv', 'en', 'es', 'fa', 'fr','ha', 'hi', 'id', 'it', 'ja', 'ko', 'ku', 'ml', 'nl', 'no', 'pl','ps', 'pt', 'ro', 'ru', 'sd', 'so', 'sq', 'sv', 'sw', 'ta', 'tg', 'th', 'tr', 'tt', 'ug', 'ur', 'uz'],
                             )
                         ]
                     )
@@ -323,7 +323,7 @@ class Edition extends AlQuranController
     public function getLanguages(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         return Http\Response::json($response,
-            ['ar', 'am', 'az', 'ber', 'bn', 'cs', 'de', 'dv', 'en', 'es', 'fa', 'fr','ha', 'hi', 'id', 'it', 'ja', 'ko', 'ku', 'ml', 'nl', 'no', 'pl','ps', 'pt', 'ro', 'ru', 'sd', 'so', 'sq', 'sv', 'sw', 'ta', 'tg', 'th', 'tr', 'tt', 'ug', 'ur', 'uz'],
+            ['ar', 'am', 'az', 'ber', 'bn', 'cs', 'ce', 'de', 'dv', 'en', 'es', 'fa', 'fr','ha', 'hi', 'id', 'it', 'ja', 'ko', 'ku', 'ml', 'nl', 'no', 'pl','ps', 'pt', 'ro', 'ru', 'sd', 'so', 'sq', 'sv', 'sw', 'ta', 'tg', 'th', 'tr', 'tt', 'ug', 'ur', 'uz'],
             200,
             true,
             86400
