@@ -9,6 +9,7 @@ use Mamluk\Kipchak\Components\Http;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Contracts\Cache\ItemInterface;
+use OpenApi\Attributes as OA;
 
 /**
  * All Controllers extending Controllers\Slim Contain the Service / DI Container as a protected property called $container.
@@ -17,8 +18,33 @@ use Symfony\Contracts\Cache\ItemInterface;
  * logger - which returns an instance of \Monolog\Logger. This is also a protected property on your controller. Access it using $this->logger.
  */
 
+
+
 class Surah extends AlQuranController
 {
+
+    #[OA\Get(
+        path: '/surah',
+        description: 'Returns the list of all Surahs in the Holy Quran',
+        summary: 'List of Surahs',
+        tags: ['Surah'],
+        responses: [
+            new OA\Response(response: '200', description: 'Returns the list of all Surahs in the Holy Quran',
+                content: new OA\MediaType(mediaType: 'application/json',
+                    schema: new OA\Schema(
+                        properties: [
+                            new OA\Property(property: 'code', type: 'integer', example: 200),
+                            new OA\Property(property: 'status', type: 'string', example: 'OK'),
+                            new OA\Property(property: 'data', type: 'array',
+                                items: new OA\Items(ref: '#/components/schemas/200SurahPartialSurahResponse')
+                            )
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(ref: '#/components/responses/404NotFoundResourceResponse', response: '404')
+        ]
+    )]
 
     public function get(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
@@ -40,6 +66,32 @@ class Surah extends AlQuranController
             86400
         );
     }
+
+    #[OA\Get(
+        path: '/surah/{number}',
+        description: 'Returns a Surah as per the specified number along with all the Ayahs and details',
+        summary: 'A Surah along with all Ayahs and details',
+        tags: ['Surah'],
+        parameters: [
+            new OA\PathParameter(ref: '#/components/parameters/SurahNumberParameter'),
+            new OA\QueryParameter(ref: '#/components/parameters/SurahOffsetQueryParameter'),
+            new OA\QueryParameter(ref: '#/components/parameters/LimitQueryParameter'),
+        ],
+        responses: [
+            new OA\Response(response: '200', description: 'Returns a Surah as per the specified number along with all the Ayahs and details',
+                content: new OA\MediaType(mediaType: 'application/json',
+                    schema: new OA\Schema(
+                        properties: [
+                            new OA\Property(property: 'code', type: 'integer', example: 200),
+                            new OA\Property(property: 'status', type: 'string', example: 'OK'),
+                            new OA\Property(property: 'data', ref: '#/components/schemas/200SurahResponse', type: 'object')
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(ref: '#/components/responses/404SurahResponse', response: '404')
+        ]
+    )]
 
     public function getByNumber(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
@@ -67,6 +119,34 @@ class Surah extends AlQuranController
         );
     }
 
+    #[OA\Get(
+        path: '/surah/{number}/{edition}',
+        description: 'Returns a Surah as per the specified number and specified edition along with all the Ayahs and details',
+        summary: 'A Surah as per the specified number and specified edition along with all Ayahs and details',
+        tags: ['Surah'],
+        parameters: [
+            new OA\PathParameter(ref: '#/components/parameters/SurahNumberParameter'),
+            new OA\PathParameter(name: 'edition', description: 'Edition name',
+                in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy'),
+            new OA\QueryParameter(ref: '#/components/parameters/SurahOffsetQueryParameter'),
+            new OA\QueryParameter(ref: '#/components/parameters/LimitQueryParameter'),
+        ],
+        responses: [
+            new OA\Response(response: '200', description: 'Returns a Surah as per the specified number and specified edition along with all the Ayahs and details',
+                content: new OA\MediaType(mediaType: 'application/json',
+                    schema: new OA\Schema(
+                        properties: [
+                            new OA\Property(property: 'code', type: 'integer', example: 200),
+                            new OA\Property(property: 'status', type: 'string', example: 'OK'),
+                            new OA\Property(property: 'data', ref: '#/components/schemas/200SurahResponse', type: 'object')
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(ref: '#/components/responses/404SurahResponse', response: '404')
+        ]
+    )]
+
     public function getOneByNumberAndEdition(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $number = Http\Request::getAttribute($request, 'number');
@@ -92,6 +172,41 @@ class Surah extends AlQuranController
             86400
         );
     }
+
+    #[OA\Get(
+        path: '/surah/{number}/editions/{editions}',
+        description: 'Returns a Surah as per the specified number and specified list of editions along with all the Ayahs and details',
+        summary: 'A Surah as per the specified number and specified list of editions along with all Ayahs and details',
+        tags: ['Surah'],
+        parameters: [
+            new OA\PathParameter(ref: '#/components/parameters/SurahNumberParameter'),
+            new OA\PathParameter(name: 'editions', description: 'Comma separated list of edition names',
+                in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy,quran-simple'),
+            new OA\QueryParameter(ref: '#/components/parameters/SurahOffsetQueryParameter'),
+            new OA\QueryParameter(ref: '#/components/parameters/LimitQueryParameter'),
+        ],
+        responses: [
+            new OA\Response(response: '200', description: 'Returns a Surah as per the specified number and specified list of editions along with all the Ayahs and details',
+                content: new OA\MediaType(mediaType: 'application/json',
+                    schema: new OA\Schema(
+                        properties: [
+                            new OA\Property(property: 'code', type: 'integer', example: 200),
+                            new OA\Property(property: 'status', type: 'string', example: 'OK'),
+                            new OA\Property(property: 'data', type: 'array',
+                                items: new OA\Items(
+                                    oneOf: [
+                                        new OA\Schema(ref: '#/components/schemas/200SurahResponse'),
+                                        new OA\Schema(ref: '#/components/schemas/200SurahQuranSimpleResponse')
+                                    ]
+                                )
+                            )
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(ref: '#/components/responses/404NotFoundResourceResponse', response: '404')
+        ]
+    )]
 
     public function getManyByNumberAndEdition(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {

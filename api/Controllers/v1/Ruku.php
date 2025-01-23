@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Api\Models\RukuResponse;
+use OpenApi\Attributes as OA;
 
 /**
  * All Controllers extending Controllers\Slim Contain the Service / DI Container as a protected property called $container.
@@ -16,8 +17,35 @@ use Api\Models\RukuResponse;
  * logger - which returns an instance of \Monolog\Logger. This is also a protected property on your controller. Access it using $this->logger.
  */
 
+
 class Ruku extends AlQuranController
 {
+
+    #[OA\Get(
+        path: '/ruku/{number}',
+        description: 'Returns the Ruku for the requested number',
+        summary: 'Ruku for the requested number',
+        tags: ['Ruku'],
+        parameters: [
+            new OA\PathParameter(ref: '#/components/parameters/RukuNumberParameter'),
+            new OA\QueryParameter(ref: '#/components/parameters/RukuOffsetQueryParameter'),
+            new OA\QueryParameter(ref: '#/components/parameters/LimitQueryParameter')
+        ],
+        responses: [
+            new OA\Response(response: '200', description: 'Returns the Ruku for the requested number',
+                content: new OA\MediaType(mediaType: 'application/json',
+                    schema: new OA\Schema(
+                        properties: [
+                            new OA\Property(property: 'code', type: 'integer', example: 200),
+                            new OA\Property(property: 'status', type: 'string', example: 'OK'),
+                            new OA\Property(property: 'data', ref: '#/components/schemas/200QuranUthmaniEntireResponse', type: 'object')
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(ref: '#/components/responses/404RukuResponse', response: '404')
+        ]
+    )]
 
     public function getByNumber(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
@@ -45,6 +73,34 @@ class Ruku extends AlQuranController
         );
 
     }
+
+    #[OA\Get(
+        path: '/ruku/{number}/{edition}',
+        description: 'Returns the Ruku for the requested number and requested edition.',
+        summary: 'Ruku for the requested number and edition',
+        tags: ['Ruku'],
+        parameters: [
+            new OA\PathParameter(ref: '#/components/parameters/RukuNumberParameter'),
+            new OA\PathParameter(name: 'edition', description: 'Edition name',
+                in: 'path', required: true, schema: new OA\Schema(type: 'string'), example: 'quran-uthmani-quran-academy'),
+            new OA\QueryParameter(ref: '#/components/parameters/RukuOffsetQueryParameter'),
+            new OA\QueryParameter(ref: '#/components/parameters/LimitQueryParameter')
+        ],
+        responses: [
+            new OA\Response(response: '200', description: 'Returns the Ruku for the requested number and requested edition.',
+                content: new OA\MediaType(mediaType: 'application/json',
+                    schema: new OA\Schema(
+                        properties: [
+                            new OA\Property(property: 'code', type: 'integer', example: 200),
+                            new OA\Property(property: 'status', type: 'string', example: 'OK'),
+                            new OA\Property(property: 'data', ref: '#/components/schemas/200QuranUthmaniEntireResponse', type: 'object')
+                        ]
+                    )
+                )
+            ),
+            new OA\Response(ref: '#/components/responses/404RukuResponse', response: '404')
+        ]
+    )]
 
     public function getByEdition(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {

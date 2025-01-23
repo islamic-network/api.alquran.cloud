@@ -80,7 +80,7 @@ class HizbQuarterResponse extends QuranResponse
     {
 
         if ($number === null || $number < 1 || $number > 240) {
-            $this->response = 'HizbQuarter number should be betwen 1 and 240';
+            $this->response = 'HizbQuarter number should be between 1 and 240';
             $this->setCode(404);
             $this->setStatus('Not Found');
         } else  {
