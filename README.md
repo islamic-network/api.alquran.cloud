@@ -6,6 +6,8 @@
 [![](https://img.shields.io/github/license/islamic-network/api.alquran.cloud.svg)](https://github.com/islamic-network/api.alquran.cloud/blob/master/LICENSE)
 ![GitHub All Releases](https://img.shields.io/github/downloads/islamic-network/api.alquran.cloud/total)
 
+# This repository is no longer active. Please see https://community.islamic.network/d/140-removing-repositories-from-github.
+
 # AlQuran API - api.alquran.cloud
 
 This repository powers the AlQuran.cloud API on http://api.alquran.cloud.
